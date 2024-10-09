@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link href="https://api.fontshare.com/v2/css?f[]=erode@300,301,400,401,500,501,600,601,700,701,1,2&f[]=supreme@100,101,200,201,300,301,400,401,500,501,700,701,800,801,1,2&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="">
+    
     <title>T&T</title>
 </head>
 <body>
@@ -11,14 +14,69 @@
         <nav>
             <Ul>
                 <li class="esquerda">Logo</li>
-                <li>Como funciona?</li>
-                <li>Sobre</li>
-                <li><button onclick="window.location.href='login.html'">Login</button></li>
+                <li><a href="#comofunci">Como funciona?</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><button id="myBtn">Login</button></li>
             </Ul>
         </nav>
     </header>
     <main>
-        
+        <section class="inicio">
+            <div class="inicio1">
+                <h1>Tarefas & <br> Tartarugas</h1>
+                <p>Faça da sua rotina uma grande jornada!</p>
+                <div class="butcentro"><button onclick="window.location.href='login.html'" >Aventure-se</button></div>
+            </div>
+            <div>
+                <figure>
+                    <img src="img/turtle.png" alt="tartaruga véia anciã">
+                </figure>
+            </div>
+        </section>
+        <section class="comofunci" id="comofunci">
+
+        </section>
+        <section class="sobre" id="sobre">
+
+        </section>
+        <div class="modal" id="modal">
+            <div class="modal-imagem">
+                <div class="modal-shade">
+                    <div class="modal-conteudo">
+                        <div class="bloco-form bloco-registro">
+                            <form action="">
+                                <h1>Registre sua conta</h1>
+                                <input type="text" placeholder="nome">
+                                <input type="email" placeholder="email">
+                                <input type="password" placeholder="senha">
+                                <button>Registre-se</button>
+                            </form>
+                        </div>
+                        <div class="bloco-from bloco-login">
+                            <form action="">
+                                <h1>Faça Login</h1>
+                                <input type="email" placeholder="Email">
+                                <input type="password" placeholder="password">
+                                <button>Login</button>
+                            </form>
+                        </div>
+                        <div class="bloco-desliza">
+                            <div class="desliza">
+                                <div class="painel-desliza desliza-esquerda">
+                                    <h1>Bem vindo de volta</h1>
+                                    <button class="fantasma" id="login">Login</button>
+                                </div>
+                                <div class="painel-desliza desliza-direita">
+                                    <h1>Olá amigo</h1>
+                                    <button class="fantasma" id="registro">Registre-se</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
+    <script type="text/javascript" src="scripts/index.js"></script>
 </body>
 </html>

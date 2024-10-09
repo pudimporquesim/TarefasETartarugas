@@ -1,9 +1,11 @@
 body {
     margin: 0;
-    margin-top: 98px;
+    margin-top: 108px; /* 78px de padding e 30px de margin do nav */
+    background-color: #F5FEE0;
+    font-family: 'Tanker', sans-serif;
 }
 nav {
-    margin: 10px;
+    margin: 15px;
     height: 78px;
     border-radius: 23px;
     background-color: rgba(121, 163, 128, 0.68);
@@ -11,11 +13,10 @@ nav {
     position: fixed;
     z-index: 1;
     top: 0;
-    width: calc(100% - 20px); 
+    width: calc(100% - 30px); /*o -30px é por conta do padding, 15 de cada lado */
     box-sizing: border-box;
 }
 ul {
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,4 +31,86 @@ li {
     text-decoration: none;
     list-style: none;
     margin: 10px;
+}
+main {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.inicio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.inicio1 {
+    padding-left: 100px;
+}
+.inicio h1 {
+    font-family: 'Erode', serif;
+    font-size: 110px;
+    color: #2d473d;
+    line-height: 70px;
+    font-weight: 650;
+    margin-bottom: 35px;
+    margin-top: 35px;
+}
+.inicio p {
+    font-size: 27px;
+    margin: 0;
+    color: #2d473d;
+    display: flex;
+    justify-content: center;
+    font-weight: 501;
+    margin-bottom: 15px;
+}
+.butcentro {
+    display: flex;
+    justify-content: center;
+}
+.inicio button {
+    width: 300px;
+    height: 40px;
+    border-radius: 15px;
+    border: none;
+    font-size: 20px;
+    color: #F5FEE0;
+    background-color: #2d473d;
+}
+.inicio img {
+    height: 550px;
+}
+.comofunciona {
+
+}
+.sobre {
+
+}
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+.modal-imagem {
+    background-image: url("/img/giphy.webp");
+    background-repeat: no-repeat;
+    height: calc(100% - 60px);
+    margin: 30px;
+    border-radius: 20px;
+    background-size: cover;
+}
+.modal-shade {
+    background-color: rgba(0,0,0,0.1);
+    height: 100%;
+    border-radius: 20px;
+}
+.modal-conteudo {
+    /* padding: 20px; */
+
 }
