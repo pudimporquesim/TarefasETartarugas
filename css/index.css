@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+    margin-top: 98px;
+}
+nav {
+    margin: 10px;
+    height: 78px;
+    border-radius: 23px;
+    background-color: rgba(121, 163, 128, 0.68);
+    backdrop-filter: blur(2px);
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    width: calc(100% - 20px); 
+    box-sizing: border-box;
+}
+ul {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+.esquerda {
+    margin-right: auto;
+}
+li {
+    text-decoration: none;
+    list-style: none;
+    margin: 10px;
+}
