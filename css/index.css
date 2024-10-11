@@ -1,3 +1,6 @@
+/* * {
+    box-sizing: border-box;
+} */
 body {
     margin: 0;
     margin-top: 108px; /* 78px de padding e 30px de margin do nav */
@@ -15,6 +18,7 @@ nav {
     top: 0;
     width: calc(100% - 30px); /*o -30px é por conta do padding, 15 de cada lado */
     box-sizing: border-box;
+    
 }
 ul {
     display: flex;
@@ -26,11 +30,30 @@ ul {
 }
 .esquerda {
     margin-right: auto;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.esquerda img {
+    width: 50px;
 }
 li {
     text-decoration: none;
     list-style: none;
     margin: 10px;
+}
+li a {
+    text-decoration: none;
+    color: #2d473d;
+    font-weight: 600;
+}
+li button {
+    border: none;
+    height: 25px;
+    border-radius: 8px;
+    width: 60px;
+    background-color: #2d473d;
+    color: #F5FEE0;
 }
 main {
     margin-left: 20px;
@@ -96,21 +119,27 @@ main {
     overflow: auto; 
     background-color: rgb(0,0,0); 
     background-color: rgba(0,0,0,0.4); 
+    /* padding: 30px; */
 }
-.modal-imagem {
+.container {
     background-image: url("/img/giphy.webp");
     background-repeat: no-repeat;
+    background-color: #F5FEE0;
     height: calc(100% - 60px);
     margin: 30px;
     border-radius: 20px;
     background-size: cover;
 }
-.modal-shade {
-    background-color: rgba(0,0,0,0.1);
-    height: 100%;
-    border-radius: 20px;
-}
-.modal-conteudo {
-    /* padding: 20px; */
 
+.modal-conteudo {
+    padding: 20px;
+}
+.login {
+    background-color: #F5FEE0;
+    height: 100%;
+    width: 50%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: flex;
+    justify-content: center;
 }

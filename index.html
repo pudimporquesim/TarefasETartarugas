@@ -12,12 +12,12 @@
 <body>
     <header>
         <nav>
-            <Ul>
-                <li class="esquerda">Logo</li>
+            <ul>
+                <li class="esquerda"><img src="img/ogo T&T 2.svg" alt="aaaa"></li>
                 <li><a href="#comofunci">Como funciona?</a></li>
                 <li><a href="#sobre">Sobre</a></li>
                 <li><button id="myBtn">Login</button></li>
-            </Ul>
+            </ul>
         </nav>
     </header>
     <main>
@@ -25,7 +25,7 @@
             <div class="inicio1">
                 <h1>Tarefas & <br> Tartarugas</h1>
                 <p>Faça da sua rotina uma grande jornada!</p>
-                <div class="butcentro"><button onclick="window.location.href='login.html'" >Aventure-se</button></div>
+                <div class="butcentro"><button id="myBtn2">Aventure-se</button></div>
             </div>
             <div>
                 <figure>
@@ -40,39 +40,10 @@
 
         </section>
         <div class="modal" id="modal">
-            <div class="modal-imagem">
-                <div class="modal-shade">
-                    <div class="modal-conteudo">
-                        <div class="bloco-form bloco-registro">
-                            <form action="">
-                                <h1>Registre sua conta</h1>
-                                <input type="text" placeholder="nome">
-                                <input type="email" placeholder="email">
-                                <input type="password" placeholder="senha">
-                                <button>Registre-se</button>
-                            </form>
-                        </div>
-                        <div class="bloco-from bloco-login">
-                            <form action="">
-                                <h1>Faça Login</h1>
-                                <input type="email" placeholder="Email">
-                                <input type="password" placeholder="password">
-                                <button>Login</button>
-                            </form>
-                        </div>
-                        <div class="bloco-desliza">
-                            <div class="desliza">
-                                <div class="painel-desliza desliza-esquerda">
-                                    <h1>Bem vindo de volta</h1>
-                                    <button class="fantasma" id="login">Login</button>
-                                </div>
-                                <div class="painel-desliza desliza-direita">
-                                    <h1>Olá amigo</h1>
-                                    <button class="fantasma" id="registro">Registre-se</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="container">
+                <div class="login">
+                    <h1>Login</h1>
+                    <span class="fechar">Fechar</span>
                 </div>
             </div>
         </div>

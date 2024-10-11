@@ -1,10 +1,14 @@
 var modal = document.getElementById("modal");
 var btn = document.getElementById("myBtn");
 var span = document.getElementsByClassName("fechar")[0];
+var btn2 = document.getElementById("myBtn2");
 
 btn.onclick = function() {
   modal.style.display = "block";
 }
+btn2.onclick = function() {
+    modal.style.display = "block";
+  }
 
 span.onclick = function() {
   modal.style.display = "none";
