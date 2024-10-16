@@ -40,15 +40,41 @@
 
         </section>
         <div class="modal" id="modal">
-            <div class="container">
-                <div class="login">
-                    <form action="">
-                        <h1>Login</h1>
-                        <input type="email" name="emaill" id="emaill" placeholder="Email"> <br>
-                        <input type="password" name="senhal" id="senhal" placeholder="Senha"> <br>
-                        <a href="">Esqueceu sua senha?</a> <br>
-                        <input type="submit" value="Logar">
-                    </form>
+            <div class="bloco">
+                <div class="container" id="container">
+                    <div class="form-container registro-container">
+                        <form action="">
+                            <h1>Registro</h1>
+                            <input type="text" name="nome" id="nome" placeholder="Nome"> <br>
+                            <input type="email" name="emailr" id="emailr" placeholder="Email"> <br>
+                            <input type="password" name="senhaR1" id="senhaR1" placeholder="Senha"> <br>
+                            <input type="password" name="senhaR2" id="senhaR2" placeholder="Senha de novo"> <br>
+                            <input type="submit" value="Registrar-se">
+                        </form>
+                    </div>
+                    <div class="form-container login-container">
+                        <form action="">
+                            <h1>Login</h1>
+                            <input type="email" name="emaill" id="emaill" placeholder="Email"> <br>
+                            <input type="password" name="senhal" id="senhal" placeholder="Senha"> <br>
+                            <a href="">Esqueceu sua senha?</a> <br>
+                            <input type="submit" value="Logar">
+                        </form>
+                    </div>
+                    <div class="overlay-container">
+                        <div class="overlay">
+                            <div class="overlay-painel overlay-esquerda">
+                                <h1>Oi Amigo</h1>
+                                <p>Já tem conta é?</p>
+                                <button class="fantasma" id="login">Login</button>
+                            </div>
+                            <div class="overlay-painel overlay-direita">
+                                <h1>Eae parça</h1>
+                                <p>Tem conta não é?</p>
+                                <button class="fantasma" id="registro">Registro</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

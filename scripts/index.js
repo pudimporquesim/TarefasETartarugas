@@ -10,11 +10,22 @@ btn2.onclick = function() {
     modal.style.display = "block";
   }
 
-span.onclick = function() {
-  modal.style.display = "none";
-}
+// span.onclick = function() {
+//   modal.style.display = "none";
+// }
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
 }
+const registerButton = document.getElementById("registro");
+const loginButton = document.getElementById("login");
+const container = document.getElementById("container");
+
+registerButton.addEventListener("click", () => {
+  container.classList.add("painel-direito-ativo");
+});
+
+loginButton.addEventListener("click", () => {
+  container.classList.remove("painel-direito-ativo");
+});
