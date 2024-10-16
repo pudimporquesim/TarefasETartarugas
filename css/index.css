@@ -15,7 +15,7 @@ nav {
     background-color: rgba(121, 163, 128, 0.68);
     backdrop-filter: blur(2px);
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     top: 0;
     width: calc(100% - 30px); /*o -30px é por conta do padding, 15 de cada lado */
     box-sizing: border-box;
@@ -65,6 +65,7 @@ main {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    margin-bottom: 70px;
 }
 .inicio1 {
     padding-left: 100px;
@@ -103,15 +104,22 @@ main {
 .inicio img {
     height: 550px;
 }
-.comofunciona {
+.comofunci {
+    background-color: #2d473d;
+    position: absolute;
+    left: 0;
+    padding: 20px;
+}
+.quadrado {
 
 }
 .sobre {
 
 }
 .modal {
+    display: none;
     position: fixed; 
-    z-index: 1; 
+    z-index: 3; 
     left: 0;
     top: 0;
     width: 100%; 
@@ -135,6 +143,7 @@ main {
     width: calc(100%);
     border-radius: 20px;
     background-color: antiquewhite;
+    box-shadow: 0 0 10px 2.5px rgb(0 0 0 / 20%);
 }
 form {
     display: flex;
@@ -173,6 +182,20 @@ form {
     border: none;
     margin-bottom: 10px;
 }
+.login-container form a {
+    text-decoration: none;
+}
+.login-container form input[type="submit"] {
+    margin: 40px;
+    width: 300px;
+    height: 40px;
+    border-radius: 15px;
+    border: none;
+    background-color: #2d473d;
+    color: #F5FEE0;
+    font-weight: 500;
+    font-size: 17px;
+}
 .container.painel-direito-ativo .login-container {
     transform: translateX(100%);
     opacity: 0;
@@ -184,7 +207,33 @@ form {
     opacity: 0;
     z-index: 1;
 }
-
+.registro-container form {
+    align-items: center;
+}
+.registro-container h1 {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 65px;
+}
+.registro-container input[type="email"],.registro-container input[type="password"], .registro-container input[type="text"]{
+    height: 45px;
+    width: 400px;
+    border-radius: 15px;
+    padding: 10px;
+    border: none;
+    margin-bottom: 10px;
+}
+.registro-container form input[type="submit"] {
+    /* margin: 40px; */
+    width: 300px;
+    height: 40px;
+    border-radius: 15px;
+    border: none;
+    background-color: #2d473d;
+    color: #F5FEE0;
+    font-weight: 500;
+    font-size: 17px;
+}
 .container.painel-direito-ativo .registro-container {
     transform: translateX(100%);
     opacity: 1;
@@ -230,6 +279,11 @@ form {
     background-repeat: no-repeat;
     background-size: cover;
 }
+.escuro {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.2);
+}
 
 .overlay::before {
     content: "";
@@ -259,6 +313,18 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+}
+
+.overlay-painel button {
+    height: 40px;
+    width: 250px;
+    background-color: rgba(247, 245, 245, 0.556);
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 500;
+    border: solid 1px #fff ;
+    border-radius: 15px;
 }
 
 .container.painel-direito-ativo .overlay-esquerda {
