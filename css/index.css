@@ -21,7 +21,7 @@ nav {
     box-sizing: border-box;
     
 }
-ul {
+.menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,16 +29,16 @@ ul {
     padding-right: 10px;
     box-sizing: border-box;
 }
-.esquerda {
+.menu .esquerda {
     margin-right: auto;
     margin-left: 0;
     margin-top: 0;
     margin-bottom: 0;
 }
-.esquerda img {
+.menu .esquerda img {
     width: 50px;
 }
-li {
+.menu li {
     text-decoration: none;
     list-style: none;
     margin: 10px;
@@ -57,8 +57,8 @@ li button {
     color: #F5FEE0;
 }
 main {
-    margin-left: 20px;
-    margin-right: 20px;
+    /* margin-left: 20px;
+    margin-right: 20px; */
 }
 .inicio {
     display: flex;
@@ -106,18 +106,46 @@ main {
 }
 .comofunci {
     background-color: #2d473d;
-    position: absolute;
+    /* position: absolute; */
     left: 0;
-    padding: 20px;
+    padding: 50px 50px;
 }
-.quadrado {
-
+.pt1 {
+    margin-bottom: 40px;
+}
+.pt1 h1, .pt2 h1, .sobre h1 {
+    font-family: 'Erode', serif;
+    font-weight: 600;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+.pt1 p, .pt2 ul, .sobre p {
+    line-height: 24px;
+    font-size: 18px;
+    font-weight: 500;
+}
+.pt2 ul {
+    padding-left: 20px;
+}
+.comofunci {
+    color: #F5FEE0;
 }
 .sobre {
-
+    /* margin-top: 550px; */
+    padding: 50px 50px;
+}
+footer {
+    background-color: #1A4862;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+footer p {
+    margin: 0;
 }
 .modal {
-    display: none;
+    /* display: none; */
     position: fixed; 
     z-index: 3; 
     left: 0;
@@ -135,7 +163,6 @@ main {
     border-radius: 20px;
     margin: 40px 180px;
 }
-
 .container {
     position: relative;
     overflow: hidden;
@@ -187,14 +214,20 @@ form {
 }
 .login-container form input[type="submit"] {
     margin: 40px;
-    width: 300px;
-    height: 40px;
+    /* width: 300px;
+    height: 40px; */
     border-radius: 15px;
     border: none;
     background-color: #2d473d;
     color: #F5FEE0;
     font-weight: 500;
     font-size: 17px;
+    padding: 12px 80px;
+    transition: all 0.3s ease-in-out;
+}
+.login-container form input[type="submit"]:hover {
+    letter-spacing: 3px;
+    cursor: pointer;
 }
 .container.painel-direito-ativo .login-container {
     transform: translateX(100%);
@@ -225,14 +258,19 @@ form {
 }
 .registro-container form input[type="submit"] {
     /* margin: 40px; */
-    width: 300px;
-    height: 40px;
+    /* height: 40px; */
     border-radius: 15px;
     border: none;
     background-color: #2d473d;
     color: #F5FEE0;
     font-weight: 500;
     font-size: 17px;
+    padding: 12px 80px;
+    transition: all 0.3s ease-in-out;
+}
+.registro-container form input[type="submit"]:hover {
+    letter-spacing: 3px;
+    cursor: pointer;
 }
 .container.painel-direito-ativo .registro-container {
     transform: translateX(100%);
@@ -305,7 +343,8 @@ form {
     width: 50%;
     transform: translateX(0);
     transition: transform 0.6s ease-in-out;
-    padding: 30px;
+    padding: 90px 70px;
+    color: #fff;
 }
 
 .overlay-esquerda {
@@ -313,20 +352,39 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }
 
 .overlay-painel button {
-    height: 40px;
-    width: 250px;
-    background-color: rgba(247, 245, 245, 0.556);
+    /* width: 250px; */
+    
+    background-color: rgba(255, 255, 255, 0.304);
     color: rgb(255, 255, 255);
     font-size: 20px;
     font-weight: 500;
     border: solid 1px #fff ;
-    border-radius: 15px;
+    border-radius: 18px;
+    text-shadow: 0 0 10px rgb(0 0 0 / 50%);
+    box-shadow: 0 0 10px 2.5px rgb(0 0 0 / 20%);
+    padding: 12px 80px;
+    transition: all 0.3s ease-in-out;
 }
-
+.overlay-painel button:hover {
+    letter-spacing: 3px;
+    cursor: pointer;
+}
+.overlay-painel h1 {
+    text-shadow: 0 0 10px rgb(0 0 0 / 50%);
+    margin-bottom: 60px;
+    font-size: 50px;
+    text-align: center;
+    font-family: 'Erode', serif;
+}
+.overlay-painel p {
+    text-align: center;
+    font-size: 23px;
+    margin-bottom: 60px;
+    text-shadow: 0 0 10px rgb(0 0 0 / 50%);
+}
 .container.painel-direito-ativo .overlay-esquerda {
     transform: translateX(0);
 }

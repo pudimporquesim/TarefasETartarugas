@@ -12,7 +12,7 @@
 <body>
     <header>
         <nav>
-            <ul>
+            <ul class="menu">
                 <li class="esquerda"><img src="img/ogo T&T 2.svg" alt="aaaa"></li>
                 <li><a href="#comofunci">Como funciona?</a></li>
                 <li><a href="#sobre">Sobre</a></li>
@@ -34,14 +34,28 @@
             </div>
         </section>
         <section class="comofunci" id="comofunci">
-            <div class="quadrado">
-                <h1>Como funciona?</h1>
-                <p>O Tarefas & Tartarugas é um site desenvolvido para ajudar a sua produtividade através de uma agenda com um sitema de RPG! Aqui você pode gamificar a sua vida e transformar-se em um personagem vivendo grandes aventuras.</p>
+            <div class="pt1">
+                <h1>A jornada vivida em Tarefas & Tartarugas</h1>
+                <p>Olá, viajante! Você está prestes a se aventurar e salvar os belos moradores do recife de Água Branca. Aqui, seus afazeres não são apenas atividades rotineiras, elas te rendem moedas e experiência, ao completá-las você ajuda a proteger e preservar os mares. Escolha o tipo de tartaruga que deseja ser, aumente seu nível e derrote aqueles que estão poluindo as águas!</p>
+            </div>
+            <div class="pt2">
+                <h1>O que lhe aguarda em seu percurso</h1>
+                <ul>
+                    <li><strong>Escolha sua classe de tartaruga:</strong> um veloz jabuti, uma poderosa tartaruga marinha ou um sábio cágado, sua escolha trará habilidades que lhe ajudarão a navegar pelos mares da produtividade.</li>
+                    <li><strong>Missões marinhas:</strong> junte-se com seus amigos para completar missões e derrotar chefões que estão ameaçando o recife.</li>
+                    <li><strong>Evolua enquanto produz:</strong> complete suas tarefas, ganhe experiência e veja sua evolução em força e sabedoria.</li>
+                </ul>
             </div>
         </section>
         <section class="sobre" id="sobre">
-
+            <div>
+                <h1>Sobre</h1>
+                <p>O Tarefas & Tartarugas é um projeto de agenda gamificada com sistema de RPG desenvolvido por Bianca Gomes, aluna do curso Técnico em Informática e Luís Araújo, seu orientador. O projeto tem como objetivo usar mecanismos de jogos e RPG para despertar motivação para a realização de tarefas em seus usuários.</p>
+            </div>
         </section>
+        <footer>
+            <p>© Todos os direitos reservados.</p>
+        </footer>
         <div class="modal" id="modal">
             <div class="bloco">
                 <div class="container" id="container">
@@ -52,7 +66,7 @@
                             <input type="email" name="emailr" id="emailr" placeholder="Email"> <br>
                             <input type="password" name="senhaR1" id="senhaR1" placeholder="Senha"> <br>
                             <input type="password" name="senhaR2" id="senhaR2" placeholder="Senha de novo"> <br>
-                            <input type="submit" value="Registrar-se">
+                            <input type="submit" value="Iniciar jornada">
                         </form>
                     </div>
                     <div class="form-container login-container">
@@ -61,21 +75,21 @@
                             <input type="email" name="emaill" id="emaill" placeholder="Email"> <br>
                             <input type="password" name="senhal" id="senhal" placeholder="Senha"> <br>
                             <a href="">Esqueceu sua senha?</a> <br>
-                            <input type="submit" value="Logar">
+                            <input type="submit" value="Voltar aos mares">
                         </form>
                     </div>
                     <div class="overlay-container">
                         <div class="overlay">
                             <div class="escuro">
                                 <div class="overlay-painel overlay-esquerda">
-                                    <h1>Oi Amigo</h1>
-                                    <p>Já tem conta é?</p>
-                                    <button class="fantasma" id="login">Login</button>
+                                    <h1>Olá Aventureiro!</h1>
+                                    <p>Que bom vê-lo novamente, se deseja retornar a sua jornada é só apertar o botão abaixo</p>
+                                    <button id="login">Login</button>
                                 </div>
                                 <div class="overlay-painel overlay-direita">
-                                    <h1>Eae parça</h1>
-                                    <p>Tem conta não é?</p>
-                                    <button class="fantasma" id="registro">Registro</button>
+                                    <h1>Boas-vindas, viajante!</h1>
+                                    <p>Se deseja começar sua aventura, junte-se a nós e crie sua conta</p>
+                                    <button id="registro">Registre-se</button>
                                 </div>
                             </div>
                         </div>
