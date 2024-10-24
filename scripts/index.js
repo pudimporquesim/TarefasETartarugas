@@ -29,3 +29,21 @@ registerButton.addEventListener("click", () => {
 loginButton.addEventListener("click", () => {
   container.classList.remove("painel-direito-ativo");
 });
+
+document.addEventListener('scroll', function() {
+  const sections = document.querySelectorAll('section');
+  const logo = document.querySelector('.logo');
+  
+  let currentSection = '';
+
+  sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      const scrollY = window.pageYOffset;
+
+      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+          currentSection = section.getAttribute('id'); 
+      }
+  });
+  document.body.className = `section-${currentSection}`;
+});

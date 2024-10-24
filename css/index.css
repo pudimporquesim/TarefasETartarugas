@@ -34,9 +34,22 @@ nav {
     margin-left: 0;
     margin-top: 0;
     margin-bottom: 0;
+    
 }
-.menu .esquerda img {
+.menu .esquerda svg {
     width: 50px;
+    aspect-ratio: 1/1;
+}
+#logo {
+    transition: all 0.5s ease-in-out;
+}
+.section-inicio #logo {
+    fill: #21342d;
+    
+}
+.section-comofunci #logo {
+    fill: #c9f4e4;
+    
 }
 .menu li {
     text-decoration: none;
@@ -56,6 +69,10 @@ li button {
     background-color: #2d473d;
     color: #F5FEE0;
 }
+li button:hover {
+    background-color: #21342d;
+    cursor: pointer;
+}
 main {
     /* margin-left: 20px;
     margin-right: 20px; */
@@ -65,7 +82,7 @@ main {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: 70px;
+    height: 100dvh;
 }
 .inicio1 {
     padding-left: 100px;
@@ -101,6 +118,10 @@ main {
     color: #F5FEE0;
     background-color: #2d473d;
 }
+.inicio button:hover {
+    background-color: #21342d;
+    cursor: pointer;
+}
 .inicio img {
     height: 550px;
 }
@@ -109,6 +130,11 @@ main {
     /* position: absolute; */
     left: 0;
     padding: 50px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
 }
 .pt1 {
     margin-bottom: 40px;
@@ -120,7 +146,7 @@ main {
     margin-bottom: 20px;
 }
 .pt1 p, .pt2 ul, .sobre p {
-    line-height: 24px;
+    line-height: 28px;
     font-size: 18px;
     font-weight: 500;
 }
@@ -133,6 +159,9 @@ main {
 .sobre {
     /* margin-top: 550px; */
     padding: 50px 50px;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
 }
 footer {
     background-color: #1A4862;
@@ -143,6 +172,7 @@ footer {
 }
 footer p {
     margin: 0;
+    color: #F5FEE0;
 }
 .modal {
     display: none;
@@ -169,7 +199,7 @@ footer p {
     height: calc(100%);
     width: calc(100%);
     border-radius: 20px;
-    background-color: antiquewhite;
+    background-color: #b7c0dd;
     box-shadow: 0 0 10px 2.5px rgb(0 0 0 / 20%);
 }
 form {
@@ -313,7 +343,7 @@ form {
     width: 200%;
     transform: translateX(0);
     transition: transform 0.6s ease-in-out;
-    background-image: url("/img/giphy.webp");
+    background-image: url("/img/fundo.png");
     background-repeat: no-repeat;
     background-size: cover;
 }
