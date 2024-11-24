@@ -6,9 +6,9 @@ $email = "";
 $senha = "";
 
 //pegando os valores e verificando
-if( ( isset($_POST['email']) ) && ( isset($_POST['senha']) ) ){
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+if( ( isset($_POST['emaill']) ) && ( isset($_POST['senhal']) ) ){
+    $email = $_POST['emaill'];
+    $senha = $_POST['senhal'];
 
     //juntando a variavel no script (substituir :atributo)
     $sql = "SELECT id FROM usuario WHERE email = :email and senha = :senha";
@@ -23,8 +23,13 @@ if( ( isset($_POST['email']) ) && ( isset($_POST['senha']) ) ){
         //recupera os dados fetch fetchAll
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        $checarSenha = "SELECT senha from usuario where email = :email";
+        $ah = $pdo->prepare($checarSenha);
+        $ah->bindParam(':email', $email);
+        $ah->execute();
+        $resultado = $ah->fetch();
             // Verifica a senha usando password_verify
-        if ($senha ==  $usuario['senha']) {
+        if ($senha ==  $resultado['senha']) {
             echo json_encode(['success' => 'Login realizado com sucesso', 'user_id' => $usuario['id']]);
         } else {
             echo json_encode(['error' => 'Senha incorreta']);

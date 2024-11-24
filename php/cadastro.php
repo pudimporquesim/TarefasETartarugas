@@ -27,13 +27,15 @@ if( ( isset($_POST['emailr']) ) && ( isset($_POST['senhaR1'])) && (isset($_POST[
                 $stmt->execute();
                 //recupera os dados fetch fetchAll
                 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+                //
+                echo ("Conta cadastrada com sucesso");
                 //mandando o usuário pra algum lugar
-                header('Location: ../index.html');
+                // header('Location: ../index.html');
             } catch (PDOException $e) {
                 echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
             }
         } else {
-            echo("Essa conta já existe, crie outra deixe de bobaje");
+            echo("Esse email já foi cadastrado, faça login");
         }
     } catch (PDOException $e) {
         echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
