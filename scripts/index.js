@@ -47,3 +47,9 @@ document.addEventListener('scroll', function() {
   });
   document.body.className = `section-${currentSection}`;
 });
+
+
+function mostrar() {
+  var modalsenha = document.getElementById("show");
+  modalsenha.style.zIndex = '3';
+}

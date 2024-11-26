@@ -11,30 +11,31 @@ if( ( isset($_POST['emaill']) ) && ( isset($_POST['senhal']) ) ){
     $senha = $_POST['senhal'];
 
     //juntando a variavel no script (substituir :atributo)
-    $sql = "SELECT id FROM usuario WHERE email = :email and senha = :senha";
+    $sql = "SELECT id FROM usuario WHERE email = :email";
 
     try{
         $stmt = $pdo->prepare($sql);
         //de acordo com o que veio no post
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':senha', $senha);
         $stmt->execute();
 
         //recupera os dados fetch fetchAll
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $checarSenha = "SELECT senha from usuario where email = :email";
-        $ah = $pdo->prepare($checarSenha);
-        $ah->bindParam(':email', $email);
-        $ah->execute();
-        $resultado = $ah->fetch();
-            // Verifica a senha usando password_verify
-        if ($senha ==  $resultado['senha']) {
-            echo json_encode(['success' => 'Login realizado com sucesso', 'user_id' => $usuario['id']]);
+        if ($usuario != false) {
+            $checarSenha = "SELECT senha from usuario where email = :email";
+            $ah = $pdo->prepare($checarSenha);
+            $ah->bindParam(':email', $email);
+            $ah->execute();
+            $resultado = $ah->fetch();
+                // Verifica a senha usando password_verify
+            if ($senha == $resultado['senha']) {
+                echo json_encode(['success' => 'Login realizado com sucesso', 'user_id' => $usuario['id']]);
+            } else {
+                echo json_encode(['error' => 'Senha incorreta']);
+            }
         } else {
-            echo json_encode(['error' => 'Senha incorreta']);
+            echo("Esse email não foi cadastrado.");
         }
-
     } catch (PDOException $e) {
         echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
     }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="../TarefasETartarugas/css/index.css">
     <link href="https://api.fontshare.com/v2/css?f[]=erode@300,301,400,401,500,501,600,601,700,701,1,2&f[]=supreme@100,101,200,201,300,301,400,401,500,501,700,701,800,801,1,2&display=swap" rel="stylesheet">
     <title>T&T</title>
 </head>
@@ -74,8 +74,16 @@
                             <h1>Login</h1>
                             <input type="email" name="emaill" id="emaill" placeholder="Email" required> <br>
                             <input type="password" name="senhal" id="senhal" placeholder="Senha" required> <br>
-                            <a href="">Esqueceu sua senha?</a> <br>
                             <input type="submit" value="Voltar aos mares">
+                        </form>
+                        <button onclick="mostrar()">Esqueceu sua senha?</button>
+                    </div>
+                    <div class="form-container login-container" id="show">
+                        <form method="post" action="php/recuperarsenha.php">
+                            <h1>Esqueceu sua senha?</h1>
+                            <p>Insira seu email abaixo para que mandemos um link de recuperação de senha</p>
+                            <input type="email" name="emails" id="emails" placeholder="Email" required> <br>
+                            <input type="submit" value="Enviar email">
                         </form>
                     </div>
                     <div class="overlay-container">
@@ -98,6 +106,6 @@
             </div>
         </div>
     </main>
-    <script type="text/javascript" src="scripts/index.js"></script>
+    <script type="text/javascript" src="../TarefasETartarugas/scripts/index.js"></script>
 </body>
 </html>
