@@ -1,7 +1,11 @@
 <?php 
 include 'conectbd.php';
-$email = "";
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+require '../vendor/autoload.php';
+$email = "";
 
 if(( isset($_POST['emails']))){
     $email = $_POST['emails'];
@@ -19,18 +23,40 @@ if(( isset($_POST['emails']))){
         //recupera os dados fetch fetchAll
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($usuario != false) {
-            $mensagem = "Teste";
-            $emailm = $usuario['email'];
-            mail($emailm, 'teste', $mensagem);
+            $mail = new PHPMailer(true);
+            try {
+                //Server settings
+                // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                
+                $mail->isSMTP();                                          
+                $mail->Host       = 'smtp.gmail.com';                  
+                $mail->SMTPAuth   = true;                             
+                $mail->Username   = 'tarefasetartarugas@gmail.com';                   
+                $mail->Password   = 'giur mjae iaka arxz';                           
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;           
+                $mail->Port       = 465;                                    
+                //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+                //Recipients
+                $mail->setFrom('tarefasetartarugas@gmail.com', 'Tarefas & Tartarugas');
+                $mail->addAddress($_POST['emails']);   
+                $mail->addReplyTo('tarefasetartarugas@gmail.com', 'Information');
+                //Content
+                $mail->isHTML(true);                                
+                $mail->Subject = 'Here is the subject';
+                $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+                $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+                $mail->send();
+                echo 'Message has been sent';
+            } catch (Exception $e) {
+                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
+            // $mensagem = "Teste";
+            // $emailm = $usuario['email'];
+            // mail($emailm, 'teste', $mensagem);
         }else {
             echo("Esse email não foi cadastrado.");
         }
-        // Aqui nós teriamos que conferir se esse nome heroico existe e depois mudar a senha e mandar o email
-        // if ($senha ==  $usuario['senha']) {
-        //     echo json_encode(['success' => 'Login realizado com sucesso', 'user_id' => $usuario['id']]);
-        // } else {
-        //     echo json_encode(['error' => 'Senha incorreta']);
-        // }
 
     } catch (PDOException $e) {
         echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
