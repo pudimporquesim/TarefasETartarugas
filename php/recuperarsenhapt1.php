@@ -43,9 +43,8 @@ if(( isset($_POST['emails']))){
                 //Content
                 $mail->isHTML(true);                                
                 $mail->Subject = 'Here is the subject';
-                $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-                $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
+                $mail->Body    = '<a href="http://localhost/tarefasetartarugas/recuperarsenha.html">Clique aqui</a>';
+                $mail->AltBody = '<a href="http://localhost/tarefasetartarugas/recuperarsenha.html">Clique aqui</a>';
                 $mail->send();
                 echo 'Message has been sent';
             } catch (Exception $e) {
