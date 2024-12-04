@@ -5,8 +5,8 @@ $email = "";
 $senha = "";
 
 if( ( isset($_POST['emailr']) ) && ( isset($_POST['senhaR1'])) && (isset($_POST['nome'])) ){
-    $email = $_POST['emailr'];
-    $senha = $_POST['senhaR1'];
+    $email = md5($_POST['emailr']);
+    $senha = md5($_POST['senhaR1']);
     $nome = $_POST['nome'];
 
     $checarEmail = "SELECT email FROM usuario where email = :email";
@@ -28,14 +28,14 @@ if( ( isset($_POST['emailr']) ) && ( isset($_POST['senhaR1'])) && (isset($_POST[
                 //recupera os dados fetch fetchAll
                 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
                 //
-                echo ("Conta cadastrada com sucesso");
+                echo json_encode (['success' => "Conta cadastrada com sucesso"], JSON_UNESCAPED_UNICODE);
                 //mandando o usuário pra algum lugar
                 // header('Location: ../index.html');
             } catch (PDOException $e) {
                 echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
             }
         } else {
-            echo("Esse email já foi cadastrado, faça login");
+            echo json_encode (['error' => "Esse email já foi cadastrado, faça login"], JSON_UNESCAPED_UNICODE);
         }
     } catch (PDOException $e) {
         echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);

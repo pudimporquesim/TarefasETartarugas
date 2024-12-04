@@ -1,41 +1,55 @@
 <?php
 include 'conectbd.php';
 $senha = "";
-$email = "";
-
-if ((isset($_POST['email'])) && (isset($_POST['senha']))) {
-    $senha = $_POST['senha'];
-    $email = $_POST['email'];
-    $checarEmail = "SELECT email FROM usuario where email = :email";
+$hash = "";
+if ((isset($_POST['hash']))) {
+    $hash = $_POST['hash'];
+    $data = date("Y-m-d");
+    $sqlhash = "SELECT hash FROM hash WHERE hash = :hash AND dataCriado = :data";
     try {
-        $stmt = $pdo->prepare($checarEmail);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($result != false) {
-            $sql = "UPDATE usuario set senha = :senha where email = :email";
-            try{
-                $stmt = $pdo->prepare($sql);
-                //de acordo com o que veio no post
-                $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':senha', $senha);
-                $stmt->execute();
-                //recupera os dados fetch fetchAll
-                $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-                echo ("Senha atualizada com sucesso");
-            } catch (PDOException $e) {
-                echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
+       $hashtry = $pdo->prepare($sqlhash);
+       $hashtry->bindParam(':hash', $hash);
+       $hashtry->bindParam(':data', $data);
+       $hashtry->execute();
+       $hashstring = $hashtry->fetch(PDO::FETCH_ASSOC);
+       if ($hashstring != false) {
+        $sqlseusado = "SELECT usado FROM hash WHERE hash = :hash";
+        $seusado = $pdo->prepare($sqlseusado);
+        $seusado->bindParam(':hash', $hash);
+        $seusado->execute();
+        $seusadostr = $seusado->fetch(PDO::FETCH_ASSOC);
+        if ($seusadostr['usado'] == 0) {
+            if (isset($_POST['senha'])) {
+                $senha = md5($_POST['senha']);
+                $sql = "UPDATE usuario set senha = :senha where email IN (SELECT fk_email_usuario FROM hash WHERE hash = :hash)";
+                $sql2 = "UPDATE hash set usado = 1 where hash = :hash";
+                try {
+                    $trocasenha = $pdo->prepare($sql);
+                    $usado = $pdo->prepare($sql2);
+                    $usado->bindParam(':hash', $hash);
+                    $trocasenha->bindParam(':senha', $senha);
+                    $trocasenha->bindParam(':hash', $hash);
+                    $trocasenha->execute();
+                    $usado->execute();
+                    echo json_encode(['success' => 'Senha atualizada com sucesso'], JSON_UNESCAPED_UNICODE);
+                }catch (PDOException $e) {
+                    echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
+                }
+            } else {
+                echo json_encode(['error' => 'Parametros obrigatorios nao especificados senha']);
             }
         } else {
-            echo("Esse email não foi cadastrado.");
+            echo json_encode(['error' => 'Essa solicitação de troca de senha já foi usada, solicite uma nova'], JSON_UNESCAPED_UNICODE);
         }
+       } else {
+        echo json_encode(['error' => 'Essa solicitação de troca de senha expirou, solicite uma nova'], JSON_UNESCAPED_UNICODE);
+       }
     } catch (PDOException $e) {
         echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
     }
-
 }else {
     // Retorna um erro caso algum parâmetro obrigatório esteja faltando
-    echo json_encode(['error' => 'Parametros obrigatorios nao especificados']);
+    echo json_encode(['error' => 'Parametros obrigatorios nao especificados hash']);
 }
 
 ?>

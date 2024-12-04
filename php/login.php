@@ -7,8 +7,8 @@ $senha = "";
 
 //pegando os valores e verificando
 if( ( isset($_POST['emaill']) ) && ( isset($_POST['senhal']) ) ){
-    $email = $_POST['emaill'];
-    $senha = $_POST['senhal'];
+    $email = md5($_POST['emaill']);
+    $senha = md5($_POST['senhal']);
 
     //juntando a variavel no script (substituir :atributo)
     $sql = "SELECT id FROM usuario WHERE email = :email";
@@ -22,7 +22,7 @@ if( ( isset($_POST['emaill']) ) && ( isset($_POST['senhal']) ) ){
         //recupera os dados fetch fetchAll
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($usuario != false) {
-            $checarSenha = "SELECT senha from usuario where email = :email";
+            $checarSenha = "SELECT senha FROM usuario WHERE email = :email";
             $ah = $pdo->prepare($checarSenha);
             $ah->bindParam(':email', $email);
             $ah->execute();
@@ -34,7 +34,7 @@ if( ( isset($_POST['emaill']) ) && ( isset($_POST['senhal']) ) ){
                 echo json_encode(['error' => 'Senha incorreta']);
             }
         } else {
-            echo("Esse email não foi cadastrado.");
+            echo("Esse email não foi cadastrado."); // Mudar para json_encode
         }
     } catch (PDOException $e) {
         echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
