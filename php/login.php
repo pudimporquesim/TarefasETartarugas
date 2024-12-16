@@ -1,9 +1,12 @@
 <?php
+// Seu código aqui
 //conexao com banco
+header('Content-Type: application/json; charset=UTF-8');
 include 'conectbd.php';
 //variavels (dependendo do que vc fará)
 $email = "";
 $senha = "";
+
 
 //pegando os valores e verificando
 if( ( isset($_POST['emaill']) ) && ( isset($_POST['senhal']) ) ){
@@ -34,7 +37,7 @@ if( ( isset($_POST['emaill']) ) && ( isset($_POST['senhal']) ) ){
                 echo json_encode(['error' => 'Senha incorreta']);
             }
         } else {
-            echo("Esse email não foi cadastrado."); // Mudar para json_encode
+            echo json_encode(['error' => 'Esse email não foi cadastrado.']); // Mudar para json_encode
         }
     } catch (PDOException $e) {
         echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
