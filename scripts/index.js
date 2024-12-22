@@ -50,35 +50,24 @@ function mostrar() {
   modalsenha.style.zIndex = '3';
 }
 
-/*
-<form action="#">
-<h1>Login</h1>
-<input type="email" name="emaill" id="emaill" placeholder="Email" required> <br>
-<input type="password" name="senhal" id="senhal" placeholder="Senha" required> <br>
-<input id="submit" value="Voltar aos mares">
-</form>
-*/
-inp_email = document.getElementById('emaill');
-inp_senha = document.getElementById('senhal');
-inp_submit = document.getElementById("submit");
 
-inp_submit.addEventListener('click', function () {
-  console.log("Botão clicado");
-    login(inp_email.value, inp_senha.value);
+inp_emailr = document.getElementById('emailr');
+inp_senhaR1 = document.getElementById('senhaR1');
+inp_nomer = document.getElementById('nomer');
+inp_submitr = document.getElementById('butsubmitr');
+
+inp_submitr.addEventListener('click' , function () {
+    event.preventDefault();
+    registro(inp_emailr.value, inp_senhaR1.value, inp_nomer.value);
 });
 
-function login(email, senha) {
-    $.post("php/login.php", { emaill: email, senhal: senha })
-
+function registro(email, senha, nome) {
+    $.post("php/cadastro.php", {emailr: email, senhaR1: senha, nomer: nome})
     .done(function (data) {
-        console.log("Resposta do servidor:", data);
-        // data = JSON.parse(data); se deixar isso aqui o código não funciona
         if (data.error != undefined) {
-          console.log("Chegamos aqui");
           console.log(data.error);
         } else if (data.success != undefined) {
-            // console.log(data.success);
-            window.location.href = "homepage.html";
+            console.log(data.success);
         }
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
@@ -86,3 +75,30 @@ function login(email, senha) {
     });
 }
 
+inp_emails = document.getElementById('emails');
+inp_senhaesquecida = document.getElementById('senhaesquecida');
+
+inp_senhaesquecida.addEventListener('click', function() {
+  console.log("Chega aqui senha esquecida");
+  event.preventDefault();
+  senhaesquecida(inp_emails.value);
+});
+
+function senhaesquecida(email) {
+  console.log("Chega aqui senha esquecida 2");
+  $.post("php/recuperarsenhapt1.php", {emails: email})
+  .done(function(data) {
+    console.log("Resposta do servidor:", data);
+    if (data.error != undefined) {
+      console.log("show 1");
+      console.log(data.error);
+    } else if (data.success != undefined) {
+      console.log("show 2");
+      console.log(data.success);
+    }
+  })
+  .fail(function (jqXHR, textStatus, errorThrown) {
+    console.error('Erro na requisição:', textStatus, errorThrown);
+  });
+  console.log("show");
+}

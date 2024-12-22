@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="../TarefasETartarugas/css/index.css">
     <link href="https://api.fontshare.com/v2/css?f[]=erode@300,301,400,401,500,501,600,601,700,701,1,2&f[]=supreme@100,101,200,201,300,301,400,401,500,501,700,701,800,801,1,2&display=swap" rel="stylesheet">
     <title>T&T</title>
 </head>
@@ -62,15 +62,16 @@
                     <div class="form-container registro-container">
                         <form method="post">
                             <h1>Registro</h1>
-                            <input type="text" name="nome" id="nome" placeholder="Nome"> <br>
+                            <input type="text" name="nomer" id="nomer" placeholder="Nome"> <br>
                             <input type="email" name="emailr" id="emailr" placeholder="Email" required> <br>
                             <input type="password" name="senhaR1" id="senhaR1" placeholder="Senha" required> <br>
                             <input type="password" name="senhaR2" id="senhaR2" placeholder="Senha de novo" required> <br>
-                            <input type="submitr" value="Iniciar jornada">
+                            <button id="butsubmitr">Iniciar jornada</button>
                         </form>
                     </div>
+                    
                     <div class="form-container login-container">
-                        <form method="post">
+                        <form>
                             <h1>Login</h1>
                             <input type="email" name="emaill" id="emaill" placeholder="Email" required> <br>
                             <input type="password" name="senhal" id="senhal" placeholder="Senha" required> <br>
@@ -79,12 +80,11 @@
                         <button onclick="mostrar()">Esqueceu sua senha?</button>
                     </div>
                     <div class="form-container login-container" id="show">
-                        <form method="post" action="php/recuperarsenhapt1.php">
+                        <form>
                             <h1>Esqueceu sua senha?</h1>
                             <p>Insira seu email abaixo para que mandemos um link de recuperação de senha:</p>
                             <input type="email" name="emails" id="emails" placeholder="Email" required> <br>
-                            <input type="submit" value="Enviar email">
-
+                            <button id="senhaesquecida">Enviar email</button>
                         </form>
                     </div>
                     <div class="overlay-container">
@@ -107,7 +107,7 @@
             </div>
         </div>
     </main>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="scripts/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../TarefasETartarugas/scripts/index.js"></script>
 </body>
 </html>

@@ -9,7 +9,7 @@ $senha = "";
 
 
 //pegando os valores e verificando
-if( ( isset($_POST['emaill']) ) && ( isset($_POST['senhal']) ) ){
+if(($_POST['emaill'] != null) && ($_POST['senhal'] != null)) {
     $email = md5($_POST['emaill']);
     $senha = md5($_POST['senhal']);
 

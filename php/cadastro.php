@@ -1,13 +1,14 @@
 <?php 
 include 'conectbd.php';
-$nome = "";
+header('Content-Type: application/json');
+$nomer = "";
 $email = "";
 $senha = "";
 
-if( ( isset($_POST['emailr']) ) && ( isset($_POST['senhaR1'])) && (isset($_POST['nome'])) ){
+if( ($_POST['emailr'] != null) && ($_POST['senhaR1'] != null) && ($_POST['nomer'] != null) ){
     $email = md5($_POST['emailr']);
     $senha = md5($_POST['senhaR1']);
-    $nome = $_POST['nome'];
+    $nomer = $_POST['nomer'];
 
     $checarEmail = "SELECT email FROM usuario where email = :email";
     //checa se o email já foi cadastrado
@@ -23,14 +24,12 @@ if( ( isset($_POST['emailr']) ) && ( isset($_POST['senhaR1'])) && (isset($_POST[
                 //de acordo com o que veio no post
                 $stmt->bindParam(':email', $email);
                 $stmt->bindParam(':senha', $senha);
-                $stmt->bindParam(':nome', $nome);
+                $stmt->bindParam(':nome', $nomer);
                 $stmt->execute();
                 //recupera os dados fetch fetchAll
                 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
                 //
                 echo json_encode (['success' => "Conta cadastrada com sucesso"], JSON_UNESCAPED_UNICODE);
-                //mandando o usuário pra algum lugar
-                // header('Location: ../index.html');
             } catch (PDOException $e) {
                 echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
             }

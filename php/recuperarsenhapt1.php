@@ -1,13 +1,45 @@
 <?php 
 include 'conectbd.php';
-
+header('Content-Type: application/json');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 require '../vendor/autoload.php';
-$email = "";
+$emails = "";
+function emailmandar($x, $y){
+    $mail = new PHPMailer(true);
+    try {
+        //Server settings
+        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;  
+        $mail->SMTPDebug = 0;               
+        $mail->isSMTP();                                          
+        $mail->Host       = 'smtp.gmail.com';                  
+        $mail->SMTPAuth   = true;                             
+        $mail->Username   = 'tarefasetartarugas@gmail.com';                   
+        $mail->Password   = 'giur mjae iaka arxz';                           
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;           
+        $mail->Port       = 465;                                    
+        //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
-if(( isset($_POST['emails']))){
+        //Recipients
+        $mail->setFrom('tarefasetartarugas@gmail.com', 'Tarefas & Tartarugas');
+        $mail->addAddress($x);   
+        $mail->addReplyTo('tarefasetartarugas@gmail.com', 'Information');
+        //Content
+        $mail->isHTML(true);                                
+        $mail->Subject = 'Here is the subject';
+        $end = "http://localhost/tarefasetartarugas/recuperarsenha.php?hash=".$y;
+        $mail->Body    = '<a href="'.$end.'">Clique aqui</a>';
+        $mail->AltBody = '<a href="'.$end.'">Clique aqui</a>';
+        $mail->send();
+        echo json_encode (['success' => "O email foi enviado com sucesso"], JSON_UNESCAPED_UNICODE);
+    } catch (Exception $e) {
+        //Não sei se muda para echo json_encode porque esse veio direto do php mailler
+        echo json_encode(['error' => "Erro ao enviar e-mail: {$mail->ErrorInfo}"], JSON_UNESCAPED_UNICODE);
+    }
+}
+
+if(($_POST['emails'] != null)){
     $email = md5($_POST['emails']);
     $sql = "SELECT id FROM usuario WHERE email = :email";
     try{
@@ -33,35 +65,7 @@ if(( isset($_POST['emails']))){
             } catch (PDOException $e) {
                 echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
             }
-            $mail = new PHPMailer(true);
-            try {
-                //Server settings
-                // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                
-                $mail->isSMTP();                                          
-                $mail->Host       = 'smtp.gmail.com';                  
-                $mail->SMTPAuth   = true;                             
-                $mail->Username   = 'tarefasetartarugas@gmail.com';                   
-                $mail->Password   = 'giur mjae iaka arxz';                           
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;           
-                $mail->Port       = 465;                                    
-                //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-                //Recipients
-                $mail->setFrom('tarefasetartarugas@gmail.com', 'Tarefas & Tartarugas');
-                $mail->addAddress($_POST['emails']);   
-                $mail->addReplyTo('tarefasetartarugas@gmail.com', 'Information');
-                //Content
-                $mail->isHTML(true);                                
-                $mail->Subject = 'Here is the subject';
-                $end = "http://localhost/tarefasetartarugas/recuperarsenha.php?hash=".$hash;
-                $mail->Body    = '<a href="'.$end.'">Clique aqui</a>';
-                $mail->AltBody = '<a href="'.$end.'">Clique aqui</a>';
-                $mail->send();
-                echo json_encode (['success' => "O email foi enviado com sucesso"], JSON_UNESCAPED_UNICODE);
-            } catch (Exception $e) {
-                //Não sei se muda para echo json_encode porque esse veio direto do php mailler
-                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-            }
+            emailmandar($_POST['emails'], $hash);
         }else {
             echo json_encode(['error' => 'Esse email não foi cadastrado'], JSON_UNESCAPED_UNICODE);
         }

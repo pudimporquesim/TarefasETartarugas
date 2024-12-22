@@ -1,9 +1,11 @@
 <?php
 include 'conectbd.php';
-$senha = "";
+header('Content-Type: application/json; charset=utf-8');
+$senhat = "";
 $hash = "";
 if ((isset($_POST['hash']))) {
     $hash = $_POST['hash'];
+    date_default_timezone_set('America/Bahia');
     $data = date("Y-m-d");
     $sqlhash = "SELECT hash FROM hash WHERE hash = :hash AND dataCriado = :data";
     try {
@@ -19,19 +21,19 @@ if ((isset($_POST['hash']))) {
         $seusado->execute();
         $seusadostr = $seusado->fetch(PDO::FETCH_ASSOC);
         if ($seusadostr['usado'] == 0) {
-            if (isset($_POST['senha'])) {
-                $senha = md5($_POST['senha']);
-                $sql = "UPDATE usuario set senha = :senha where email IN (SELECT fk_email_usuario FROM hash WHERE hash = :hash)";
+            if (isset($_POST['senhat'])) {
+                $senhat = md5($_POST['senhat']);
+                $sql = "UPDATE usuario set senha = :senhat where email IN (SELECT fk_email_usuario FROM hash WHERE hash = :hash)";
                 $sql2 = "UPDATE hash set usado = 1 where hash = :hash";
                 try {
-                    $trocasenha = $pdo->prepare($sql);
+                    $trocasenhat = $pdo->prepare($sql);
                     $usado = $pdo->prepare($sql2);
                     $usado->bindParam(':hash', $hash);
-                    $trocasenha->bindParam(':senha', $senha);
-                    $trocasenha->bindParam(':hash', $hash);
-                    $trocasenha->execute();
+                    $trocasenhat->bindParam(':senhat', $senhat);
+                    $trocasenhat->bindParam(':hash', $hash);
+                    $trocasenhat->execute();
                     $usado->execute();
-                    echo json_encode(['success' => 'Senha atualizada com sucesso'], JSON_UNESCAPED_UNICODE);
+                    echo json_encode(['success' => 'senha atualizada com sucesso'], JSON_UNESCAPED_UNICODE);
                 }catch (PDOException $e) {
                     echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
                 }
