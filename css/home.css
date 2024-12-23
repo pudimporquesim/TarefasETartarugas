@@ -1,0 +1,136 @@
+* {
+    font-family: 'Tanker', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    display: grid;
+    grid-template-columns: 5% 95%;
+    height: 100vh;
+}
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 3fr;
+    gap: 10px;
+    grid-template-areas: 
+    'perfil perfil tarefas tarefas'
+    'calendario calendario calendario missoes';
+    padding: 10px;
+}
+nav, .perfil, .tarefasdia, .calendario, .missao{
+
+}
+
+nav {
+    background-color: aqua;
+}
+.perfil {
+    grid-area: perfil;
+    background-color: blue;
+}
+.tarefasdia {
+    background-color: blueviolet;
+    grid-area: tarefas;
+}
+.calendario {
+    grid-area: calendario;
+    /* background-color: brown; */
+}
+.calendario-todo{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.diasdasemanalista{
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    border-bottom: 1px solid gray;
+    padding: 3px;
+    margin-bottom: 3px;
+}
+.diasdasemananome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+.diasdasemana {
+    height: 100%;
+}
+.diaslista {
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0,1fr));
+    grid-template-rows: repeat(5, minmax(auto, 1fr));
+    inset: 0;
+}
+.diadasemana {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.diadasemana button {
+    width: fit-content;
+    justify-content: center;
+    align-self: center;
+    background-color: transparent;
+    border: none;
+    font-weight: 500;
+}
+.listadeeventos {
+    list-style: none;
+}
+.missao {
+    grid-area: missoes;
+    background-color: chartreuse;
+}
+.nav-calendario {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.controles {
+    display: flex;
+    flex-direction: row;
+    height: 80%;
+    gap: 15px;
+}
+.controles button {
+    border: none;
+    cursor: pointer;
+}
+.hoje {
+    display: flex;
+}
+.hoje button {
+    border: 1px solid gray;
+    border-radius: 0.5rem;
+    padding: 4px 15px;
+}
+.hoje button:hover {
+    background-color: aquamarine;
+    transition: all 0.3s ease-in-out;
+}
+.setinhas {
+    display: flex;
+    flex-direction: row;
+}
+.adicionartarefa button{
+    height: 100%;
+}
+.icone-button {
+    display: flex;
+    align-self: center;
+    height: 100%;
+}
+.icone-button:hover {
+    color: blue;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+}
