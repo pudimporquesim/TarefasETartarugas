@@ -468,24 +468,24 @@
         </div>
     </main>
     <dialog class="dialog" data-dialog="form-evento">
-        <form>
+        <form data-event-form>
             <h1>Tarefas</h1>
             <button class="fechardialog" data-dialog-close-button>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-button"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button> <br>
             <label for="nome">Nome</label> <br>
-            <input type="text" name="nome" id="nome"> <br>
+            <input type="text" name="nome" id="nome" required> <br>
             <label for="descricao">Descrição</label> <br>
-            <input type="text" name="descricao" id="descricao"> <br>
+            <input type="text" name="descricao" id="descricao" required> <br>
             <label for="data-limite">Data limite</label> <br>
-            <input type="date" name="data-limite" id="data-limite"> <br>
+            <input type="date" name="data-limite" id="data-limite" required> <br>
             <label for="dificuldade">Dificuldade</label> <br>
-            <input type="radio" name="facil" id="facil">
-            <label for="facil">Fácil</label>
-            <input type="radio" name="medio" id="medio">
-            <label for="medio">Médio</label>
-            <input type="radio" name="dificil" id="dificil">
-            <label for="dificil">Difícil</label> <br>
+            <input type="radio" name="dificuldade" id="dificuldade" value="facil">
+            <label for="dificuldade">Fácil</label>
+            <input type="radio" name="dificuldade" id="dificuldade" value="medio">
+            <label for="dificuldade">Médio</label>
+            <input type="radio" name="dificuldade" id="dificuldade" value="dificil">
+            <label for="dificuldade">Difícil</label> <br>
             <button id="naocriartarefa-button" data-dialog-close-button>Cancelar</button>
             <button id="criartarefa-button">Criar tarefa</button>
         </form>
