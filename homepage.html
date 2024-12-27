@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/home.css">
-    <link href="https://api.fontshare.com/v2/css?f[]=erode@300,301,400,401,500,501,600,601,700,701,1,2&f[]=supreme@100,101,200,201,300,301,400,401,500,501,700,701,800,801,1,2&display=swap" rel="stylesheet">
     <title>Homepage</title>
 </head>
 <body>
@@ -41,303 +40,422 @@
                             </button>
                         </div>
                         <div class="hoje">
-                            <button>Hoje</button>
+                            <button id="hoje">Hoje</button>
                         </div>
                         <div class="adicionartarefa">
-                            <button>
+                            <button id="adicionartarefa">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-button"><path d="M11 12H3"/><path d="M16 6H3"/><path d="M16 18H3"/><path d="M18 9v6"/><path d="M21 12h-6"/></svg>
                             </button>
                         </div>
                     </div>
                 </div>
-                <ul class="diasdasemanalista">
-                    <li class="diasdasemananome">Dom</li>
-                    <li class="diasdasemananome">Seg</li>
-                    <li class="diasdasemananome">Ter</li>
-                    <li class="diasdasemananome">Qua</li>
-                    <li class="diasdasemananome">Qui</li>
-                    <li class="diasdasemananome">Sex</li>
-                    <li class="diasdasemananome">Sab</li>
-                </ul>
-                <div class="diasdasemana">
-                    <ul class="diaslista">
-                        <li class="diadasemana">
-                            <button class="numerododia">30</button>
+                <div class="calendario-mes" style="display: none;">
+                    <ul class="diasdasemanalista-mes">
+                        <li class="diasdasemananome">Dom</li>
+                        <li class="diasdasemananome">Seg</li>
+                        <li class="diasdasemananome">Ter</li>
+                        <li class="diasdasemananome">Qua</li>
+                        <li class="diasdasemananome">Qui</li>
+                        <li class="diasdasemananome">Sex</li>
+                        <li class="diasdasemananome">Sab</li>
+                    </ul>
+                    <div class="diasdasemana-mes">
+                        <ul class="diaslista">
+                            <li class="diadasemana">
+                                <button class="numerododia">30</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">01</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">02</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">03</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">04</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">05</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">06</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">07</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">08</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">09</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">10</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">11</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">12</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">13</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">14</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">15</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">16</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">17</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">18</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">19</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">20</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">21</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">22</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">23</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">24</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">25</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">26</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">27</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">28</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">29</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">30</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">31</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">1</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">2</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="diadasemana">
+                                <button class="numerododia">3</button>
+                                <ul class="listadeeventos">
+                                    <li class="evento">
+                    
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="calendario-semana" style="display: flex;">
+                    <ul class="diasdasemanalista-semana">
+                        <li class="diadasemana-semana">
+                            <button class="diadasemana-semana-button">
+                                <span class="diadasemana-dia-semana">Dom</span>
+                                <span class="diadasemana-numero-semana">7</span>
+                            </button>
+                        </li>
+                        <li class="diadasemana-semana">
+                            <button class="diadasemana-semana-button">
+                                <span class="diadasemana-dia-semana">Seg</span>
+                                <span class="diadasemana-numero-semana">8</span>
+                            </button>
+                        </li>
+                        <li class="diadasemana-semana">
+                            <button class="diadasemana-semana-button">
+                                <span class="diadasemana-dia-semana">Ter</span>
+                                <span class="diadasemana-numero-semana">9</span>
+                            </button>
+                        </li>
+                        <li class="diadasemana-semana">
+                            <button class="diadasemana-semana-button">
+                                <span class="diadasemana-dia-semana">Qua</span>
+                                <span class="diadasemana-numero-semana">10</span>
+                            </button>
+                        </li>
+                        <li class="diadasemana-semana">
+                            <button class="diadasemana-semana-button">
+                                <span class="diadasemana-dia-semana">Qui</span>
+                                <span class="diadasemana-numero-semana">11</span>
+                            </button>
+                        </li>
+                        <li class="diadasemana-semana">
+                            <button class="diadasemana-semana-button">
+                                <span class="diadasemana-dia-semana">Sex</span>
+                                <span class="diadasemana-numero-semana">12</span>
+                            </button>
+                        </li>
+                        <li class="diadasemana-semana">
+                            <button class="diadasemana-semana-button">
+                                <span class="diadasemana-dia-semana">Sab</span>
+                                <span class="diadasemana-numero-semana">13</span>
+                            </button>
+                        </li>
+                    </ul>
+                    <ul class="diasdasemanatodoslista-semana">
+                        <li class="diasdasemanatodoslista-semana-dia">
                             <ul class="listadeeventos">
-                                <li class="evento">
-
+                                <li class="listadeeventos-itens">
+                                    <button class="evento evento-cheio">
+                                        <span class="cordoevento"></span>
+                                        <span class="titulodoevento"></span>
+                                    </button>
                                 </li>
                             </ul>
                         </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">01</button>
+                        <li class="diasdasemanatodoslista-semana-dia">
                             <ul class="listadeeventos">
-                                <li class="evento">
-                                    
+                                <li class="listadeeventos-itens">
+                                    <button class="evento evento-cheio">
+                                        <span class="cordoevento"></span>
+                                        <span class="titulodoevento"></span>
+                                    </button>
                                 </li>
                             </ul>
                         </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">02</button>
+                        <li class="diasdasemanatodoslista-semana-dia">
                             <ul class="listadeeventos">
-                                <li class="evento">
-                                    
+                                <li class="listadeeventos-itens">
+                                    <button class="evento evento-cheio">
+                                        <span class="cordoevento"></span>
+                                        <span class="titulodoevento"></span>
+                                    </button>
                                 </li>
                             </ul>
                         </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">03</button>
+                        <li class="diasdasemanatodoslista-semana-dia">
                             <ul class="listadeeventos">
-                                <li class="evento">
-                                    
+                                <li class="listadeeventos-itens">
+                                    <button class="evento evento-cheio">
+                                        <span class="cordoevento"></span>
+                                        <span class="titulodoevento"></span>
+                                    </button>
                                 </li>
                             </ul>
                         </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">04</button>
+                        <li class="diasdasemanatodoslista-semana-dia">
                             <ul class="listadeeventos">
-                                <li class="evento">
-                                    
+                                <li class="listadeeventos-itens">
+                                    <button class="evento evento-cheio">
+                                        <span class="cordoevento"></span>
+                                        <span class="titulodoevento"></span>
+                                    </button>
                                 </li>
                             </ul>
                         </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">05</button>
+                        <li class="diasdasemanatodoslista-semana-dia">
                             <ul class="listadeeventos">
-                                <li class="evento">
-                                    
+                                <li class="listadeeventos-itens">
+                                    <button class="evento evento-cheio">
+                                        <span class="cordoevento"></span>
+                                        <span class="titulodoevento"></span>
+                                    </button>
                                 </li>
                             </ul>
                         </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">06</button>
+                        <li class="diasdasemanatodoslista-semana-dia">
                             <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">07</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">08</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">09</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">10</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">11</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">12</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">13</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">14</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">15</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">16</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">17</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">18</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">19</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">20</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">21</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">22</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">23</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">24</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">25</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">26</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">27</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">28</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">29</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">30</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">31</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">1</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">2</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="diadasemana">
-                            <button class="numerododia">3</button>
-                            <ul class="listadeeventos">
-                                <li class="evento">
-                                    
+                                <li class="listadeeventos-itens">
+                                    <button class="evento evento-cheio">
+                                        <span class="cordoevento"></span>
+                                        <span class="titulodoevento"></span>
+                                    </button>
                                 </li>
                             </ul>
                         </li>
@@ -349,7 +467,30 @@
             
         </div>
     </main>
+    <dialog class="dialog" data-dialog="form-evento">
+        <form>
+            <h1>Tarefas</h1>
+            <button class="fechardialog" data-dialog-close-button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-button"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button> <br>
+            <label for="nome">Nome</label> <br>
+            <input type="text" name="nome" id="nome"> <br>
+            <label for="descricao">Descrição</label> <br>
+            <input type="text" name="descricao" id="descricao"> <br>
+            <label for="data-limite">Data limite</label> <br>
+            <input type="date" name="data-limite" id="data-limite"> <br>
+            <label for="dificuldade">Dificuldade</label> <br>
+            <input type="radio" name="facil" id="facil">
+            <label for="facil">Fácil</label>
+            <input type="radio" name="medio" id="medio">
+            <label for="medio">Médio</label>
+            <input type="radio" name="dificil" id="dificil">
+            <label for="dificil">Difícil</label> <br>
+            <button id="naocriartarefa-button" data-dialog-close-button>Cancelar</button>
+            <button id="criartarefa-button">Criar tarefa</button>
+        </form>
+    </dialog>
+    <script type="text/javascript" src="scripts/home.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script type="text/script" src="../TarefasETartarugas/scripts/home.js"></script>
 </body>
 </html>

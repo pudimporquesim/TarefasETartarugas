@@ -36,18 +36,17 @@ nav {
 }
 .calendario {
     grid-area: calendario;
-    /* background-color: brown; */
+    height: 100%;
 }
 .calendario-todo{
     display: flex;
     flex-direction: column;
     height: 100%;
 }
-.diasdasemanalista{
+.diasdasemanalista-mes{
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
     border-bottom: 1px solid gray;
-    padding: 3px;
     margin-bottom: 3px;
 }
 .diasdasemananome {
@@ -55,14 +54,20 @@ nav {
     justify-content: center;
     align-items: center;
     list-style: none;
+    padding: 3px;
 }
-.diasdasemana {
+
+.diasdasemana-mes {
     height: 100%;
+}
+.calendario-mes {
+    height: 100%;
+    flex-direction: column;
 }
 .diaslista {
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(7, minmax(0,1fr));
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     grid-template-rows: repeat(5, minmax(auto, 1fr));
     inset: 0;
 }
@@ -103,6 +108,7 @@ nav {
 .controles button {
     border: none;
     cursor: pointer;
+    background-color: transparent;
 }
 .hoje {
     display: flex;
@@ -133,4 +139,60 @@ nav {
     transition: all 0.3s ease-in-out;
     display: flex;
     align-items: center;
+}
+.calendario-semana {
+    height: 100%;
+    flex-direction: column;
+    transition: all 1.3s ease-in-out;
+}
+.diasdasemanalista-semana {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    border-bottom: 1px solid gray;
+    /* padding: 3px; */
+    margin-bottom: 3px;
+}
+.diadasemana-semana {
+    list-style: none;
+}
+.diasdasemanatodoslista-semana {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    height: 100%;
+}
+.diadasemana-semana-button {
+    background-color: transparent;
+    border: none;
+}
+.diadasemana:hover {
+    background-color: rgb(231, 219, 231);
+    transition: all 0.1s ease-in-out;
+}
+.diadasemana-semana {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 3px;
+}
+.diasdasemanatodoslista-semana-dia {
+    list-style: none;
+    border-left: 1px solid gray;
+    
+}
+.diasdasemanatodoslista-semana-dia:last-child {
+    border-right: 1px solid gray;
+}
+@media (max-width: 767px) {
+    .diasdasemana-semana {
+        display: none;
+    }
+    body {
+        grid-template-columns: 100%;
+        grid-template-rows: 10vh 90vh;
+    }
+    nav {
+        flex-direction: row;
+        display: flex;
+    }
 }
