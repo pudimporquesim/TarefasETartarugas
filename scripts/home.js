@@ -143,7 +143,22 @@ function pegareventosdoarm() {
 
     return events;
 }
+const ElementoTemplateCalendario = document.querySelector("[data-template='calendario-mes']");
+const ElementoTemplateCalendarioDia = document.querySelector("[data-template='calendario-mes-dia']");
+function iniciarCalendarioMes(parentes, dataSelecionada) {
+    const ConteudoCalendario = ElementoTemplateCalendario.textContent.clodeNote(true);
+    const ElementoCalendario = ConteudoCalendario.querySelector("[data-calendario-mes]");
+    const ElementoListaDiaCalendario = ElementoCalendario.querySelector("[data-calendario-mes-lista-dia]");
+    console.log(elementoCalendario);
+}
+function iniciarCalendario() {
+    const elementoCalendario = document.querySelector("[data-calendario]");
+    let dataSelecionada = today();
+    document.addEventListener("data-mudou")
+
+}
 function salvarEventos() {  }
+
 butao.onclick = teste;
 butaocriacaoevento();
 formdialogevento();
