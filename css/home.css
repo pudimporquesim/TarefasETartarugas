@@ -36,6 +36,8 @@ nav {
 }
 .calendario {
     grid-area: calendario;
+    display: flex;
+    flex-direction: column;
     height: 100%;
 }
 .calendario-todo{
@@ -62,6 +64,7 @@ nav {
 }
 .calendario-mes {
     height: 100%;
+    display: flex;
     flex-direction: column;
 }
 .diaslista {

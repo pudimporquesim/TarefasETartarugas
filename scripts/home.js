@@ -1,16 +1,6 @@
-var butao = document.getElementById("hoje");
+
 var calendarioMes = document.getElementsByClassName("calendario-mes")[0]; 
 var calendarioSemana = document.getElementsByClassName("calendario-semana")[0];
-
-function teste() {
-    if (calendarioMes.style.display == "none") {
-        calendarioMes.style.display = "flex";
-        calendarioSemana.style.display = "none";
-    } else {
-        calendarioMes.style.display = "none";
-        calendarioSemana.style.display = "flex";
-    }
-}
 
 function butaocriacaoevento() {
     const butaoevento = document.getElementById("adicionartarefa");
@@ -143,23 +133,137 @@ function pegareventosdoarm() {
 
     return events;
 }
+function today() {
+    const agora = new Date();
+
+    return new Date(
+        agora.getFullYear(),
+        agora.getMonth(),
+        agora.getDate(),
+        12
+    );
+}
+function adicionarMeses(data, meses) {
+    const primeiroDiadoMes = new Date(
+        data.getFullYear(),
+        data.getMonth() + meses,
+        1,
+        data.getHours()
+    );
+    const ultimoDiadoMes = ultimodiadomesfunc(primeiroDiadoMes);
+    const diaDoMes = Math.min(data.getDate(), ultimoDiadoMes.getDate());
+
+    return new Date(
+        data.getFullYear(),
+        data.getMonth() + meses,
+        diaDoMes,
+        data.getHours()
+    );
+}
+function subtrairMeses(data, meses) { 
+    return adicionarMeses(data, -meses);
+}
+function adicionaDias(data, dias) {
+    return new Date(
+        data.getFullYear(),
+        data.getMonth(),
+        data.getDate() + dias,
+        data.getHours()
+    );
+}
+function subtrairDias(data, dias) {
+    return adicionaDias(data, -dias);
+}
+function ultimodiadomesfunc(data) {
+    return new Date(
+       data.getFullYear(),
+       data.getMonth() + 1,
+       0,
+       12
+    );
+}
 const ElementoTemplateCalendario = document.querySelector("[data-template='calendario-mes']");
 const ElementoTemplateCalendarioDia = document.querySelector("[data-template='calendario-mes-dia']");
-function iniciarCalendarioMes(parentes, dataSelecionada) {
-    const ConteudoCalendario = ElementoTemplateCalendario.textContent.clodeNote(true);
+function iniciarCalendarioMes(parent, dataSelecionada) {
+    const ConteudoCalendario = ElementoTemplateCalendario.content.cloneNode(true);
     const ElementoCalendario = ConteudoCalendario.querySelector("[data-calendario-mes]");
     const ElementoListaDiaCalendario = ElementoCalendario.querySelector("[data-calendario-mes-lista-dia]");
-    console.log(elementoCalendario);
+    
+    parent.appendChild(ElementoCalendario);
 }
 function iniciarCalendario() {
-    const elementoCalendario = document.querySelector("[data-calendario]");
+    const ElementoCalendario = document.querySelector("[data-calendario]");
     let dataSelecionada = today();
-    document.addEventListener("data-mudou")
+    document.addEventListener("data-mudou", (event) => {
+        dataSelecionada = event.detail.date;
+        refreshCalendario();
+    })
+    function refreshCalendario() {
+        iniciarCalendarioMes(ElementoCalendario, dataSelecionada);    
+    }
+    refreshCalendario();
+}
+const formatadorData = new Intl.DateTimeFormat("pt-BR", {
+    month: "long",
+    year: "numeric"
+});
+function iniciarNav() {
+    const buttonshoje = document.querySelectorAll("[data-nav-button-hoje]");
+    const buttonanterior = document.querySelector("[data-nav-anterior-button]");
+    const buttonproximo = document.querySelector("[data-nav-proximo-button]");
+    const elementoData = document.querySelector("[data-nav-data]");
+    let dataSelecionada = today();
+
+    for (const buttonhoje of buttonshoje)  {
+        buttonhoje.addEventListener("click", () => {
+            buttonhoje.dispatchEvent(new CustomEvent("data-mudada", {
+                detail: {
+                    data:today()
+                },
+                bubbles: true
+            }));
+        });
+    }
+    buttonanterior.addEventListener("click", () => {
+        buttonanterior.dispatchEvent(new CustomEvent("data-mudada", {
+            detail: {
+                data: pegarDataAnterior(dataSelecionada)
+            },
+            bubbles: true
+        }));
+    });
+    buttonproximo.addEventListener("click", () => {
+        buttonproximo.dispatchEvent(new CustomEvent("data-mudada", {
+            detail: {
+                data: pegarProximaData(dataSelecionada)
+            },
+            bubbles: true
+        }));
+    });
+    // document.addEventListener("view-change")
+    document.addEventListener("data-mudada", (event) => {
+        dataSelecionada = event.detail.data;
+        refreshElementoData(elementoData, dataSelecionada);
+    });
+    refreshElementoData(elementoData, dataSelecionada);
 
 }
+function refreshElementoData(elementoData, dataSelecionada) {
+    let dataFormatada = formatadorData.format(dataSelecionada);
+    dataFormatada = dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
+    elementoData.textContent = dataFormatada;
+}
+function pegarDataAnterior(dataSelecionada) {
+    return subtrairMeses(dataSelecionada, 1);
+}
+function pegarProximaData(dataSelecionada) {
+    return adicionarMeses(dataSelecionada, 1);
+}
 function salvarEventos() {  }
-
-butao.onclick = teste;
-butaocriacaoevento();
+// butao.onclick = iniciarCalendario;
+// butaocriacaoevento();
 formdialogevento();
+butaocriacaoevento();
 iniciarArmEvento();
+iniciarCalendario();
+iniciarNav();
