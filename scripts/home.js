@@ -88,18 +88,34 @@ function FormparaEvento(ElementoForm) {
 // function validarEvento(event) {
     // eu validaria pra não colocar um evento antes do dia atual
 // }
+const ElementoTemplateEvento = document.querySelector("[data-template='evento']");
+function iniciarEventoEstatico(parent, event) {  
+    const ElementoEvento = iniciarEvento(event);
+    parent.appendChild(ElementoEvento);
+}
+function iniciarEvento(event) {
+    const ConteudoEvento = ElementoTemplateEvento.content.cloneNode(true);
+    const ElementoEvento = ConteudoEvento.querySelector("[data-evento]");
+    const ElementoEventoTitulo = ElementoEvento.querySelector("[data-evento-titulo]");
+    ElementoEventoTitulo.textContent = event.titulo;
+    return ElementoEvento
+}
 function iniciarArmEvento() { 
     document.addEventListener("criar-evento", (event)=>{
         const EventoCriado = event.detail.event;
         const events = pegareventosdoarm();
         events.push(EventoCriado);
         saveEventsIntoLocalStorage(events);
+
+        document.dispatchEvent(new CustomEvent("eventos-mudaram", {
+            bubbles: true
+        }));
     });
 
     return {
         pegarEventosPorData(data) {
             const events = pegareventosdoarm();
-            const EventosFiltrados = events.filtro((event) => mesmodia(event.data, data));
+            const EventosFiltrados = events.filter((event) => mesmodia(event.data, data));
 
             return EventosFiltrados;
         }
@@ -107,19 +123,18 @@ function iniciarArmEvento() {
 }
 function saveEventsIntoLocalStorage(events) {
     const safeToStringifyEvents = events.map((event) => ({
-      ...event,
-      data: event.data.toISOString()
+        ...event,
+        data: event.data.toISOString() 
     }));
-  
-    let stringifiedEvents;
+
     try {
-      stringifiedEvents = JSON.stringify(safeToStringifyEvents);
+        const stringifiedEvents = JSON.stringify(safeToStringifyEvents);
+        localStorage.setItem("events", stringifiedEvents);
     } catch (error) {
-      console.error("Stringify events failed", error);
+        console.error("Erro ao salvar os eventos", error);
     }
-  
-    localStorage.setItem("events", stringifiedEvents);
 }
+
 
 function pegareventosdoarm() {  
     const eventosarm = localStorage.getItem("events");
@@ -131,17 +146,24 @@ function pegareventosdoarm() {
     try {
         parsedEventos = JSON.parse(eventosarm);
     } catch (error) {
-        console.error("Parse deu errado", error);
+        console.error("Erro ao analisar os eventos", error);
         return [];
     }
 
-    const events = parsedEventos.map((event) => ({
-        ...event,
-        data: new Date(event.data)
-    }));
+    const events = parsedEventos.map((event) => {
+
+        const data = new Date(event.data);
+        data.setUTCHours(12, 0, 0, 0); 
+
+        return {
+            ...event,
+            data: data 
+        };
+    });
 
     return events;
 }
+
 function today() {
     const agora = new Date();
     return new Date(
@@ -228,7 +250,7 @@ const ClassesCalendarioSemanas = {
     5: "cinco-semanas",
     6: "seis-semanas"
 }
-function iniciarCalendarioMes(parent, dataSelecionada) {
+function iniciarCalendarioMes(parent, dataSelecionada, armEvento) {
     const ConteudoCalendario = ElementoTemplateCalendario.content.cloneNode(true);
     const ElementoCalendario = ConteudoCalendario.querySelector("[data-calendario-mes]");
     const ElementoListaDiaCalendario = ElementoCalendario.querySelector("[data-calendario-mes-lista-dia]");
@@ -238,12 +260,13 @@ function iniciarCalendarioMes(parent, dataSelecionada) {
     const ClasseCalendarioSemanas = ClassesCalendarioSemanas[SemanasCalendario];
     ElementoListaDiaCalendario.classList.add(ClasseCalendarioSemanas);
     for (const DiaCalendario of DiasCalendario) {
-        iniciarDiaCalendario(ElementoListaDiaCalendario, DiaCalendario);
+        const events = armEvento.pegarEventosPorData(DiaCalendario);
+        iniciarDiaCalendario(ElementoListaDiaCalendario, DiaCalendario, events);
     }
 
     parent.appendChild(ElementoCalendario);
 }
-function iniciarDiaCalendario(parent, DiaCalendario) {
+function iniciarDiaCalendario(parent, DiaCalendario, events) {
     const DiaCalendarioConteudo = ElementoTemplateCalendarioDia.content.cloneNode(true);
     const ElementoDiaCalendario = DiaCalendarioConteudo.querySelector("[data-calendario-mes-dia]");
     const ElementoDiaLabelCalendario = DiaCalendarioConteudo.querySelector("[data-calendario-mes-dia-numero]");
@@ -251,6 +274,7 @@ function iniciarDiaCalendario(parent, DiaCalendario) {
         ElementoDiaCalendario.classList.add("highlight");
     }
     ElementoDiaLabelCalendario.textContent = DiaCalendario.getDate();
+    iniciarListaEventos(ElementoDiaCalendario, events);
     parent.appendChild(ElementoDiaCalendario);
 }
 function iniciarCalendario(armEvento) {
@@ -265,6 +289,9 @@ function iniciarCalendario(armEvento) {
         iniciarCalendarioMes(ElementoCalendario, dataSelecionada, armEvento);    
     }
     refreshCalendario();
+    document.addEventListener("eventos-mudaram", () => {
+        refreshCalendario();
+    })
 }
 const formatadorData = new Intl.DateTimeFormat("pt-BR", {
     month: "long",
@@ -323,9 +350,21 @@ function pegarDataAnterior(dataSelecionada) {
 function pegarProximaData(dataSelecionada) {
     return adicionarMeses(dataSelecionada, 1);
 }
-function salvarEventos() { 
+const ElementoTemplateListaEventoItem = document.querySelector("[data-template='evento-lista-item']");
+function iniciarListaEventos(parent, events) { 
+    const ElementoListaEvento = parent.querySelector("[data-lista-eventos]")
+    for (const event of events) {
+        const ListaEventoItemConteudo = ElementoTemplateListaEventoItem.content.cloneNode(true);
+        const ElementoListaEventoItem = ListaEventoItemConteudo.querySelector("[data-evento-lista-item]");
 
+        iniciarEventoEstatico(ElementoListaEventoItem, event);
+        ElementoListaEvento.appendChild(ElementoListaEventoItem);
+    }
  }
+
+// function salvarEventos() { 
+    
+//  }
 // butao.onclick = iniciarCalendario;
 // butaocriacaoevento();
 formdialogevento(); 
