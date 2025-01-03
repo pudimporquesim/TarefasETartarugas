@@ -7,9 +7,9 @@ function butaocriacaoevento() {
     butaoevento.addEventListener("click", () => {
         butaoevento.dispatchEvent(new CustomEvent
             ("requisicao-criacao-evento", {
-                bubbles: true
+                bubbles: true 
             }));
-    })
+    }) 
 }
 function formdialogevento() {
     const dialog = iniciarDialog("form-evento");
@@ -94,7 +94,16 @@ function iniciarArmEvento() {
         const events = pegareventosdoarm();
         events.push(EventoCriado);
         saveEventsIntoLocalStorage(events);
-    })
+    });
+
+    return {
+        pegarEventosPorData(data) {
+            const events = pegareventosdoarm();
+            const EventosFiltrados = events.filtro((event) => mesmodia(event.data, data));
+
+            return EventosFiltrados;
+        }
+    };
 }
 function saveEventsIntoLocalStorage(events) {
     const safeToStringifyEvents = events.map((event) => ({
@@ -135,7 +144,6 @@ function pegareventosdoarm() {
 }
 function today() {
     const agora = new Date();
-
     return new Date(
         agora.getFullYear(),
         agora.getMonth(),
@@ -182,24 +190,79 @@ function ultimodiadomesfunc(data) {
        12
     );
 }
+function gerarDiasCalendarioMes(diaAtual) {
+    const DiasCalendario = [];
+    const ultimoDiadoMesAnterior = ultimodiadomesfunc(
+        subtrairMeses(diaAtual, 1)
+    );
+
+    const ultimoDiadoMesAnteriorSemana = ultimoDiadoMesAnterior.getDay();
+    if (ultimoDiadoMesAnteriorSemana !== 6) {
+        for (let i = ultimoDiadoMesAnteriorSemana; i >= 0; i -= 1) {
+            const DiaCalendario = subtrairDias(ultimoDiadoMesAnterior, i);
+            DiasCalendario.push(DiaCalendario);
+        }
+    }
+    const ultimoDiadoMesAtual = ultimodiadomesfunc(diaAtual);
+    for (let i = 1; i <= ultimoDiadoMesAtual.getDate(); i += 1) {
+        const diaCalendario = adicionaDias(ultimoDiadoMesAnterior, i);
+        DiasCalendario.push(diaCalendario);
+    }
+
+    const SemanasTotais = Math.ceil(DiasCalendario.length / 7);
+    const DiasTotais = SemanasTotais * 7;
+    const QuantDiasFaltantes = DiasTotais - DiasCalendario.length;
+    for (let i = 1; i <= QuantDiasFaltantes; i += 1) {
+        const DiaCalendario = adicionaDias(ultimoDiadoMesAtual, i);
+        DiasCalendario.push(DiaCalendario);
+    }
+    return DiasCalendario;
+}
+function mesmodia(dataA, dataB) {
+    return dataA.getFullYear() === dataB.getFullYear() && dataA.getMonth() === dataB.getMonth() && dataA.getDate() === dataB.getDate();
+}
 const ElementoTemplateCalendario = document.querySelector("[data-template='calendario-mes']");
 const ElementoTemplateCalendarioDia = document.querySelector("[data-template='calendario-mes-dia']");
+const ClassesCalendarioSemanas = {
+    4: "quatro-semanas",
+    5: "cinco-semanas",
+    6: "seis-semanas"
+}
 function iniciarCalendarioMes(parent, dataSelecionada) {
     const ConteudoCalendario = ElementoTemplateCalendario.content.cloneNode(true);
     const ElementoCalendario = ConteudoCalendario.querySelector("[data-calendario-mes]");
     const ElementoListaDiaCalendario = ElementoCalendario.querySelector("[data-calendario-mes-lista-dia]");
     
+    const DiasCalendario = gerarDiasCalendarioMes(dataSelecionada);
+    const SemanasCalendario = DiasCalendario.length / 7;
+    const ClasseCalendarioSemanas = ClassesCalendarioSemanas[SemanasCalendario];
+    ElementoListaDiaCalendario.classList.add(ClasseCalendarioSemanas);
+    for (const DiaCalendario of DiasCalendario) {
+        iniciarDiaCalendario(ElementoListaDiaCalendario, DiaCalendario);
+    }
+
     parent.appendChild(ElementoCalendario);
 }
-function iniciarCalendario() {
+function iniciarDiaCalendario(parent, DiaCalendario) {
+    const DiaCalendarioConteudo = ElementoTemplateCalendarioDia.content.cloneNode(true);
+    const ElementoDiaCalendario = DiaCalendarioConteudo.querySelector("[data-calendario-mes-dia]");
+    const ElementoDiaLabelCalendario = DiaCalendarioConteudo.querySelector("[data-calendario-mes-dia-numero]");
+    if (mesmodia(today(), DiaCalendario)) {
+        ElementoDiaCalendario.classList.add("highlight");
+    }
+    ElementoDiaLabelCalendario.textContent = DiaCalendario.getDate();
+    parent.appendChild(ElementoDiaCalendario);
+}
+function iniciarCalendario(armEvento) {
     const ElementoCalendario = document.querySelector("[data-calendario]");
     let dataSelecionada = today();
     document.addEventListener("data-mudou", (event) => {
-        dataSelecionada = event.detail.date;
+        dataSelecionada = event.detail.data;
         refreshCalendario();
     })
     function refreshCalendario() {
-        iniciarCalendarioMes(ElementoCalendario, dataSelecionada);    
+        ElementoCalendario.replaceChildren();
+        iniciarCalendarioMes(ElementoCalendario, dataSelecionada, armEvento);    
     }
     refreshCalendario();
 }
@@ -216,7 +279,7 @@ function iniciarNav() {
 
     for (const buttonhoje of buttonshoje)  {
         buttonhoje.addEventListener("click", () => {
-            buttonhoje.dispatchEvent(new CustomEvent("data-mudada", {
+            buttonhoje.dispatchEvent(new CustomEvent("data-mudou", {
                 detail: {
                     data:today()
                 },
@@ -225,7 +288,7 @@ function iniciarNav() {
         });
     }
     buttonanterior.addEventListener("click", () => {
-        buttonanterior.dispatchEvent(new CustomEvent("data-mudada", {
+        buttonanterior.dispatchEvent(new CustomEvent("data-mudou", {
             detail: {
                 data: pegarDataAnterior(dataSelecionada)
             },
@@ -233,7 +296,7 @@ function iniciarNav() {
         }));
     });
     buttonproximo.addEventListener("click", () => {
-        buttonproximo.dispatchEvent(new CustomEvent("data-mudada", {
+        buttonproximo.dispatchEvent(new CustomEvent("data-mudou", {
             detail: {
                 data: pegarProximaData(dataSelecionada)
             },
@@ -241,8 +304,9 @@ function iniciarNav() {
         }));
     });
     // document.addEventListener("view-change")
-    document.addEventListener("data-mudada", (event) => {
+    document.addEventListener("data-mudou", (event) => {
         dataSelecionada = event.detail.data;
+        
         refreshElementoData(elementoData, dataSelecionada);
     });
     refreshElementoData(elementoData, dataSelecionada);
@@ -259,11 +323,13 @@ function pegarDataAnterior(dataSelecionada) {
 function pegarProximaData(dataSelecionada) {
     return adicionarMeses(dataSelecionada, 1);
 }
-function salvarEventos() {  }
+function salvarEventos() { 
+
+ }
 // butao.onclick = iniciarCalendario;
 // butaocriacaoevento();
-formdialogevento();
+formdialogevento(); 
 butaocriacaoevento();
-iniciarArmEvento();
-iniciarCalendario();
+const armEvento = iniciarArmEvento();
+iniciarCalendario(armEvento);
 iniciarNav();
