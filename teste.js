@@ -1,7 +1,10 @@
-const data = new Date(2024, 0, 13); // 13 de janeiro
-const dataFormatada = new Intl.DateTimeFormat('pt-BR', {
-    timeZone: 'America/Bahia',
-    dateStyle: 'full'
-}).format(data);
-
-console.log(dataFormatada);
+var checkbox = document.getElementById("checkbox");
+var texto = document.getElementsByClassName("evento-titulo")[0];
+function checkfeito() {
+    if (checkbox.checked == true) {
+        texto.classList.add("feito");
+    } else {
+        texto.classList.remove("feito");
+    }
+}
+checkbox.onclick = checkfeito;

@@ -1,0 +1,75 @@
+* {
+    font-family: 'Tanker', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    padding: 20px;
+}
+.evento {
+    height: 40px;
+    width: 90px;
+    display: flex;
+    padding: 2px;
+    align-items: center;
+    border: 1px solid gray;
+    justify-content: space-between;
+}
+/* .feito {
+    border: 1px solid gray;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+input[type="checkbox"] {
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    appearance: none;
+    background: none;
+    border: 0;
+    outline: 0;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    transition: all 300ms ease-in-out;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 0 1px #CCD3D8;
+}
+input[type="checkbox"]:checked {
+    background-color: white;
+    transition: all 300ms ease-in-out;
+}
+input[type="checkbox"]::before {
+    display: flex;
+    content: '\2713'; /* O V do checkbox */
+    color: gray;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.9rem;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    border: 0;
+    background-color: transparent;
+    box-shadow: inset 0 0 0 1px #CCD3D8;
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+}
+input[type="checkbox"]:checked::before {
+    opacity: 1;
+    transition: all 300ms ease-in-out;
+}
+.evento-titulo {
+
+}
+.feito {
+    text-decoration: line-through;
+    color: gray;
+    transition: all 300ms ease-in-out;
+}

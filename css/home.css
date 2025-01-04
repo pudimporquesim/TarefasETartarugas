@@ -12,15 +12,20 @@ body {
 main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 4fr;
+    grid-template-rows: 1fr 1fr 3fr;
     gap: 10px;
     grid-template-areas: 
-    'perfil perfil tarefas tarefas'
+    'perfil perfil tarefas pomodoro'
+    'calendario calendario calendario pomodoro'
     'calendario calendario calendario missoes';
     padding: 10px;
 }
 nav, .perfil, .tarefasdia, .calendario, .missao{
 
+}
+.pomodoro {
+    grid-area: pomodoro;
+    background-color: salmon;
 }
 .calendario2 {
     display: flex;
