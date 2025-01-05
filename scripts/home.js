@@ -1,7 +1,19 @@
-
-var calendarioMes = document.getElementsByClassName("calendario-mes")[0]; 
-var calendarioSemana = document.getElementsByClassName("calendario-semana")[0];
-
+import {feito} from "./checkbox.js";
+function butaodialogteste() {
+    const butaodialog = document.getElementById("dialog2");
+    const dialog = iniciarDialog("nomeheroico");
+    butaodialog.addEventListener("click", () => {
+        butaodialog.dispatchEvent(new CustomEvent (
+            "abrir-dialog", {
+                bubbles: true
+            }
+        ));
+        
+    })
+    document.addEventListener("abrir-dialog", () =>{
+        dialog.open();
+    })
+}
 function butaocriacaoevento() {
     const butaoevento = document.getElementById("adicionartarefa");
     butaoevento.addEventListener("click", () => {
@@ -362,6 +374,7 @@ function iniciarListaEventos(parent, events) {
     }
  }
 
+feito();
 // function salvarEventos() { 
     
 //  }
@@ -372,3 +385,4 @@ butaocriacaoevento();
 const armEvento = iniciarArmEvento();
 iniciarCalendario(armEvento);
 iniciarNav();
+butaodialogteste();
