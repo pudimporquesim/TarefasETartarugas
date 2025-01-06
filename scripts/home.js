@@ -1,4 +1,8 @@
 import {feito} from "./checkbox.js";
+import {espacamentotexto} from "./dialogo.js";
+import {sessionfunc} from "./session.js";
+import {primeiraentrada} from "./primeiraentrada.js";
+
 function butaodialogteste() {
     const butaodialog = document.getElementById("dialog2");
     const dialog = iniciarDialog("nomeheroico");
@@ -12,6 +16,7 @@ function butaodialogteste() {
     })
     document.addEventListener("abrir-dialog", () =>{
         dialog.open();
+        espacamentotexto();
     })
 }
 function butaocriacaoevento() {
@@ -38,7 +43,7 @@ function formdialogevento() {
         dialog.close();
     });
 }
-function iniciarDialog(nome) {
+export function iniciarDialog(nome) {
     const elementoDialog = document.querySelector(`[data-dialog=${nome}]`);
     const butaofechar = document.querySelectorAll("[data-dialog-close-button]");
 
@@ -47,11 +52,13 @@ function iniciarDialog(nome) {
             elementoDialog.close();
         });
     }
-    elementoDialog.addEventListener("click", (event) => {
-        if (event.target === elementoDialog) {
-            elementoDialog.close();
-        }
-    })
+    if (nome != "nomeheroico"){
+        elementoDialog.addEventListener("click", (event) => {
+            if (event.target === elementoDialog) {
+                elementoDialog.close();
+            }
+        })
+    }
     return {
         elementoDialog,
         open() {
@@ -373,10 +380,8 @@ function iniciarListaEventos(parent, events) {
         ElementoListaEvento.appendChild(ElementoListaEventoItem);
     }
  }
-
 feito();
 // function salvarEventos() { 
-    
 //  }
 // butao.onclick = iniciarCalendario;
 // butaocriacaoevento();
@@ -386,3 +391,5 @@ const armEvento = iniciarArmEvento();
 iniciarCalendario(armEvento);
 iniciarNav();
 butaodialogteste();
+// sessionfunc();
+primeiraentrada();

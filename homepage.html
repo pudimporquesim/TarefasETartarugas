@@ -21,7 +21,7 @@
     </nav>
     <main>
         <div class="perfil">
-
+            <p data-nome-teste></p>
         </div>
         <div class="tarefasdia">
 
@@ -88,14 +88,18 @@
         </form>
     </dialog>
     <dialog class="dialog2" data-dialog="nomeheroico">
-        <div class="dialog2dentro">
-            <h1>Brasizl</h1>
-            <button class="fechardialog" data-dialog-close-button>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-button"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-            </button>
-            <form>
-                laidasndjasdassac
-            </form>
+        <div class="dialog21">
+            <img src="img/turtle.png" alt="" data-dialog-img>
+            <div class="dialog2dentro">
+                <div class="espacamentoimg"></div>
+                <div class="dialogo" data-dialogo>
+                    <p>Olá nobre viajante, a muito esperamos por sua chegada, aquele que irá proteger os recifes de Água Branca, como você gostaria que fosse o seu <strong>Nome Heróico</strong>?</p>
+                    <form>
+                        <input type="text" name="nomeheroico" id="nomeheroico" placeholder="Insira seu nome heroico" required>
+                        <button id="btnnomeheroico">Esse é meu nome heróico</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </dialog>
     <template data-template="calendario-mes">
@@ -137,7 +141,8 @@
             <input type="checkbox" id="checkbox" data-checkbox/>
         </button>
     </template>
-    <script type="module" src="scripts/home.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script type="module" src="scripts/home.js"></script>
+    
 </body>
 </html>

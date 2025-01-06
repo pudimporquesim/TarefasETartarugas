@@ -32,7 +32,9 @@ if(($_POST['emaill'] != null) && ($_POST['senhal'] != null)) {
             $resultado = $ah->fetch();
                 // Verifica a senha usando password_verify
             if ($senha == $resultado['senha']) {
-                echo json_encode(['success' => 'Login realizado com sucesso', 'user_id' => $usuario['id']]);
+                session_start();
+                $_SESSION["user-id"] = $usuario['id'];
+                echo json_encode(['success' => 'Login realizado com sucesso', 'user_id' => $_SESSION["user-id"]]);
             } else {
                 echo json_encode(['error' => 'Senha incorreta']);
             }
