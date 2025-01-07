@@ -7,15 +7,18 @@
     <title>Brasil</title>
 </head>
 <body>
-    <div class="evento" data-evento>
-        <div>
-            <span class="evento-cor">ai</span>
-            <span class="evento-titulo" data-evento-titulo>lala</span>
-        </div>
-        <span>
-            <input type="checkbox" id="checkbox" />
-        </span>
-    </div>
+    <p id="meuParagrafo">Texto original do parágrafo.</p>
+    <button onclick="alterarTexto()">Alterar Texto</button>
+
+    <script>
+        function alterarTexto() {
+            // Pega o elemento pelo id
+            var p = document.getElementById("meuParagrafo");
+            
+            // Altera o texto dentro do elemento <p>
+            p.textContent = "Texto alterado com sucesso!";
+        }
+    </script>
     <!-- <div class="calendario-todo">
             <div class="calendario-semana" style="display: flex;">
                 <ul class="diasdasemanalista-semana">

@@ -11,10 +11,10 @@ if (isset($_SESSION["user-id"])) {
         $stmt->execute();
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($usuario['nome_heroico'] == null) {
-            echo json_encode(['success' => 'Nome heroico não encontrado']);
+            echo json_encode(['snome' => 'Nome heroico não encontrado']);
         } else {
             // Caso o usuário tenha um nome heroico, retorne o nome
-            echo json_encode(['success' => 'Nome heroico encontrado', 'nome_heroico' => $usuario['nome_heroico']]);
+            echo json_encode(['cnome' => 'Nome heroico encontrado', 'nome_heroico' => $usuario['nome_heroico']]);
         }
         exit;
     } catch (PDOException $e) {

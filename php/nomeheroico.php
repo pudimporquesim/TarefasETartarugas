@@ -12,7 +12,7 @@ if ($_POST['nomeheroico'] != null) {
         $stmt->bindParam(':nomeheroico', $nomeheroico);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
-        echo json_encode(['success' => 'Nome heroico inserido']);
+        echo json_encode(['success' => 'Nome heroico inserido', 'nomeheroico' => $nomeheroico]);
     } catch (PDOException $e) {
         echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
     }
