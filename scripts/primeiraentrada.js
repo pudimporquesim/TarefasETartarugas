@@ -2,11 +2,16 @@ import { iniciarDialog } from "./home.js";
 import {espacamentotexto} from "./dialogo.js";
 export function primeiraentrada() { 
     let nomeHeroico = " ";
+    let classe = "";
+    var caixaclasses = document.getElementsByClassName("dialogo22")[0];
+    
+    const dialogof = document.querySelector(`[data-dialog="nomeheroico"]`);
     $.post("php/primeiraentrada.php")
     .done(function (data) {
-        // console.log("Resposta do servidor: ", data);
+        console.log("Resposta do servidor: ", data);
         if (data.error != undefined) {
             console.log(data.error);
+        } else if (data.slogin != undefined) {
             window.location.href = "index.html";
         } else if (data.snome != undefined) {
             const dialog = iniciarDialog("nomeheroico");
@@ -18,7 +23,7 @@ export function primeiraentrada() {
             document.addEventListener("abrir-dialog", () =>{
                     dialog.open();
                     espacamentotexto();
-            })
+            });
             var btnnomeheroico = document.getElementById("btnnomeheroico");
             var inp_nomeheroico = document.getElementById("nomeheroico");
             btnnomeheroico.onclick = function () { 
@@ -36,6 +41,7 @@ export function primeiraentrada() {
                         mudartexto(getTextoClasse(nomeHeroico));
                         removerform();
                         classesfunc();
+                        escolherclassefunc();
                     }
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
@@ -51,26 +57,122 @@ export function primeiraentrada() {
                 formnomeHeroico.remove();
             }
             function classesfunc() {
-                var caixaclasses = document.getElementsByClassName("dialogo22")[0];
+                
                 caixaclasses.style.display = "flex";
-                $(".cagado").on("mouseenter", function() {
-                    mudartexto("Essa é a classe cágado");
+                $(".cagado").on("mouseover", function() {
+                    mudartextoDebounced("Essa é a classe cágado");
                 }) .on("mouseout", function () {  
-                    mudartexto(getTextoClasse(nomeHeroico));
+                    mudartextoDebounced(getTextoClasse(nomeHeroico));
                 });
-                $(".jabuti").on("mouseenter", function() {
-                    mudartexto("Essa é a classe jabuti");
+                $(".jabuti").on("mouseover", function() {
+                    mudartextoDebounced("Essa é a classe jabuti");
                 }) .on("mouseout", function () {  
-                    mudartexto(getTextoClasse(nomeHeroico));
+                    mudartextoDebounced(getTextoClasse(nomeHeroico));
                 });
-                $(".tartaruga").on("mouseenter", function() {
-                    mudartexto("Essa é a classe tartaruga");
+                $(".tartaruga").on("mouseover", function() {
+                    mudartextoDebounced("Essa é a classe tartaruga");
                 }) .on("mouseout", function () {  
-                    mudartexto(getTextoClasse(nomeHeroico));
+                    mudartextoDebounced(getTextoClasse(nomeHeroico));
                 });
             }
             function getTextoClasse(nome) {
                 return `Belo nome <strong>${nome}</strong>, agora você terá de escolher sua classe, entre as três disponíveis.`;
+            }
+            function mudartextoDebounced(novoTexto) {
+                let debounceTimer;
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    mudartexto(novoTexto); 
+                }, 50); 
+            }
+            let clicks = 0; 
+            var classeesc = "";
+            function escolherclassefunc() {
+                $(".tartaruga").on("click", function () {
+                    if (clicks === 1) { 
+                        console.log("Clicou a segunda vez na tartaruga");
+                        classeesc = "tartaruga";
+                        $.post("php/classe.php", {classeesc: classeesc})
+                        .done(function (data) {
+                            console.log("Resposta do servidor: ", data);
+                            caixaclasses.style.display = "none";
+                            classe = data.classe;
+                            console.log(classe);
+                            setTimeout(() => {
+                                mudartexto(`Fico feliz que você ${nomeHeroico} da classe ${classe} esteja aqui para proteger os recifes de Água Branca <br> <span class='clique'>Clique em qualquer lugar para continuar</span>`);
+                              }, 100);
+                              const dialogof = document.querySelector(`[data-dialog="nomeheroico"]`);
+                              document.addEventListener("click", () => {
+                                  if (dialogof.open) {
+                                      dialogof.close(); 
+                                  }
+                              });
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.error('Erro na requisição:', textStatus, errorThrown);
+                        });
+                    } else { 
+                        mudartexto("Oh, grande escolha o <strong>tartaruga</strong>, tem certeza? <br> <span class='clique'>Clique novamente se tiver</span>");
+                        clicks = 1; 
+                    }
+                });
+                $(".jabuti").on("click", function () {
+                    if (clicks === 2) {
+                        console.log("Clicou a segunda vez na jabuti");
+                        classeesc = "jabuti";
+                        $.post("php/classe.php", {classeesc: classeesc})
+                        .done(function (data) {
+                            console.log("Resposta do servidor: ", data);
+                            caixaclasses.style.display = "none";
+                            classe = data.classe;
+                            console.log(classe);
+                            setTimeout(() => {
+                                mudartexto(`Fico feliz que você ${nomeHeroico} da classe ${classe} esteja aqui para proteger os recifes de Água Branca <br> <span class='clique'>Clique em qualquer lugar para continuar</span>`);
+                              }, 100);
+                              const dialogof = document.querySelector(`[data-dialog="nomeheroico"]`);
+                              document.addEventListener("click", () => {
+                                  if (dialogof.open) {
+                                      dialogof.close(); 
+                                  }
+                              });
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.error('Erro na requisição:', textStatus, errorThrown);
+                        });
+                    } else {
+                        mudartexto("Oh, grande escolha o <strong>jabuti</strong>, tem certeza? <br> <span class='clique'>Clique novamente se tiver</span>");
+                        clicks = 2;
+                    }
+                });
+                $(".cagado").on("click", function () {
+                    if (clicks === 3) {
+                        console.log("Clicou a segunda vez no cágado");
+                        classeesc = "cágado";
+                        $.post("php/classe.php", {classeesc: classeesc})
+                        .done(function (data) {
+                            console.log("Resposta do servidor: ", data);
+                            caixaclasses.style.display = "none";
+                            classe = data.classe;
+                            console.log(classe);
+                            setTimeout(() => {
+                                mudartexto(`Fico feliz que você ${nomeHeroico} da classe ${classe} esteja aqui para proteger os recifes de Água Branca <br> <span class='clique'>Clique em qualquer lugar para continuar</span>`);
+                              }, 100);
+                              const dialogof = document.querySelector(`[data-dialog="nomeheroico"]`);
+                              document.addEventListener("click", () => {
+                                  if (dialogof.open) { 
+                                      dialogof.close(); 
+                                  }
+                              });
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.error('Erro na requisição:', textStatus, errorThrown);
+                        });
+
+                    } else {
+                        mudartexto("Oh, grande escolha o <strong>cágado</strong>, tem certeza? <br> <span class='clique'>Clique novamente se tiver</span>");
+                        clicks = 3;
+                    }
+                });
             }
         } 
     })

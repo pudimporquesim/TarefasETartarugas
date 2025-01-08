@@ -1,24 +1,6 @@
 import {feito} from "./checkbox.js";
-import {espacamentotexto} from "./dialogo.js";
-import {sessionfunc} from "./session.js";
 import {primeiraentrada} from "./primeiraentrada.js";
 
-function butaodialogteste() {
-    const butaodialog = document.getElementById("dialog2");
-    const dialog = iniciarDialog("nomeheroico");
-    butaodialog.addEventListener("click", () => {
-        butaodialog.dispatchEvent(new CustomEvent (
-            "abrir-dialog", {
-                bubbles: true
-            }
-        ));
-        
-    })
-    document.addEventListener("abrir-dialog", () =>{
-        dialog.open();
-        espacamentotexto();
-    })
-}
 function butaocriacaoevento() {
     const butaoevento = document.getElementById("adicionartarefa");
     butaoevento.addEventListener("click", () => {
@@ -95,11 +77,12 @@ function FormparaEvento(ElementoForm) {
     const titulo = DadosForm.get("nome");
     const data = DadosForm.get("data-limite");
     const dificuldade = DadosForm.get("dificuldade");
-
+    const feito = DadosForm.get("feito");
     const event = {
         titulo,
-        data: new Date(data),
-        dificuldade
+        data,
+        dificuldade,
+        feito
     };
 
     return event;
@@ -124,7 +107,7 @@ function iniciarArmEvento() {
         const EventoCriado = event.detail.event;
         const events = pegareventosdoarm();
         events.push(EventoCriado);
-        saveEventsIntoLocalStorage(events);
+        salvarEventosNoBD(events);
 
         document.dispatchEvent(new CustomEvent("eventos-mudaram", {
             bubbles: true
@@ -140,14 +123,15 @@ function iniciarArmEvento() {
         }
     };
 }
-function saveEventsIntoLocalStorage(events) {
-    const safeToStringifyEvents = events.map((event) => ({
+function salvarEventosNoBD(events) {
+    const EventosStrings = events.map((event) => ({
         ...event,
         data: event.data.toISOString() 
     }));
-
+    
+    console.log(EventosStrings);
     try {
-        const stringifiedEvents = JSON.stringify(safeToStringifyEvents);
+        const stringifiedEvents = JSON.stringify(EventosStrings);
         localStorage.setItem("events", stringifiedEvents);
     } catch (error) {
         console.error("Erro ao salvar os eventos", error);
@@ -390,6 +374,4 @@ butaocriacaoevento();
 const armEvento = iniciarArmEvento();
 iniciarCalendario(armEvento);
 iniciarNav();
-butaodialogteste();
-// sessionfunc();
 primeiraentrada();

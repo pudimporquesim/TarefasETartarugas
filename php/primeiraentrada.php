@@ -21,6 +21,6 @@ if (isset($_SESSION["user-id"])) {
         echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
     }
 } else {
-    echo json_encode(['error' => 'Você não está logado, suma']);
+    echo json_encode(['slogin' => 'Você não está logado, suma']);
 }
 ?>
