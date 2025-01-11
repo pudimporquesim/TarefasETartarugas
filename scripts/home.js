@@ -1,6 +1,6 @@
 import {feito} from "./checkbox.js";
 import {primeiraentrada} from "./primeiraentrada.js";
-
+import {} from "./eventosbd.js";
 function butaocriacaoevento() {
     const butaoevento = document.getElementById("adicionartarefa");
     butaoevento.addEventListener("click", () => {
@@ -56,10 +56,17 @@ function iniciarFormEvento() {
     ElementoForm.addEventListener("submit", (event) => {
         event.preventDefault();
         const EventoForm = FormparaEvento(ElementoForm);
+        const EventoForm2 = FormparaEvento2(ElementoForm);
 
         ElementoForm.dispatchEvent(new CustomEvent("criar-evento", {
             detail: {
                 event: EventoForm
+            },
+            bubbles: true
+        }));
+        ElementoForm.dispatchEvent(new CustomEvent("criar-evento2", {
+            detail: {
+                evento: EventoForm2
             },
             bubbles: true
         }));
@@ -80,13 +87,32 @@ function FormparaEvento(ElementoForm) {
     const feito = DadosForm.get("feito");
     const event = {
         titulo,
-        data,
+        data: new Date(data),
         dificuldade,
         feito
-    };
+    }
+
 
     return event;
 }
+function FormparaEvento2(ElementoForm) { 
+    const DadosForm = new FormData(ElementoForm);
+    const titulo = DadosForm.get("nome");
+    const data = DadosForm.get("data-limite");
+    const dificuldade = DadosForm.get("dificuldade");
+    const descricao = DadosForm.get("descricao");
+    const feito = DadosForm.get("feito");
+    const evento = {
+        titulo,
+        data,
+        dificuldade,
+        descricao,
+        feito
+    }
+
+    return evento;
+}
+
 // function validarEvento(event) {
     // eu validaria pra não colocar um evento antes do dia atual
 // }
@@ -107,13 +133,30 @@ function iniciarArmEvento() {
         const EventoCriado = event.detail.event;
         const events = pegareventosdoarm();
         events.push(EventoCriado);
-        salvarEventosNoBD(events);
+        saveEventsIntoLocalStorage(events);
 
         document.dispatchEvent(new CustomEvent("eventos-mudaram", {
             bubbles: true
         }));
     });
-
+    document.addEventListener("criar-evento2", (evento) =>{
+        const EventoCriado2 = evento.detail.evento;
+        var titulo = EventoCriado2.titulo;
+        var descricao = EventoCriado2.descricao;
+        var data_limite = EventoCriado2.data;
+        var dificuldade = EventoCriado2.dificuldade;
+        var feito = EventoCriado2.feito;
+        // mandarEventoBD(inpTitu, inpDesc, inpDataLimit, inpDific, inpFei);
+        $.post("php/eventoBD.php", {titulo, descricao, data_limite, dificuldade, feito})
+        .done(function (data) {
+            console.log("Resposta do servidor: ", data);
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            console.error('Erro na requisição:', textStatus, errorThrown);
+        });
+        console.log(titulo);
+        console.log(EventoCriado2);
+    });
     return {
         pegarEventosPorData(data) {
             const events = pegareventosdoarm();
@@ -123,15 +166,14 @@ function iniciarArmEvento() {
         }
     };
 }
-function salvarEventosNoBD(events) {
-    const EventosStrings = events.map((event) => ({
+function saveEventsIntoLocalStorage(events) {
+    const safeToStringifyEvents = events.map((event) => ({
         ...event,
         data: event.data.toISOString() 
     }));
-    
-    console.log(EventosStrings);
+
     try {
-        const stringifiedEvents = JSON.stringify(EventosStrings);
+        const stringifiedEvents = JSON.stringify(safeToStringifyEvents);
         localStorage.setItem("events", stringifiedEvents);
     } catch (error) {
         console.error("Erro ao salvar os eventos", error);
