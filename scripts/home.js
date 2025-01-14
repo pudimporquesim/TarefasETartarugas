@@ -21,7 +21,7 @@ function formdialogevento() {
         FormEvento.reset();
     })
 
-    FormEvento.ElementoForm.addEventListener("criar-evento", () => {
+    FormEvento.ElementoForm.addEventListener("criar-evento2", () => {
         dialog.close();
     });
 }
@@ -55,15 +55,7 @@ function iniciarFormEvento() {
     const ElementoForm = document.querySelector("[data-event-form]");
     ElementoForm.addEventListener("submit", (event) => {
         event.preventDefault();
-        const EventoForm = FormparaEvento(ElementoForm);
         const EventoForm2 = FormparaEvento2(ElementoForm);
-
-        ElementoForm.dispatchEvent(new CustomEvent("criar-evento", {
-            detail: {
-                event: EventoForm
-            },
-            bubbles: true
-        }));
         ElementoForm.dispatchEvent(new CustomEvent("criar-evento2", {
             detail: {
                 evento: EventoForm2
@@ -77,23 +69,6 @@ function iniciarFormEvento() {
             ElementoForm.reset();
         }
     };
-}
-
-function FormparaEvento(ElementoForm) { 
-    const DadosForm = new FormData(ElementoForm);
-    const titulo = DadosForm.get("nome");
-    const data = DadosForm.get("data-limite");
-    const dificuldade = DadosForm.get("dificuldade");
-    const feito = DadosForm.get("feito");
-    const event = {
-        titulo,
-        data: new Date(data),
-        dificuldade,
-        feito
-    }
-
-
-    return event;
 }
 function FormparaEvento2(ElementoForm) { 
     const DadosForm = new FormData(ElementoForm);
@@ -125,16 +100,15 @@ function iniciarEvento(event) {
     const ConteudoEvento = ElementoTemplateEvento.content.cloneNode(true);
     const ElementoEvento = ConteudoEvento.querySelector("[data-evento]");
     const ElementoEventoTitulo = ElementoEvento.querySelector("[data-evento-titulo]");
-    ElementoEventoTitulo.textContent = event.titulo;
+    ElementoEventoTitulo.textContent = event.Nome;
     return ElementoEvento
 }
 function iniciarArmEvento() { 
-    document.addEventListener("criar-evento", (event)=>{
+    const eventos = [];
+    document.addEventListener("criar-evento2", async (event)=>{
         const EventoCriado = event.detail.event;
-        const events = pegareventosdoarm();
-        events.push(EventoCriado);
-        saveEventsIntoLocalStorage(events);
-
+        const tarefas = await pegareventosdoarm2();
+        eventos.push(...tarefas);
         document.dispatchEvent(new CustomEvent("eventos-mudaram", {
             bubbles: true
         }));
@@ -146,7 +120,6 @@ function iniciarArmEvento() {
         var data_limite = EventoCriado2.data;
         var dificuldade = EventoCriado2.dificuldade;
         var feito = EventoCriado2.feito;
-        // mandarEventoBD(inpTitu, inpDesc, inpDataLimit, inpDific, inpFei);
         $.post("php/eventoBD.php", {titulo, descricao, data_limite, dificuldade, feito})
         .done(function (data) {
             console.log("Resposta do servidor: ", data);
@@ -154,69 +127,46 @@ function iniciarArmEvento() {
         .fail(function (jqXHR, textStatus, errorThrown) {
             console.error('Erro na requisição:', textStatus, errorThrown);
         });
-        console.log(titulo);
-        console.log(EventoCriado2);
     });
     return {
-        pegarEventosPorData(data) {
-            const events = pegareventosdoarm();
-            const EventosFiltrados = events.filter((event) => mesmodia(event.data, data));
-
+        async pegarEventosPorData(data) {
+            const tarefas = await pegareventosdoarm2();
+            const EventosFiltrados = tarefas.filter((evento) => mesmodia(evento.DataLimite, data));
             return EventosFiltrados;
         }
     };
 }
-function saveEventsIntoLocalStorage(events) {
-    const safeToStringifyEvents = events.map((event) => ({
-        ...event,
-        data: event.data.toISOString() 
-    }));
-
+async function pegareventosdoarm2() {
     try {
-        const stringifiedEvents = JSON.stringify(safeToStringifyEvents);
-        localStorage.setItem("events", stringifiedEvents);
+        var tarefas = [];
+        const data = await $.post("php/puxareventoBD.php");
+        if (data.error !== undefined) {
+            console.error(data.error);
+            return [];
+        }
+        if (data.tarefas !== undefined) {
+            tarefas = data.tarefas;
+            tarefas = tarefas.map((evento) => {
+                const datan = new Date(evento.DataLimite); 
+                datan.setUTCHours(12, 0, 0, 0); 
+                return {
+                    ...evento, // Copia os outros campos do objeto
+                    DataLimite: datan // Atualiza o campo DataLimite
+                };
+            });            
+            return tarefas;
+        }
+        return [];
     } catch (error) {
-        console.error("Erro ao salvar os eventos", error);
-    }
-}
-
-
-function pegareventosdoarm() {  
-    const eventosarm = localStorage.getItem("events");
-    if (eventosarm === null) {
+        console.error("Erro na requisição:", error);
         return [];
     }
-
-    let parsedEventos;
-    try {
-        parsedEventos = JSON.parse(eventosarm);
-    } catch (error) {
-        console.error("Erro ao analisar os eventos", error);
-        return [];
-    }
-
-    const events = parsedEventos.map((event) => {
-
-        const data = new Date(event.data);
-        data.setUTCHours(12, 0, 0, 0); 
-
-        return {
-            ...event,
-            data: data 
-        };
-    });
-
-    return events;
 }
 
 function today() {
     const agora = new Date();
-    return new Date(
-        agora.getFullYear(),
-        agora.getMonth(),
-        agora.getDate(),
-        12
-    );
+    const dataAjustada = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
+    return dataAjustada;
 }
 function adicionarMeses(data, meses) {
     const primeiroDiadoMes = new Date(
@@ -295,7 +245,7 @@ const ClassesCalendarioSemanas = {
     5: "cinco-semanas",
     6: "seis-semanas"
 }
-function iniciarCalendarioMes(parent, dataSelecionada, armEvento) {
+async function iniciarCalendarioMes(parent, dataSelecionada, armEvento) {
     const ConteudoCalendario = ElementoTemplateCalendario.content.cloneNode(true);
     const ElementoCalendario = ConteudoCalendario.querySelector("[data-calendario-mes]");
     const ElementoListaDiaCalendario = ElementoCalendario.querySelector("[data-calendario-mes-lista-dia]");
@@ -305,13 +255,13 @@ function iniciarCalendarioMes(parent, dataSelecionada, armEvento) {
     const ClasseCalendarioSemanas = ClassesCalendarioSemanas[SemanasCalendario];
     ElementoListaDiaCalendario.classList.add(ClasseCalendarioSemanas);
     for (const DiaCalendario of DiasCalendario) {
-        const events = armEvento.pegarEventosPorData(DiaCalendario);
-        iniciarDiaCalendario(ElementoListaDiaCalendario, DiaCalendario, events);
+        const events = await armEvento.pegarEventosPorData(DiaCalendario);
+        await iniciarDiaCalendario(ElementoListaDiaCalendario, DiaCalendario, events);
     }
 
     parent.appendChild(ElementoCalendario);
 }
-function iniciarDiaCalendario(parent, DiaCalendario, events) {
+async function iniciarDiaCalendario(parent, DiaCalendario, events) {
     const DiaCalendarioConteudo = ElementoTemplateCalendarioDia.content.cloneNode(true);
     const ElementoDiaCalendario = DiaCalendarioConteudo.querySelector("[data-calendario-mes-dia]");
     const ElementoDiaLabelCalendario = DiaCalendarioConteudo.querySelector("[data-calendario-mes-dia-numero]");
@@ -322,16 +272,16 @@ function iniciarDiaCalendario(parent, DiaCalendario, events) {
     iniciarListaEventos(ElementoDiaCalendario, events);
     parent.appendChild(ElementoDiaCalendario);
 }
-function iniciarCalendario(armEvento) {
+async function iniciarCalendario(armEvento) {
     const ElementoCalendario = document.querySelector("[data-calendario]");
     let dataSelecionada = today();
-    document.addEventListener("data-mudou", (event) => {
-        dataSelecionada = event.detail.data;
+    document.addEventListener("data-mudou", (evento) => {
+        dataSelecionada = evento.detail.data;
         refreshCalendario();
     })
-    function refreshCalendario() {
+    async function refreshCalendario() {
         ElementoCalendario.replaceChildren();
-        iniciarCalendarioMes(ElementoCalendario, dataSelecionada, armEvento);    
+        await  iniciarCalendarioMes(ElementoCalendario, dataSelecionada, armEvento);    
     }
     refreshCalendario();
     document.addEventListener("eventos-mudaram", () => {

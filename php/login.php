@@ -49,3 +49,4 @@ if(($_POST['emaill'] != null) && ($_POST['senhal'] != null)) {
     // Retorna um erro caso algum parâmetro obrigatório esteja faltando
     echo json_encode(['error' => 'Parametros obrigatorios nao especificados']);
 }
+?>

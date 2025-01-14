@@ -15,15 +15,12 @@ export function primeiraentrada() {
             window.location.href = "index.html";
         } else if (data.snome != undefined) {
             const dialog = iniciarDialog("nomeheroico");
-            document.dispatchEvent(new CustomEvent (
-                "abrir-dialog", {
-                    bubbles: true
-                }
-            ));
-            document.addEventListener("abrir-dialog", () =>{
-                    dialog.open();
-                    espacamentotexto();
-            });
+            if (dialog) {
+                dialog.open();
+                espacamentotexto();
+            } else {
+                console.error("Erro: o diálogo não foi encontrado ou inicializado corretamente.");
+            }
             var btnnomeheroico = document.getElementById("btnnomeheroico");
             var inp_nomeheroico = document.getElementById("nomeheroico");
             btnnomeheroico.onclick = function () { 
