@@ -1,6 +1,6 @@
 import {feito} from "./checkbox.js";
 import {primeiraentrada} from "./primeiraentrada.js";
-import {} from "./eventosbd.js";
+// import {abrirevento} from "./eventoabrir.js";
 function butaocriacaoevento() {
     const butaoevento = document.getElementById("adicionartarefa");
     butaoevento.addEventListener("click", () => {
@@ -99,14 +99,40 @@ function iniciarEventoEstatico(parent, event) {
 function iniciarEvento(event) {
     const ConteudoEvento = ElementoTemplateEvento.content.cloneNode(true);
     const ElementoEvento = ConteudoEvento.querySelector("[data-evento]");
-    const ElementoEventoTitulo = ElementoEvento.querySelector("[data-evento-titulo]");
+    // const ElementoEventoTitulo = abrirevento(event);
+    const ElementoEventoTitulo = ConteudoEvento.querySelector("[data-evento-titulo]");
+    ElementoEventoTitulo.addEventListener("click", function () {
+        const dialog = iniciarDialog("evento");
+        if (dialog) {
+            dialog.open();
+        } else {
+            console.error("Erro: o diálogo não foi encontrado ou inicializado corretamente.");
+        }
+        const elementoDialog = document.querySelector("[data-dialog='evento']");
+        const tituloevento = elementoDialog.querySelector("[id='nome']");
+        const desc = elementoDialog.querySelector("[id='descricao']");
+        const data = elementoDialog.querySelector("[id='data-limite']");
+        
+        tituloevento.value = event.Nome;
+        desc.value = event.Descricao;
+        const dataEvento = new Date(event.DataLimite);
+        data.value = dataEvento.toISOString().split('T')[0];
+        
+    });
+    const ElementoId = ConteudoEvento.querySelector("[data-evento-id='']");
+    const ElementoCheckbox = ConteudoEvento.querySelector("[data-checkbox]");
+    
     ElementoEventoTitulo.textContent = event.Nome;
+    ElementoId.setAttribute('data-evento-id', event.ID);
+    if (event.Feita == 1) {
+        ElementoEventoTitulo.classList.add("feito");
+        ElementoCheckbox.checked = true;
+    }
     return ElementoEvento
 }
 function iniciarArmEvento() { 
     const eventos = [];
     document.addEventListener("criar-evento2", async (event)=>{
-        const EventoCriado = event.detail.event;
         const tarefas = await pegareventosdoarm2();
         eventos.push(...tarefas);
         document.dispatchEvent(new CustomEvent("eventos-mudaram", {
@@ -150,8 +176,8 @@ async function pegareventosdoarm2() {
                 const datan = new Date(evento.DataLimite); 
                 datan.setUTCHours(12, 0, 0, 0); 
                 return {
-                    ...evento, // Copia os outros campos do objeto
-                    DataLimite: datan // Atualiza o campo DataLimite
+                    ...evento, 
+                    DataLimite: datan 
                 };
             });            
             return tarefas;
@@ -325,7 +351,6 @@ function iniciarNav() {
             bubbles: true
         }));
     });
-    // document.addEventListener("view-change")
     document.addEventListener("data-mudou", (event) => {
         dataSelecionada = event.detail.data;
         
@@ -351,16 +376,11 @@ function iniciarListaEventos(parent, events) {
     for (const event of events) {
         const ListaEventoItemConteudo = ElementoTemplateListaEventoItem.content.cloneNode(true);
         const ElementoListaEventoItem = ListaEventoItemConteudo.querySelector("[data-evento-lista-item]");
-
         iniciarEventoEstatico(ElementoListaEventoItem, event);
         ElementoListaEvento.appendChild(ElementoListaEventoItem);
     }
  }
 feito();
-// function salvarEventos() { 
-//  }
-// butao.onclick = iniciarCalendario;
-// butaocriacaoevento();
 formdialogevento(); 
 butaocriacaoevento();
 const armEvento = iniciarArmEvento();

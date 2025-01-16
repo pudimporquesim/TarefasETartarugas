@@ -8,7 +8,6 @@ export function primeiraentrada() {
     const dialogof = document.querySelector(`[data-dialog="nomeheroico"]`);
     $.post("php/primeiraentrada.php")
     .done(function (data) {
-        console.log("Resposta do servidor: ", data);
         if (data.error != undefined) {
             console.log(data.error);
         } else if (data.slogin != undefined) {

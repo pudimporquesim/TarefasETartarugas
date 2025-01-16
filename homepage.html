@@ -65,11 +65,11 @@
         </div>
     </main>
     <dialog class="dialog" data-dialog="form-evento">
+        <button class="fechardialog" data-dialog-close-button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-button"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button> <br>
         <form data-event-form autocomplete="off">
             <h1>Tarefas</h1>
-            <button class="fechardialog" data-dialog-close-button>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-button"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-            </button> <br>
             <label for="nome">Nome</label> <br>
             <input type="text" name="nome" id="nome" required> <br>
             <label for="descricao">Descrição</label> <br>
@@ -84,7 +84,6 @@
             <input type="radio" name="dificuldade" id="dificuldade" value="dificil">
             <input type="hidden" name="feito" id="feito" value="0">
             <label for="dificuldade">Difícil</label> <br>
-            <button id="naocriartarefa-button" data-dialog-close-button>Cancelar</button>
             <button id="criartarefa-button">Criar tarefa</button>
         </form>
     </dialog>
@@ -114,6 +113,34 @@
             </div>
         </div>
     </dialog>
+    <dialog data-dialog="evento">
+        <button class="fechardialog" data-dialog-close-button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-button"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button> <br>
+        <form autocomplete="off">
+            <h1>Tarefas</h1>
+            <label for="nome">Nome</label> <br>
+            <input type="text" name="nome" id="nome" required> <br>
+            <label for="descricao">Descrição</label> <br>
+            <input type="text" name="descricao" id="descricao"> <br>
+            <label for="data-limite">Data limite</label> <br>
+            <input type="date" name="data-limite" id="data-limite" required> <br>
+            <label for="dificuldade">Dificuldade</label> <br>
+            <input type="radio" name="dificuldadef" id="dificuldadef" value="facil">
+            <label for="dificuldadef">Fácil</label>
+            <input type="radio" name="dificuldadem" id="dificuldadem" value="medio">
+            <label for="dificuldadem">Médio</label>
+            <input type="radio" name="dificuldaded" id="dificuldaded" value="dificil">
+            <input type="hidden" name="feito" id="feito" value="0">
+            <label for="dificuldaded">Difícil</label> <br>
+            <div class="linha">
+                <label for="feito">Feita?</label>
+                <input type="checkbox" name="feito" id="feito">
+            </div>
+            <button type="button" id="deletar-button">Deletar tarefa</button>
+            <button type="submit" id="criartarefa-button">Atualizar tarefa</button>
+        </form>
+    </dialog>
     <template data-template="calendario-mes">
         <div class="calendario-mes" data-calendario-mes>
             <ul class="diasdasemanalista-mes">
@@ -140,14 +167,14 @@
         </li>
     </template>
     <template data-template="evento-lista-item" >
-        <li class="evento_item" data-evento-lista-item>
+        <li class="evento_item" data-evento-lista-item >
 
         </li>
     </template>
     <template data-template="evento">
-        <button class="evento" data-evento>
-            <div>
-                <span class="evento-cor"></span>
+        <button class="evento" data-evento data-evento-id="">
+            <div class="but-evento">
+                <!-- <span class="evento-cor"></span> -->
                 <span class="evento-titulo" data-evento-titulo></span>
             </div>
             <input type="checkbox" id="checkbox" data-checkbox/>

@@ -213,6 +213,23 @@ nav {
     border: none;
     width: 100%;
 }
+.evento:hover {
+    /* background-color: antiquewhite; */
+}
+.linha {
+    display: flex;
+}
+.but-evento {
+    width: 100%;
+    display: flex;
+}
+.evento-titulo:hover {
+    background-color: antiquewhite;
+}
+.evento-titulo {
+    width: 100%;
+    display: flex;
+}
 .feito {
     text-decoration: line-through;
     text-decoration-color: #808080;
