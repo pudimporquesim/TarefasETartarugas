@@ -125,17 +125,16 @@
             <input type="text" name="descricao" id="descricao"> <br>
             <label for="data-limite">Data limite</label> <br>
             <input type="date" name="data-limite" id="data-limite" required> <br>
-            <label for="dificuldade">Dificuldade</label> <br>
-            <input type="radio" name="dificuldadef" id="dificuldadef" value="facil">
-            <label for="dificuldadef">Fácil</label>
-            <input type="radio" name="dificuldadem" id="dificuldadem" value="medio">
-            <label for="dificuldadem">Médio</label>
-            <input type="radio" name="dificuldaded" id="dificuldaded" value="dificil">
-            <input type="hidden" name="feito" id="feito" value="0">
-            <label for="dificuldaded">Difícil</label> <br>
+            <label>Dificuldade</label> <br>
+            <input type="radio" name="dificuldade" id="dificuldade-facil" value="facil">
+            <label for="dificuldade-facil">Fácil</label>
+            <input type="radio" name="dificuldade" id="dificuldade-medio" value="medio">
+            <label for="dificuldade-medio">Médio</label>
+            <input type="radio" name="dificuldade" id="dificuldade-dificil" value="dificil">
+            <label for="dificuldade-dificil">Difícil</label> <br>
             <div class="linha">
-                <label for="feito">Feita?</label>
-                <input type="checkbox" name="feito" id="feito">
+                <label for="feito-checkbox">Feita?</label>
+                <input type="checkbox" name="feito" id="feito-checkbox" value="0">
             </div>
             <button type="button" id="deletar-button">Deletar tarefa</button>
             <button type="submit" id="criartarefa-button">Atualizar tarefa</button>

@@ -99,7 +99,6 @@ function iniciarEventoEstatico(parent, event) {
 function iniciarEvento(event) {
     const ConteudoEvento = ElementoTemplateEvento.content.cloneNode(true);
     const ElementoEvento = ConteudoEvento.querySelector("[data-evento]");
-    // const ElementoEventoTitulo = abrirevento(event);
     const ElementoEventoTitulo = ConteudoEvento.querySelector("[data-evento-titulo]");
     ElementoEventoTitulo.addEventListener("click", function () {
         const dialog = iniciarDialog("evento");
@@ -112,12 +111,22 @@ function iniciarEvento(event) {
         const tituloevento = elementoDialog.querySelector("[id='nome']");
         const desc = elementoDialog.querySelector("[id='descricao']");
         const data = elementoDialog.querySelector("[id='data-limite']");
-        
+        const dificuldade = event.Dificuldade; 
+        const feito = event.Feita;
+        const atualizarbtn = elementoDialog.querySelector("[id='criartarefa-button']");
+        if (feito == 1) {
+            elementoDialog.querySelector("[id='feito-checkbox']").checked = true;
+        } else {
+            elementoDialog.querySelector("[id='feito-checkbox']").checked = false;
+        }
+        if (dificuldade) {
+            document.getElementById(`dificuldade-${dificuldade}`).checked = true;
+        }
         tituloevento.value = event.Nome;
         desc.value = event.Descricao;
         const dataEvento = new Date(event.DataLimite);
         data.value = dataEvento.toISOString().split('T')[0];
-        
+        if 
     });
     const ElementoId = ConteudoEvento.querySelector("[data-evento-id='']");
     const ElementoCheckbox = ConteudoEvento.querySelector("[data-checkbox]");
