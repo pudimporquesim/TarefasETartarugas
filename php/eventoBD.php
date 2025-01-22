@@ -16,11 +16,12 @@ if(($_POST['titulo'] != null) && ($_POST['data_limite'] != null) && ($_POST['dif
     function quantidadeDias() {
         $data_limite = $_POST['data_limite'];
         $datalimitedata = new DateTime($data_limite);
-        $dialimite = (int) $datalimitedata->format('d');
+        // $dialimite = (int) $datalimitedata->format('d');
         $data_criada = date("Y-m-d");
         $datacriadadata = new DateTime($data_criada);
-        $diacriada = (int) $datacriadadata->format('d');
-        $quantdias = $dialimite - $diacriada;
+        // $diacriada = (int) $datacriadadata->format('d');
+        $dateInterval = $datacriadadata->diff($datalimitedata);
+        $quantdias = $dateInterval->days;
         if ($quantdias <= 3) {
             $mult_quantdias = 2.5;
         } elseif ($quantdias <= 15) {

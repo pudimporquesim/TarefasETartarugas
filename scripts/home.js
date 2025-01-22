@@ -37,6 +37,7 @@ export function iniciarDialog(nome) {
     if (nome != "nomeheroico"){
         elementoDialog.addEventListener("click", (event) => {
             if (event.target === elementoDialog) {
+                event.preventDefault();
                 elementoDialog.close();
             }
         })
@@ -108,12 +109,14 @@ function iniciarEvento(event) {
             console.error("Erro: o diálogo não foi encontrado ou inicializado corretamente.");
         }
         const elementoDialog = document.querySelector("[data-dialog='evento']");
-        const tituloevento = elementoDialog.querySelector("[id='nome']");
-        const desc = elementoDialog.querySelector("[id='descricao']");
-        const data = elementoDialog.querySelector("[id='data-limite']");
-        const dificuldade = event.Dificuldade; 
+        const tituloevento = $(elementoDialog).find("[id='nome']");
+        const desc = $(elementoDialog).find("[id='descricao']");
+        const data = $(elementoDialog).find("[id='data-limite']");
+        const dificuldade = event.Dificuldade;
         const feito = event.Feita;
-        const atualizarbtn = elementoDialog.querySelector("[id='criartarefa-button']");
+        const atualizarbtn = elementoDialog.querySelector("[id='atualizartarefa-button']");
+        const deletarbtn = $(elementoDialog).find("[id='deletar-button']");
+        const idtarefa = event.ID;
         if (feito == 1) {
             elementoDialog.querySelector("[id='feito-checkbox']").checked = true;
         } else {
@@ -122,15 +125,39 @@ function iniciarEvento(event) {
         if (dificuldade) {
             document.getElementById(`dificuldade-${dificuldade}`).checked = true;
         }
-        tituloevento.value = event.Nome;
-        desc.value = event.Descricao;
+        tituloevento.val(event.Nome);
+        desc.val(event.Descricao);
         const dataEvento = new Date(event.DataLimite);
-        data.value = dataEvento.toISOString().split('T')[0];
-        if 
+        const dataEvento2 = dataEvento.toISOString().split('T')[0];
+        data.val(dataEvento2);
+        atualizarbtn.addEventListener('click', function atualizarEventoAtual() {
+            atualizarbtn.removeEventListener('click', atualizarEventoAtual);
+            verseigual(tituloevento, desc, data, dataEvento2, event, idtarefa);
+            dialog.close();
+            document.dispatchEvent(new CustomEvent("atualizou-evento", {
+                bubbles: true
+            }));
+        });
+        dialog.elementoDialog.addEventListener("close", () => {
+            const atualizarbtn = dialog.elementoDialog.querySelector("[id='atualizartarefa-button']");
+            atualizarbtn.replaceWith(atualizarbtn.cloneNode(true));
+        });
+        deletarbtn.on('click', async function () {
+            await $.post("php/deletartarefa.php", {idtarefa})
+            .done(function (data) {
+                console.log("Resposta do servidor: ", data);
+                dialog.close();
+                document.dispatchEvent(new CustomEvent("eventos-mudaram", {
+                    bubbles: true
+                }));
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error('Erro na requisição:', textStatus, errorThrown);
+            });
+          });
     });
     const ElementoId = ConteudoEvento.querySelector("[data-evento-id='']");
     const ElementoCheckbox = ConteudoEvento.querySelector("[data-checkbox]");
-    
     ElementoEventoTitulo.textContent = event.Nome;
     ElementoId.setAttribute('data-evento-id', event.ID);
     if (event.Feita == 1) {
@@ -138,6 +165,55 @@ function iniciarEvento(event) {
         ElementoCheckbox.checked = true;
     }
     return ElementoEvento
+}
+function verseigual(tituloevento,desc,data,dataEvento2,event,idtarefa) {
+    const dificuldadeSelecionada = $("input[name='dificuldade']:checked").val();
+    const feito = $("#feito-checkbox").prop("checked");
+    const mudancas = {};
+    if (tituloevento.val() != event.Nome) {
+        mudancas.Nome = tituloevento.val();
+    }
+    if (desc.val() != event.Descricao) {
+        mudancas.Descricao = desc.val();
+    }
+    if (data.val() != dataEvento2) {
+        mudancas.DataLimite = data.val();
+    }
+    if (dificuldadeSelecionada != event.Dificuldade) {
+        mudancas.Dificuldade = dificuldadeSelecionada;
+    }
+    if (feito != (event.Feita === 1)) {
+        var feitoN;
+        if (feito == true) {
+            feitoN = 1;
+        } else {
+            feitoN = 0;
+        }
+        mudancas.Feita = feitoN;
+    }
+    if (Object.keys(mudancas).length > 0) {
+        if (data.val() != '' && tituloevento.val() != "") {
+            mudancas.ID = idtarefa;
+            var mudanca = JSON.stringify(mudancas);
+            atualizarevento(mudanca);
+        } else {
+            console.log("os campos de data e nome não podem ficar vazios");
+        }
+    }
+    async function atualizarevento(mudanca) {
+        try {
+            const data = await $.post("php/atualizarevento.php", {mudanca});  
+            console.log("Resposta do servidor: ", data);
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            if (error.responseText) {
+                console.error('Resposta do erro:', error.responseText);
+            }
+            if (error.status) {
+                console.error('Status do erro:', error.status);
+            }
+        }
+    }    
 }
 function iniciarArmEvento() { 
     const eventos = [];
@@ -320,6 +396,9 @@ async function iniciarCalendario(armEvento) {
     }
     refreshCalendario();
     document.addEventListener("eventos-mudaram", () => {
+        refreshCalendario();
+    })
+    document.addEventListener("atualizou-evento", () => {
         refreshCalendario();
     })
 }

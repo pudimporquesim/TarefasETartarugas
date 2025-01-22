@@ -21,7 +21,16 @@
     </nav>
     <main>
         <div class="perfil">
-            <p data-nome-teste></p>
+            <div class="foto">
+                <img src="img/perfil.png" alt="">
+            </div>
+            <div class="dados">
+                <span></span>
+                <p>Vida</p>
+                <div class="vidatotal">
+                    <div class="barra">100</div>
+                </div>
+            </div>
         </div>
         <div class="tarefasdia">
 
@@ -137,7 +146,7 @@
                 <input type="checkbox" name="feito" id="feito-checkbox" value="0">
             </div>
             <button type="button" id="deletar-button">Deletar tarefa</button>
-            <button type="submit" id="criartarefa-button">Atualizar tarefa</button>
+            <button type="button" id="atualizartarefa-button">Atualizar tarefa</button>
         </form>
     </dialog>
     <template data-template="calendario-mes">
@@ -179,6 +188,7 @@
             <input type="checkbox" id="checkbox" data-checkbox/>
         </button>
     </template>
+
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script type="module" src="../TarefasETartarugas/scripts/home.js"></script>
     
