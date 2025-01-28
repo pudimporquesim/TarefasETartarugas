@@ -14,11 +14,15 @@ document.addEventListener("click", function (event) {
         }
         $.post("php/eventofeito.php", {feito, tarefaID})
         .done(function (data) {
-            console.log("Resposta do servidor: ", data);
+            // console.log("Resposta do servidor: ", data);
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             console.error('Erro na requisição:', textStatus, errorThrown);
         });
     }
+    document.dispatchEvent(new CustomEvent
+        ("evento-feito", {
+            bubbles: true 
+        }));
 });
 }

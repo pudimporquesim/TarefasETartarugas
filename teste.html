@@ -7,138 +7,42 @@
     <title>Brasil</title>
 </head>
 <body>
-    <p id="meuParagrafo">Texto original do parágrafo.</p>
-    <button onclick="alterarTexto()">Alterar Texto</button>
-
-    <script>
-        function alterarTexto() {
-            // Pega o elemento pelo id
-            var p = document.getElementById("meuParagrafo");
-            
-            // Altera o texto dentro do elemento <p>
-            p.textContent = "Texto alterado com sucesso!";
-        }
-    </script>
-    <!-- <div class="calendario-todo">
-            <div class="calendario-semana" style="display: flex;">
-                <ul class="diasdasemanalista-semana">
-                    <li class="diadasemana-semana">
-                        <button class="diadasemana-semana-button">
-                            <span class="diadasemana-dia-semana">Dom</span>
-                            <span class="diadasemana-numero-semana">7</span>
-                        </button>
-                    </li>
-                    <li class="diadasemana-semana">
-                        <button class="diadasemana-semana-button">
-                            <span class="diadasemana-dia-semana">Seg</span>
-                            <span class="diadasemana-numero-semana">8</span>
-                        </button>
-                    </li>
-                    <li class="diadasemana-semana">
-                        <button class="diadasemana-semana-button">
-                            <span class="diadasemana-dia-semana">Ter</span>
-                            <span class="diadasemana-numero-semana">9</span>
-                        </button>
-                    </li>
-                    <li class="diadasemana-semana">
-                        <button class="diadasemana-semana-button">
-                            <span class="diadasemana-dia-semana">Qua</span>
-                            <span class="diadasemana-numero-semana">10</span>
-                        </button>
-                    </li>
-                    <li class="diadasemana-semana">
-                        <button class="diadasemana-semana-button">
-                            <span class="diadasemana-dia-semana">Qui</span>
-                            <span class="diadasemana-numero-semana">11</span>
-                        </button>
-                    </li>
-                    <li class="diadasemana-semana">
-                        <button class="diadasemana-semana-button">
-                            <span class="diadasemana-dia-semana">Sex</span>
-                            <span class="diadasemana-numero-semana">12</span>
-                        </button>
-                    </li>
-                    <li class="diadasemana-semana">
-                        <button class="diadasemana-semana-button">
-                            <span class="diadasemana-dia-semana">Sab</span>
-                            <span class="diadasemana-numero-semana">13</span>
-                        </button>
-                    </li>
-                </ul>
-                <ul class="diasdasemanatodoslista-semana">
-                    <li class="diasdasemanatodoslista-semana-dia">
-                        <ul class="listadeeventos">
-                            <li class="listadeeventos-itens">
-                                <button class="evento evento-cheio">
-                                    <span class="cordoevento"></span>
-                                    <span class="titulodoevento"></span>
-                                </button>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="diasdasemanatodoslista-semana-dia">
-                        <ul class="listadeeventos">
-                            <li class="listadeeventos-itens">
-                                <button class="evento evento-cheio">
-                                    <span class="cordoevento"></span>
-                                    <span class="titulodoevento"></span>
-                                </button>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="diasdasemanatodoslista-semana-dia">
-                        <ul class="listadeeventos">
-                            <li class="listadeeventos-itens">
-                                <button class="evento evento-cheio">
-                                    <span class="cordoevento"></span>
-                                    <span class="titulodoevento"></span>
-                                </button>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="diasdasemanatodoslista-semana-dia">
-                        <ul class="listadeeventos">
-                            <li class="listadeeventos-itens">
-                                <button class="evento evento-cheio">
-                                    <span class="cordoevento"></span>
-                                    <span class="titulodoevento"></span>
-                                </button>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="diasdasemanatodoslista-semana-dia">
-                        <ul class="listadeeventos">
-                            <li class="listadeeventos-itens">
-                                <button class="evento evento-cheio">
-                                    <span class="cordoevento"></span>
-                                    <span class="titulodoevento"></span>
-                                </button>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="diasdasemanatodoslista-semana-dia">
-                        <ul class="listadeeventos">
-                            <li class="listadeeventos-itens">
-                                <button class="evento evento-cheio">
-                                    <span class="cordoevento"></span>
-                                    <span class="titulodoevento"></span>
-                                </button>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="diasdasemanatodoslista-semana-dia">
-                        <ul class="listadeeventos">
-                            <li class="listadeeventos-itens">
-                                <button class="evento evento-cheio">
-                                    <span class="cordoevento"></span>
-                                    <span class="titulodoevento"></span>
-                                </button>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+  <div class="modal" id="modal">
+    <div class="bloco">
+        <div class="container" id="container">
+            <div class="form-container registro-container">
+                <form>
+                    <h1>Registro</h1>
+                    <input type="text" name="nomer" id="nomer" placeholder="Nome"> <br>
+                    <input type="email" name="emailr" id="emailr" placeholder="Email" required> <br>
+                    <input type="password" name="senhaR1" id="senhaR1" placeholder="Senha" required> <br>
+                    <input type="password" name="senhaR2" id="senhaR2" placeholder="Senha de novo" required> <br>
+                    <button id="butsubmitr">Iniciar jornada</button>
+                </form>
             </div>
-        </div> -->
+            
+            <div class="form-container login-container">
+                <form>
+                    <h1>Login</h1>
+                    <input type="email" name="emaill" id="emaill" placeholder="Email" required> <br>
+                    <input type="password" name="senhal" id="senhal" placeholder="Senha" required> <br>
+                    <button id="submit">Voltar aos mares</button>
+                </form>
+                <button onclick="mostrar()">Esqueceu sua senha?</button>
+            </div>
+            <div class="form-container login-container" id="show">
+                <form>
+                    <h1>Esqueceu sua senha?</h1>
+                    <p>Insira seu email abaixo para que mandemos um link de recuperação de senha:</p>
+                    <input type="email" name="emails" id="emails" placeholder="Email" required> <br>
+                    <button id="senhaesquecida">Enviar email</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  
+      
     <script type="text/javascript" src="teste.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </body>

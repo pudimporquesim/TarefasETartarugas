@@ -1,6 +1,6 @@
 import {feito} from "./checkbox.js";
 import {primeiraentrada} from "./primeiraentrada.js";
-// import {abrirevento} from "./eventoabrir.js";
+import {iniciarperfil} from "./perfil.js";
 function butaocriacaoevento() {
     const butaoevento = document.getElementById("adicionartarefa");
     butaoevento.addEventListener("click", () => {
@@ -392,7 +392,7 @@ async function iniciarCalendario(armEvento) {
     })
     async function refreshCalendario() {
         ElementoCalendario.replaceChildren();
-        await  iniciarCalendarioMes(ElementoCalendario, dataSelecionada, armEvento);    
+        await iniciarCalendarioMes(ElementoCalendario, dataSelecionada, armEvento);    
     }
     refreshCalendario();
     document.addEventListener("eventos-mudaram", () => {
@@ -475,3 +475,4 @@ const armEvento = iniciarArmEvento();
 iniciarCalendario(armEvento);
 iniciarNav();
 primeiraentrada();
+iniciarperfil();

@@ -1,10 +1,13 @@
-var checkbox = document.getElementById("checkbox");
-var texto = document.getElementsByClassName("evento-titulo")[0];
-function checkfeito() {
-    if (checkbox.checked == true) {
-        texto.classList.add("feito");
-    } else {
-        texto.classList.remove("feito");
-    }
-}
-checkbox.onclick = checkfeito;
+const registerButton = document.getElementById("registro");
+const loginButton = document.getElementById("login");
+const container = document.getElementById("container");
+
+registerButton.addEventListener("click", () => {
+  container.classList.add("painel-direito-ativo");
+  var modalsenha = document.getElementById("show");
+  modalsenha.style.zIndex = '-1';
+});
+
+loginButton.addEventListener("click", () => {
+  container.classList.remove("painel-direito-ativo");
+});
