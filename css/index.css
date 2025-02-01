@@ -238,15 +238,17 @@ form {
 }
 .login-container form {
     align-items: center;
+    width: 100%;
 }
 .login-container h1 {
     text-align: center;
     font-size: 40px;
     margin-bottom: 85px;
+    width: 100%;
 }
 .login-container input[type="email"],.login-container input[type="password"] {
     height: 45px;
-    width: 400px;
+    width: 80%;
     border-radius: 15px;
     padding: 10px;
     border: none;
@@ -260,23 +262,6 @@ form {
     z-index: -1;
     transition: all 0.6s ease-in-out;
     text-align: center;
-}
-.login-container form input[type="submit"] {
-    margin: 40px;
-    /* width: 300px;
-    height: 40px; */
-    border-radius: 15px;
-    border: none;
-    background-color: #2d473d;
-    color: #F5FEE0;
-    font-weight: 500;
-    font-size: 17px;
-    padding: 12px 80px;
-    transition: all 0.3s ease-in-out;
-}
-.login-container form input[type="submit"]:hover {
-    letter-spacing: 3px;
-    cursor: pointer;
 }
 .container.painel-direito-ativo .login-container {
     transform: translateX(100%);
@@ -299,27 +284,11 @@ form {
 }
 .registro-container input[type="email"],.registro-container input[type="password"], .registro-container input[type="text"]{
     height: 45px;
-    width: 400px;
+    width: 80%;
     border-radius: 15px;
     padding: 10px;
     border: none;
     margin-bottom: 10px;
-}
-.registro-container form input[type="submit"] {
-    /* margin: 40px; */
-    /* height: 40px; */
-    border-radius: 15px;
-    border: none;
-    background-color: #2d473d;
-    color: #F5FEE0;
-    font-weight: 500;
-    font-size: 17px;
-    padding: 12px 80px;
-    transition: all 0.3s ease-in-out;
-}
-.registro-container form input[type="submit"]:hover {
-    letter-spacing: 3px;
-    cursor: pointer;
 }
 .container.painel-direito-ativo .registro-container {
     transform: translateX(100%);
@@ -388,14 +357,14 @@ form {
     position: absolute;
     display: flex;
     top: 0;
+    justify-content: center;
     height: 100%;
     width: 50%;
     transform: translateX(0);
     transition: transform 0.6s ease-in-out;
-    padding: 90px 70px;
+    padding: 0 10px;
     color: #fff;
 }
-
 .overlay-esquerda {
     transform: translateX(-20%);
     display: flex;
@@ -414,7 +383,7 @@ form {
     border-radius: 18px;
     text-shadow: 0 0 10px rgb(0 0 0 / 50%);
     box-shadow: 0 0 10px 2.5px rgb(0 0 0 / 20%);
-    padding: 12px 80px;
+    padding: 12px 50px;
     transition: all 0.3s ease-in-out;
 }
 .overlay-painel button:hover {
@@ -437,7 +406,21 @@ form {
 .container.painel-direito-ativo .overlay-esquerda {
     transform: translateX(0);
 }
-
+.login-container form #submit, .registro-container form #butsubmitr, .login-container form #senhaesquecida {
+    background-color: darkslategrey;
+    color:#e0fee0;
+    border: none;
+    font-size: medium;
+    border-radius: 15px;
+    height: 8%;
+    width: 50%;
+    transition: all 0.3s ease-in-out;
+}
+.login-container form #submit:hover, .registro-container form #butsubmitr:hover, .login-container form #senhaesquecida:hover {
+    background-color: rgb(31, 54, 54);
+    text-decoration: none;
+    letter-spacing: 2px;
+}
 .overlay-direita {
     right: 0;
     transform: translateX(0);
@@ -448,7 +431,52 @@ form {
 .container.painel-direito-ativo .overlay-direita {
     transform: translateX(20%);
 }
-@media (max-width: 1238px) {
+.toaster {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: calc(100vw - 2rem);
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 10%;
+    gap: 10px;
+    pointer-events: none;
+    z-index: 10;
+}
+.toast {
+    color: white;
+    border-radius: 12px;
+    padding: 10px;
+    font-weight: bold;
+    animation: toast-in 300ms ease, toast-out 300ms ease 2500ms;
+}
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes toast-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.error {
+    background-color: rgb(211, 41, 41);
+}
+.success{
+    background-color: rgb(19, 187, 19);
+}
+@media (max-width: 1170px) {
     .inicio {
         justify-content: center;
     }
@@ -499,6 +527,7 @@ form {
     .registro-container form {
         flex-wrap: nowrap;
         justify-content: center;
+        width: 100%;
     }
     .form-container {
         padding: 0;
@@ -558,14 +587,8 @@ form {
     .login-container form {
         flex-wrap: nowrap;
     }
-    .login-container input[type="email"], .login-container input[type="password"] {
-        width: 300px;
-    }
     .login-container h1 {
         margin-bottom: 0;
-    }
-    .registro-container input[type="email"], .registro-container input[type="password"], .registro-container input[type="text"] {
-        width: 300px;
     }
 }
 @media (max-width: 627px) {
@@ -583,5 +606,18 @@ form {
         height: 35px;
         font-size: 17px;
         border-radius: 13px;
+    }
+}
+@media (max-width: 430px) {
+    .login-container input[type="email"], .login-container input[type="password"] {
+        height: 17%;
+        width: 80%;
+    }
+    .login-container form {
+        width: 100%;
+        height: unset;
+    }
+    .login-container form h1 {
+        margin-bottom: 10%;
     }
 }

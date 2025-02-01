@@ -1,6 +1,7 @@
 import {feito} from "./checkbox.js";
 import {primeiraentrada} from "./primeiraentrada.js";
 import {iniciarperfil} from "./perfil.js";
+import {iniciarmissoes} from "./missoes.js";
 function butaocriacaoevento() {
     const butaoevento = document.getElementById("adicionartarefa");
     butaoevento.addEventListener("click", () => {
@@ -10,9 +11,63 @@ function butaocriacaoevento() {
             }));
     }) 
 }
+iniciarmissoes();
+function iniciarToaster(parent) {
+    const ElementoToaster = document.createElement("div");
+    ElementoToaster.classList.add("toaster");
+    parent.appendChild(ElementoToaster);
+    return {
+      success(message) {
+        mostrarToaster(ElementoToaster, message, "success");
+      },
+      error(message) {
+        mostrarToaster(ElementoToaster, message, "error");
+      }
+    };
+  }
+  function mostrarToaster(ElementoToaster, message, type) {
+    const ElementoToast = criarToast(message,type);
+    animarToast(ElementoToaster, ElementoToast);
+  }
+  function criarToast(message, type) {
+    const ElementoToast = document.createElement("div");
+    ElementoToast.textContent = message;
+    ElementoToast.classList.add("toast");
+    ElementoToast.classList.add(type);
+    return ElementoToast;
+  }
+  function animarToast(ElementoToaster, ElementoToast){
+    const alturaantes = ElementoToaster.offsetHeight;
+    ElementoToaster.appendChild(ElementoToast);
+    const alturadepois = ElementoToaster.offsetHeight;
+    const diferencaaltura = alturadepois - alturaantes;
+  
+    const AnimacaoToaster = ElementoToaster.animate([
+      { transform: `translate(0, ${diferencaaltura}px)`},
+      { transform: "translate(0, 0)"}
+    ], {
+      duration: 150,
+      easing: "ease-out"
+    });
+  
+    AnimacaoToaster.startTime = document.timeline.currentTime;
+    esperarAnimacao(ElementoToast)
+    .then(() => {
+      ElementoToaster.removeChild(ElementoToast);
+    })
+    .catch((error) => {
+      console.error("Deu errado a animação", error);
+    })
+  }
+  function esperarAnimacao(element) {
+    const animationPromises = element.getAnimations().map(animation => animation.finished);
+  
+    return Promise.allSettled(animationPromises);
+  }
 function formdialogevento() {
     const dialog = iniciarDialog("form-evento");
     const FormEvento = iniciarFormEvento();
+    // const toaster = iniciarToaster();
     document.addEventListener("requisicao-criacao-evento", () => {
         dialog.open();
     });

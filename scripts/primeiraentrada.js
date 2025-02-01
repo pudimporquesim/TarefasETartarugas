@@ -4,7 +4,6 @@ export function primeiraentrada() {
     let nomeHeroico = " ";
     let classe = "";
     var caixaclasses = document.getElementsByClassName("dialogo22")[0];
-    
     const dialogof = document.querySelector(`[data-dialog="nomeheroico"]`);
     $.post("php/primeiraentrada.php")
     .done(function (data) {

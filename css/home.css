@@ -15,23 +15,72 @@ main {
     grid-template-rows: 20% calc(40% - 10px) calc(40% - 10px);
     gap: 10px;
     grid-template-areas: 
-    'perfil perfil tarefas pomodoro'
-    'calendario calendario calendario pomodoro'
-    'calendario calendario calendario missoes';
+    'perfil perfil tarefas pomo-miss'
+    'calendario calendario calendario pomo-miss'
+    'calendario calendario calendario pomo-miss';
     padding: 10px;
     height: 100vh;
 }
 nav, .perfil, .tarefasdia, .calendario, .missao{
 
 }
+.pomodoro-missao {
+    grid-area: pomo-miss;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
 .pomodoro {
-    grid-area: pomodoro;
+    /* grid-area: pomodoro; */
     background-color: salmon;
+}
+.pomodoro, .missao {
+    height: 50%;
+    width: 100%;
 }
 .calendario2 {
     display: flex;
     flex-direction: column;
     height: 100%;
+}
+.missaoM {
+    display: flex;
+    justify-content: space-between;
+}
+[data-missao-form] {
+    display: flex;
+}
+.lado1, .lado2 {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+[data-dialog="form-missao"] {
+    width: 80%;
+    height: 70%;
+}
+.dialogmdentro {
+    padding: 20px;
+}
+.lado2 img {
+    width: 50%;
+    aspect-ratio: 1 / 1;
+    align-self: center;
+}
+.infomissao {
+    display: flex;
+}
+dialog.dialog {
+    align-self: center;
+    justify-self: center;
+    border: none;
+    border-radius: 10px;
+}
+.cima {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
 }
 nav {
     background-color: aqua;
@@ -111,7 +160,7 @@ nav {
     list-style: none;
 }
 .missao {
-    grid-area: missoes;
+    /* grid-area: missoes; */
     background-color: chartreuse;
 }
 .nav-calendario {
@@ -255,7 +304,6 @@ nav {
 .dialog21 {
     position: relative;
     height: 100%;
-
 }
 .dialogo22 {
     position: absolute;

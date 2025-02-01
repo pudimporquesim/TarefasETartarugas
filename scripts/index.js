@@ -2,9 +2,24 @@ var modal = document.getElementById("modal");
 var btn = document.getElementById("myBtn");
 var span = document.getElementsByClassName("fechar")[0];
 var btn2 = document.getElementById("myBtn2");
+var bloco = document.getElementById("bloco");
 
 btn.onclick = function() {
   modal.style.display = "block";
+  document.body.style.overflow = "hidden";
+  const toaster = iniciarToaster(modal);
+  inp_submit.addEventListener('click', function (event) {
+    event.preventDefault();
+    login(inp_email.value, inp_senha.value, toaster);
+  });
+  inp_submitr.addEventListener('click' , function (event) {
+    event.preventDefault();
+    registro(inp_emailr.value, inp_senhaR1.value, inp_nomer.value, toaster);
+  });
+  inp_senhaesquecida.addEventListener('click', function(event) {
+    event.preventDefault();
+    senhaesquecida(inp_emails.value,toaster);
+  });
 }
 btn2.onclick = function() {
     modal.style.display = "block";
@@ -12,6 +27,7 @@ btn2.onclick = function() {
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
+    document.body.style.overflow = "auto";
   }
 }
 const registerButton = document.getElementById("registro");
@@ -53,20 +69,15 @@ inp_email = document.getElementById('emaill');
 inp_senha = document.getElementById('senhal');
 inp_submit = document.getElementById("submit");
 
-inp_submit.addEventListener('click', function (event) {
-  event.preventDefault();
-  login(inp_email.value, inp_senha.value);
-});
-
-function login(email, senha) {
+function login(email, senha, toaster) {
     $.post("php/login.php", { emaill: email, senhal: senha })
     .done(function (data) {
         // data = JSON.parse(data); se deixar isso aqui o código não funciona
         if (data.error != undefined) {
-          console.log(data.error);
+          toaster.error(data.error);
         } else if (data.success != undefined) {
             // console.log(data.success);
-            console.log(data.user_id);
+            toaster.success(data.success);
             window.location.href = "homepage.html";
         }
     })
@@ -74,24 +85,20 @@ function login(email, senha) {
         console.error('Erro na requisição:', textStatus, errorThrown);
     });
 }
-
 inp_emailr = document.getElementById('emailr');
 inp_senhaR1 = document.getElementById('senhaR1');
 inp_nomer = document.getElementById('nomer');
 inp_submitr = document.getElementById('butsubmitr');
 
-inp_submitr.addEventListener('click' , function () {
-    event.preventDefault();
-    registro(inp_emailr.value, inp_senhaR1.value, inp_nomer.value);
-});
+console.log(inp_submit, inp_submitr);
 
-function registro(email, senha, nome) {
+function registro(email, senha, nome, toaster) {
     $.post("php/cadastro.php", {emailr: email, senhaR1: senha, nomer: nome})
     .done(function (data) {
         if (data.error != undefined) {
-          console.log(data.error);
+          toaster.error(data.error);
         } else if (data.success != undefined) {
-            console.log(data.success);
+            toaster.success(data.success);
         }
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
@@ -101,28 +108,70 @@ function registro(email, senha, nome) {
 
 inp_emails = document.getElementById('emails');
 inp_senhaesquecida = document.getElementById('senhaesquecida');
-
-inp_senhaesquecida.addEventListener('click', function() {
-  console.log("Chega aqui senha esquecida");
-  event.preventDefault();
-  senhaesquecida(inp_emails.value);
-});
-
-function senhaesquecida(email) {
+function senhaesquecida(email, toaster) {
   console.log("Chega aqui senha esquecida 2");
   $.post("php/recuperarsenhapt1.php", {emails: email})
   .done(function(data) {
     console.log("Resposta do servidor:", data);
     if (data.error != undefined) {
-      console.log("show 1");
-      console.log(data.error);
+      toaster.error(data.error);
     } else if (data.success != undefined) {
-      console.log("show 2");
-      console.log(data.success);
+      toaster.success(data.success);
     }
   })
   .fail(function (jqXHR, textStatus, errorThrown) {
     console.error('Erro na requisição:', textStatus, errorThrown);
   });
-  console.log("show");
+}
+function iniciarToaster(parent) {
+  const ElementoToaster = document.createElement("div");
+  ElementoToaster.classList.add("toaster");
+  parent.appendChild(ElementoToaster);
+  return {
+    success(message) {
+      mostrarToaster(ElementoToaster, message, "success");
+    },
+    error(message) {
+      mostrarToaster(ElementoToaster, message, "error");
+    }
+  };
+}
+function mostrarToaster(ElementoToaster, message, type) {
+  const ElementoToast = criarToast(message,type);
+  animarToast(ElementoToaster, ElementoToast);
+}
+function criarToast(message, type) {
+  const ElementoToast = document.createElement("div");
+  ElementoToast.textContent = message;
+  ElementoToast.classList.add("toast");
+  ElementoToast.classList.add(type);
+  return ElementoToast;
+}
+function animarToast(ElementoToaster, ElementoToast){
+  const alturaantes = ElementoToaster.offsetHeight;
+  ElementoToaster.appendChild(ElementoToast);
+  const alturadepois = ElementoToaster.offsetHeight;
+  const diferencaaltura = alturadepois - alturaantes;
+
+  const AnimacaoToaster = ElementoToaster.animate([
+    { transform: `translate(0, ${diferencaaltura}px)`},
+    { transform: "translate(0, 0)"}
+  ], {
+    duration: 150,
+    easing: "ease-out"
+  });
+
+  AnimacaoToaster.startTime = document.timeline.currentTime;
+  esperarAnimacao(ElementoToast)
+  .then(() => {
+    ElementoToaster.removeChild(ElementoToast);
+  })
+  .catch((error) => {
+    console.error("Deu errado a animação", error);
+  })
+}
+function esperarAnimacao(element) {
+  const animationPromises = element.getAnimations().map(animation => animation.finished);
+
+  return Promise.allSettled(animationPromises);
 }
