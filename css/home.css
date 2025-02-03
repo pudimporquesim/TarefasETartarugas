@@ -55,13 +55,22 @@ nav, .perfil, .tarefasdia, .calendario, .missao{
     display: flex;
     flex-direction: column;
 }
-
 [data-dialog="form-missao"] {
     width: 80%;
     height: 70%;
 }
+.tarefam {
+    display: flex;
+}
+.tarefam input[type="date"] {
+    
+}
+[data-criar-missao] {
+    width: 100%;
+}
 .dialogmdentro {
     padding: 20px;
+    height: 100%;
 }
 .lado2 img {
     width: 50%;

@@ -3,11 +3,25 @@ var btn = document.getElementById("myBtn");
 var span = document.getElementsByClassName("fechar")[0];
 var btn2 = document.getElementById("myBtn2");
 var bloco = document.getElementById("bloco");
+const registerButton = document.getElementById("registro");
+const loginButton = document.getElementById("login");
+const container = document.getElementById("container");
+inp_email = document.getElementById('emaill');
+inp_senha = document.getElementById('senhal');
+inp_submit = document.getElementById("submit");
+inp_emailr = document.getElementById('emailr');
+inp_senhaR1 = document.getElementById('senhaR1');
+inp_nomer = document.getElementById('nomer');
+inp_submitr = document.getElementById('butsubmitr');
+inp_emails = document.getElementById('emails');
+inp_senhaesquecida = document.getElementById('senhaesquecida');
+const toaster = iniciarToaster(document.body);
 
 btn.onclick = function() {
   modal.style.display = "block";
   document.body.style.overflow = "hidden";
-  const toaster = iniciarToaster(modal);
+  
+}
   inp_submit.addEventListener('click', function (event) {
     event.preventDefault();
     login(inp_email.value, inp_senha.value, toaster);
@@ -20,7 +34,6 @@ btn.onclick = function() {
     event.preventDefault();
     senhaesquecida(inp_emails.value,toaster);
   });
-}
 btn2.onclick = function() {
     modal.style.display = "block";
   }
@@ -30,10 +43,6 @@ window.onclick = function(event) {
     document.body.style.overflow = "auto";
   }
 }
-const registerButton = document.getElementById("registro");
-const loginButton = document.getElementById("login");
-const container = document.getElementById("container");
-
 registerButton.addEventListener("click", () => {
   container.classList.add("painel-direito-ativo");
   var modalsenha = document.getElementById("show");
@@ -65,9 +74,7 @@ function mostrar() {
   var modalsenha = document.getElementById("show");
   modalsenha.style.zIndex = '3';
 }
-inp_email = document.getElementById('emaill');
-inp_senha = document.getElementById('senhal');
-inp_submit = document.getElementById("submit");
+
 
 function login(email, senha, toaster) {
     $.post("php/login.php", { emaill: email, senhal: senha })
@@ -85,10 +92,7 @@ function login(email, senha, toaster) {
         console.error('Erro na requisição:', textStatus, errorThrown);
     });
 }
-inp_emailr = document.getElementById('emailr');
-inp_senhaR1 = document.getElementById('senhaR1');
-inp_nomer = document.getElementById('nomer');
-inp_submitr = document.getElementById('butsubmitr');
+
 
 console.log(inp_submit, inp_submitr);
 
@@ -106,8 +110,7 @@ function registro(email, senha, nome, toaster) {
     });
 }
 
-inp_emails = document.getElementById('emails');
-inp_senhaesquecida = document.getElementById('senhaesquecida');
+
 function senhaesquecida(email, toaster) {
   console.log("Chega aqui senha esquecida 2");
   $.post("php/recuperarsenhapt1.php", {emails: email})
