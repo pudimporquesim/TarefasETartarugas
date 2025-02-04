@@ -40,6 +40,9 @@ export function iniciarmissoes() {
         $.post("php/missaoBD.php", {titulom, descm, datalm, dificuldadem, feitom, tarefasm})
         .done(function (data) {
             console.log("Resposta do servidor: ", data);
+            document.dispatchEvent(new CustomEvent("criar-missão", {
+                bubbles: true
+            }));
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             console.error('Erro na requisição:', textStatus, errorThrown);

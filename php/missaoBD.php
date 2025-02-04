@@ -89,7 +89,29 @@ if(($_POST['titulom'] != null) && ($_POST['datalm'] != null) && ($_POST['dificul
                         $smm->bindParam(':usuario_id', $idpessoa);
                         $smm->bindParam(':missao_id', $misssaoid);
                         $smm->execute();
-                        echo json_encode(['success' => 'sasasasção']);
+                        // echo json_encode(['success' => 'sasasasção']);
+                        foreach ($tarefas_array as $tarefa) {
+                            $nomet = $tarefa["nome"];
+                            $data_limitet = $tarefa["datalimite"];
+                            $feitot = $tarefa["feito"];
+                            $sql3 = "INSERT INTO tarefa (nome, datalimite, feita, fk_usuario_id, fk_Missao_ID, recompensa_moedas, recompensa_xp) values (:nome, :datal, :feita, :usuario_id, :missaoid, :recompensa_m, :recompensa_x)";
+                            try {
+                                $ah = $pdo->prepare($sql3);
+                                $ah->bindParam(':nome', $nomet);
+                                $ah->bindParam(':datal', $data_limitet);
+                                $ah->bindParam(':feita', $feitot);
+                                $recompm = 0;
+                                $recompx = 0;
+                                $ah->bindParam(':recompensa_m', $recompm);
+                                $ah->bindParam(':recompensa_x', $recompx);
+                                $ah->bindParam(':usuario_id', $idpessoa);
+                                $ah->bindParam(':missaoid', $misssaoid);
+                                $ah->execute();
+                            } catch (PDOException $e) {
+                                echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
+                            }
+                        }
+                        echo json_encode(['success' => 'funciona']);
                     } catch (PDOException $e) {
                         echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
                     }
