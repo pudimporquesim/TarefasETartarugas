@@ -60,8 +60,8 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"class="icone-button"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                         </button>
                     </div>
-                    <div class="missoesbd">
-
+                    <div class="missoesbd" data-espaco-missoes>
+                        
                     </div>
                 </div>
             </div>
@@ -214,9 +214,63 @@
                     <button data-adicionar-tarefa-missao>
                         + Nova tarefa
                     </button>
+                    <div class="tarefas">
+
+                    </div>
                 </div>
             </div>
             <button data-criar-missao id="criarmissao-button">Criar missão</button>
+        </div>
+    </dialog>
+    <dialog class="dialog" data-dialog-missao data-dialog="form-missao2">
+        <div class="dialogmdentro">
+            <div class="cima">
+                <button class="fechardialog" data-dialog-close-button>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-button"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button> <br>
+                <h1>Missões</h1>
+            </div>
+            <div class="infomissao">
+                <form class="lado1" data-missao-form autocomplete="off">
+                    <div>
+                        <label for="nomem">Nome</label> <br>
+                        <input type="text" name="nomem" id="nomem" required> <br>
+                        <label for="descricaom">Descrição</label> <br>
+                        <input type="text" name="descricaom" id="descricaom"> <br>
+                        <label for="data-limitem">Data limite</label> <br>
+                        <input type="date" name="data-limitem" id="data-limitem" required> <br>
+                        <label>Dificuldade</label> <br>
+                        <input type="radio" name="dificuldade" id="dificuldadem-facil" value="facil">
+                        <label for="dificuldade-facil">Fácil</label>
+                        <input type="radio" name="dificuldade" id="dificuldadem-medio" value="medio">
+                        <label for="dificuldade-medio">Médio</label>
+                        <input type="radio" name="dificuldade" id="dificuldadem-dificil" value="dificil">
+                        <label for="dificuldade-dificilm">Difícil</label> 
+                        <input type="hidden" name="feito" id="feito" value="0">
+                    </div>
+                </form>
+                <div class="lado21">
+                    <p>Boss</p>
+                    <img src="img/perfil.png" alt="">
+                    <div class="vida">
+                        <p>Vida</p>
+                        <div class="barratotal">
+                            <div class="barra bv">100</div>
+                        </div>
+                    </div>
+                    <p>Tarefas</p>
+                    <button data-adicionar-tarefa-missao2>
+                        + Nova tarefa
+                    </button>
+                    <div class="tarefas2">
+
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="deletar-buttonm">Deletar tarefa</button>
+                <button type="button" id="atualizartarefa-buttonm">Atualizar tarefa</button>
+            </div>
         </div>
     </dialog>
     <template data-template="calendario-mes">
@@ -263,6 +317,17 @@
             <input data-checkbox-tarefam type="checkbox" name="feitom" id="feito-checkboxm" value="0">
             <input type="text" data-titulo-tarefam class="tarefam-titulo" id="tarefam-titulo">
             <input data-data-tarefam type="date" name="data-limite" id="data-limitefm" required>
+        </div>
+    </template>
+    <template data-template="missaobd">
+        <div class="missaobd" data-missao data-missao-id="">
+            <h3 class="missao-titulo">Terminar TCC</h3>
+            <span class="data-limite">20/02/2025</span>
+            <div class="xp">
+                <div class="barratotal">
+                    <div class="barra bx">100</div>
+                </div>
+            </div>
         </div>
     </template>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>

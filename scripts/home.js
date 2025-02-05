@@ -1,7 +1,7 @@
 import {feito} from "./checkbox.js";
 import {primeiraentrada} from "./primeiraentrada.js";
 import {iniciarperfil} from "./perfil.js";
-import {iniciarmissoes} from "./missoes.js";
+import {iniciarmissoes, aparecermissao} from "./missoes.js";
 function butaocriacaoevento() {
     const butaoevento = document.getElementById("adicionartarefa");
     butaoevento.addEventListener("click", () => {
@@ -12,6 +12,7 @@ function butaocriacaoevento() {
     }) 
 }
 iniciarmissoes();
+aparecermissao();
 function iniciarToaster(parent) {
     const ElementoToaster = document.createElement("div");
     ElementoToaster.classList.add("toaster");
@@ -75,7 +76,6 @@ function formdialogevento() {
     dialog.elementoDialog.addEventListener("close", () => {
         FormEvento.reset();
     })
-
     FormEvento.ElementoForm.addEventListener("criar-evento2", () => {
         dialog.close();
     });
@@ -87,6 +87,7 @@ export function iniciarDialog(nome) {
     for (const pedacobutaofechar of butaofechar) {
         pedacobutaofechar.addEventListener("click", () => {
             elementoDialog.close();
+           
         });
     }
     if (nome != "nomeheroico"){
@@ -296,13 +297,14 @@ function iniciarArmEvento() {
     });
     return {
         async pegarEventosPorData(data) {
-            const tarefas = await pegareventosdoarm2();
+            const { tarefas, tarefasmissao } = await pegareventosdoarm2();
+            // console.log(tarefasmissao);
             const EventosFiltrados = tarefas.filter((evento) => mesmodia(evento.DataLimite, data));
             return EventosFiltrados;
         }
     };
 }
-async function pegareventosdoarm2() {
+export async function pegareventosdoarm2() {
     try {
         var tarefas = [];
         const data = await $.post("php/puxareventoBD.php");
@@ -320,12 +322,13 @@ async function pegareventosdoarm2() {
                     DataLimite: datan 
                 };
             });            
-            return tarefas;
+            var tarefasmissao = tarefas.filter(tarefa => tarefa.Dificuldade == null);
+            return { tarefas, tarefasmissao };
         }
-        return [];
+        return { tarefas: [], tarefasmissao: [] };
     } catch (error) {
         console.error("Erro na requisição:", error);
-        return [];
+        return { tarefas: [], tarefasmissao: [] };
     }
 }
 
