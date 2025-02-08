@@ -222,8 +222,8 @@
             <button data-criar-missao id="criarmissao-button">Criar missão</button>
         </div>
     </dialog>
-    <dialog class="dialog" data-dialog-missao data-dialog="form-missao2">
-        <div class="dialogmdentro">
+    <dialog class="dialog" data-dialog-missao  data-dialog="form-missao2">
+        <div class="dialogmdentro" data-missao-dialog-id="">
             <div class="cima">
                 <button class="fechardialog" data-dialog-close-button>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-button"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
@@ -313,7 +313,7 @@
         </button>
     </template>
     <template data-template="tarefam">
-        <div data-tarefam class="tarefam">
+        <div data-tarefam class="tarefam" data-tarefa-missao-id="">
             <input data-checkbox-tarefam type="checkbox" name="feitom" id="feito-checkboxm" value="0">
             <input type="text" data-titulo-tarefam class="tarefam-titulo" id="tarefam-titulo">
             <input data-data-tarefam type="date" name="data-limite" id="data-limitefm" required>
