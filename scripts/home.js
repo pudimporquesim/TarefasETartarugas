@@ -173,6 +173,20 @@ function iniciarEvento(event) {
         const atualizarbtn = elementoDialog.querySelector("[id='atualizartarefa-button']");
         const deletarbtn = $(elementoDialog).find("[id='deletar-button']");
         const idtarefa = event.ID;
+        if (event.Dificuldade == null) {
+            const dificuldadeRadios = elementoDialog.querySelectorAll('input[name="dificuldade"]');
+            const descricaoInput = elementoDialog.querySelector("[id='descricao']");
+            const dificuldadeLabels = elementoDialog.querySelectorAll('input[name="dificuldade"], label[for^="dificuldade"]');
+            const descricaolabel = elementoDialog.querySelector('label[for="descricao"]');
+            dificuldadeRadios.forEach(radio => {
+                radio.hidden = true;
+            });
+            descricaoInput.hidden = true;
+            dificuldadeLabels.forEach(label => {
+                label.hidden = true;
+            });
+            descricaolabel.hidden = true;
+        }
         if (feito == 1) {
             elementoDialog.querySelector("[id='feito-checkbox']").checked = true;
         } else {
@@ -287,6 +301,16 @@ function iniciarArmEvento() {
         var data_limite = EventoCriado2.data;
         var dificuldade = EventoCriado2.dificuldade;
         var feito = EventoCriado2.feito;
+        if (data_limite) {
+            let datal = new Date(data_limite);
+            datal.setUTCHours(12, 0, 0, 0); 
+            let hoje = today();
+            hoje.setUTCHours(12, 0, 0, 0);
+            if (datal < hoje) {
+                console.log("A data de uma tarefa não pode ser anterior a data de hoje.");
+                return;
+            } 
+        }
         $.post("php/eventoBD.php", {titulo, descricao, data_limite, dificuldade, feito})
         .done(function (data) {
             console.log("Resposta do servidor: ", data);
@@ -332,7 +356,7 @@ export async function pegareventosdoarm2() {
     }
 }
 
-function today() {
+export function today() {
     const agora = new Date();
     const dataAjustada = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
     return dataAjustada;

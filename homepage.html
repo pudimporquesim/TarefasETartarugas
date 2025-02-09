@@ -153,19 +153,19 @@
         </button> <br>
         <form autocomplete="off">
             <h1>Tarefas</h1>
-            <label for="nome">Nome</label> <br>
-            <input type="text" name="nome" id="nome" required> <br>
-            <label for="descricao">Descrição</label> <br>
-            <input type="text" name="descricao" id="descricao"> <br>
-            <label for="data-limite">Data limite</label> <br>
-            <input type="date" name="data-limite" id="data-limite" required> <br>
-            <label>Dificuldade</label> <br>
+            <label for="nome">Nome</label> 
+            <input type="text" name="nome" id="nome" required> 
+            <label for="descricao">Descrição</label> 
+            <input type="text" name="descricao" id="descricao"> 
+            <label for="data-limite">Data limite</label> 
+            <input type="date" name="data-limite" id="data-limite" required> 
+            <label for="dificuldade">Dificuldade</label> 
             <input type="radio" name="dificuldade" id="dificuldade-facil" value="facil">
             <label for="dificuldade-facil">Fácil</label>
             <input type="radio" name="dificuldade" id="dificuldade-medio" value="medio">
             <label for="dificuldade-medio">Médio</label>
             <input type="radio" name="dificuldade" id="dificuldade-dificil" value="dificil">
-            <label for="dificuldade-dificil">Difícil</label> <br>
+            <label for="dificuldade-dificil">Difícil</label> 
             <div class="linha">
                 <label for="feito-checkbox">Feita?</label>
                 <input type="checkbox" name="feito" id="feito-checkbox" value="0">
@@ -317,6 +317,9 @@
             <input data-checkbox-tarefam type="checkbox" name="feitom" id="feito-checkboxm" value="0">
             <input type="text" data-titulo-tarefam class="tarefam-titulo" id="tarefam-titulo">
             <input data-data-tarefam type="date" name="data-limite" id="data-limitefm" required>
+            <button class="apagar-tarefa-missao" dialog-delete-tarefa-button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-button"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
         </div>
     </template>
     <template data-template="missaobd">

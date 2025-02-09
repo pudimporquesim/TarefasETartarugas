@@ -83,7 +83,7 @@ try {
         $mudancastarefas_status = "Nenhuma mudança nas tarefas";
     }
 
-    if ($tarefassembdjson !== null && is_array($tarefassembdjson)) {
+    if ($tarefassembdjson != null && is_array($tarefassembdjson)) {
         foreach ($tarefassembdjson as $novaTarefa) {
             $sql = "INSERT INTO tarefa (Nome, fk_Missao_id, DataLimite) VALUES (:Nome, :MissaoID, :data)";
             $stmt = $pdo->prepare($sql);

@@ -1,4 +1,4 @@
-import { iniciarDialog, pegareventosdoarm2 } from "./home.js";
+import { iniciarDialog, pegareventosdoarm2, today } from "./home.js";
 export function iniciarmissoes() {
     const btncriarmissao = document.querySelector("[data-criar-missao]");
     const btnmissao = document.querySelector("[data-nav-abrir-form-missao]");
@@ -38,12 +38,40 @@ export function iniciarmissoes() {
         if (tarefas.length === 0) {
             console.log("Uma missão não pode ser criada sem tarefas.");
             return;
-        }
+        };
         let temTarefaInvalida = tarefas.some(tarefa => tarefa.nome.trim() === "");
         if (temTarefaInvalida) {
             console.log("O campo de nome de uma tarefa não pode ficar vazio.");
             return;
-        }
+        };
+        var temTarefaInvalidaData = [];
+        tarefas.forEach(tarefa => {
+            let datatarefa = new Date(tarefa.datalimite);
+            datatarefa.setUTCHours(12, 0, 0, 0); 
+            let datamissao = new Date(datalm);
+            datamissao.setUTCHours(12, 0, 0, 0); 
+            if (datatarefa > datamissao) {
+                temTarefaInvalidaData.push(tarefa);
+            } 
+        });
+        if (temTarefaInvalidaData.length > 0) {
+            console.log("A data de uma tarefa de missão não pode ser posterior a data da missão.");
+            return;
+        };
+        var temTarefaInvalidaData2 = [];
+        tarefas.forEach(tarefa => {
+            let datatarefa = new Date(tarefa.datalimite);
+            datatarefa.setUTCHours(12, 0, 0, 0); 
+            let hoje = today();
+            hoje.setUTCHours(12, 0, 0, 0); 
+            if (datatarefa < hoje) {
+                temTarefaInvalidaData2.push(tarefa);
+            } 
+        });
+        if (temTarefaInvalidaData2.length > 0) {
+            console.log("A data de uma tarefa de missão não pode ser anterior a data de hoje.");
+            return;
+        };
         let tarefasm = JSON.stringify(tarefas);
         $.post("php/missaoBD.php", {titulom, descm, datalm, dificuldadem, feitom, tarefasm})
         .done(function (data) {
@@ -214,6 +242,7 @@ async function addmissao(parent, missao, tarefas) {
     // var porcentagem = qtdfalta / quanttarefastotal;
     // console.log(porcentagem, quanttarefastotal, quanttarefasfeitas);
     const missaobarra = ElementoMissaoBD.querySelector("[class='barra bx']");
+    missaobarra.style.width = (porcentagem * 100) + "%";
     missaobarra.innerHTML = (porcentagem * 100) + "%";
     parent.appendChild(ElementoMissaoBD);
     ElementoMissaoBD.addEventListener("click", function () { 
@@ -271,6 +300,19 @@ async function addmissao(parent, missao, tarefas) {
             var { tarefassembdjson, mudancastarefas }  = verseigualtarefas(tarefasm, tarefasdamissaototal);
             missaoatualizar(titulomissao,descmissao,datamissaoa,datamissao2,missao ,idmissao, mudancastarefas, tarefassembdjson);
         });
+        deletarbtn.on('click', async function () {
+            await $.post("php/deletarmissao.php", {missao})
+            .done(function (data) {
+                console.log("Resposta do servidor: ", data);
+                dialog.close();
+                // document.dispatchEvent(new CustomEvent("eventos-mudaram", {
+                //     bubbles: true
+                // }));
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error('Erro na requisição:', textStatus, errorThrown);
+            });
+          });
         const btnadicionartarefamissao = document.querySelector("[data-adicionar-tarefa-missao2]");
         const area = document.getElementsByClassName("tarefas2")[0];
         btnadicionartarefamissao.replaceWith(btnadicionartarefamissao.cloneNode(true));
@@ -345,6 +387,20 @@ function addtarefamissao2(parent, tarefa) {
     const ElementoTarefaM = ConteudoTarefaM.querySelector("[data-tarefam]");
     const TarefaMNome = ConteudoTarefaM.querySelector("[data-titulo-tarefam]");
     const TarefaMData = ConteudoTarefaM.querySelector("[data-data-tarefam]")
+    const deletartarefamissaobtn = ConteudoTarefaM.querySelector("[dialog-delete-tarefa-button]");
+    deletartarefamissaobtn.addEventListener("click", async function () {
+        console.log("cliquei", tarefa);
+        await $.post("php/deletartarefamissao.php", {tarefa})
+        .done(function (data) {
+            console.log("Resposta do servidor: ", data);
+            // document.dispatchEvent(new CustomEvent("eventos-mudaram", {
+            //     bubbles: true
+            // }));
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            console.error('Erro na requisição:', textStatus, errorThrown);
+        });
+    });
     const checkbox = ElementoTarefaM.querySelector("#feito-checkboxm");
     const ElementoId = ConteudoTarefaM.querySelector("[data-tarefa-missao-id='']");
     ElementoId.setAttribute('data-tarefa-missao-id', tarefa.ID);
