@@ -302,7 +302,7 @@ function iniciarArmEvento() {
         var dificuldade = EventoCriado2.dificuldade;
         var feito = EventoCriado2.feito;
         if (data_limite) {
-            let datal = new Date(data_limite);
+            let datal = new Date(data_limite); // Tem que mexer aqui
             datal.setUTCHours(12, 0, 0, 0); 
             let hoje = today();
             hoje.setUTCHours(12, 0, 0, 0);
