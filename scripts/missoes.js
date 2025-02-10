@@ -35,6 +35,27 @@ export function iniciarmissoes() {
         let dificuldadem = dadosMissao.dificuldade;
         let feitom = dadosMissao.feito;
         let tarefas = dadosMissao.tarefas;
+        
+        if (titulom.trim() === "") {
+            console.log("O campo de nome de uma missão não pode ficar vazio.")
+            return
+        }
+        if (datalm.trim() === "") {
+            console.log("O campo de data limite de uma missão não pode ficar vazio.")
+            return
+        }
+        if (dificuldadem == null) {
+            console.log("O campo de dificuldade de uma missão não pode ficar vazio.")
+            return
+        }
+        let dataldata = new Date(datalm);
+        dataldata.setUTCHours(12, 0, 0, 0);
+        let hoje = today();
+        hoje.setUTCHours(12, 0, 0, 0); 
+        if (dataldata < hoje) {
+            console.log("A data de uma missão não pode ser anterior a data de hoje.");
+            return;
+        }
         if (tarefas.length === 0) {
             console.log("Uma missão não pode ser criada sem tarefas.");
             return;
@@ -55,7 +76,7 @@ export function iniciarmissoes() {
             } 
         });
         if (temTarefaInvalidaData.length > 0) {
-            console.log("A data de uma tarefa de missão não pode ser posterior a data da missão.");
+            console.log("A data limite de uma tarefa de missão não pode ser posterior a data limite da missão.");
             return;
         };
         var temTarefaInvalidaData2 = [];
@@ -70,6 +91,11 @@ export function iniciarmissoes() {
         });
         if (temTarefaInvalidaData2.length > 0) {
             console.log("A data de uma tarefa de missão não pode ser anterior a data de hoje.");
+            return;
+        };
+        let temTarefaInvalidasemdata = tarefas.some(tarefa => tarefa.datalimite.trim() === "");
+        if (temTarefaInvalidasemdata) {
+            console.log("O campo de data limite de uma tarefa não pode ficar vazio.");
             return;
         };
         let tarefasm = JSON.stringify(tarefas);
@@ -119,6 +145,35 @@ export async function aparecermissao() {
     const missoesbd = await pegarmissaobd();
     // console.log(missoesbd);
     const { tarefas, tarefasmissao } = await pegareventosdoarm2();
+    let hoje = today();
+    hoje.setUTCHours(12, 0, 0, 0); 
+    let ultimaData = localStorage.getItem('ultimaDataCalculo');
+    if (ultimaData !== hoje.toDateString()) {
+        let missoesatrasadas = [];
+        missoesbd.forEach(missao => {
+            let datadata = new Date(missao.DataLimite);
+            datadata.setUTCHours(12, 0, 0, 0); 
+            if (datadata < hoje && missao.Completa == 0) {
+                missoesatrasadas.push(missao);
+            };
+        });
+        let tarefasnaomissao = tarefas.filter(tarefa => tarefa.fk_missao_id == null);
+        let tarefasatrasadas = [];
+        tarefasnaomissao.forEach(tarefa => {
+            let datadata = new Date(tarefa.DataLimite);
+            datadata.setUTCHours(12, 0, 0, 0); 
+            if (datadata < hoje && tarefa.Feita == 0) {
+                tarefasatrasadas.push(tarefa);
+            };
+        });
+        if (tarefasatrasadas.length > 0 || missoesatrasadas.length > 0) {
+            let danotarefas = (tarefasatrasadas.reduce((acumulado, tarefa) => acumulado + Number(tarefa.Recompensa_xp), 0)) / 2;
+            let danomissoes = (missoesatrasadas.reduce((acumulado, missao) => acumulado + Number(missao.Recompensa_xp), 0)) / 2;
+            let danototal = danotarefas + danomissoes;
+            console.log(`Você acaba de receber ${danototal} de dano por conta de suas missões e tarefas atrasadas.`);
+        }
+        localStorage.setItem('ultimaDataCalculo', hoje.toDateString());
+    }
     missoesbd.forEach(missao => {
         missaoaparecer(missao, tarefas);
     });
@@ -132,6 +187,23 @@ function verseigual(titulomissao,desc,data,dataEvento2,missao,idmissao, mudancas
     const mudancas = {};
     let dados = JSON.parse(tarefassembdjson);
     // Agora dados.tarefas será um array
+    if (titulomissao.val().trim() === "") {
+        console.log("O campo de nome de uma missão não pode ficar vazio");
+        return
+    }
+    if (data) {
+        let datadata = new Date(data.val());
+        datadata.setUTCHours(12, 0, 0, 0); 
+        let hoje = today();
+        hoje.setUTCHours(12, 0, 0, 0); 
+        if (data.val().trim() === "") {
+            console.log("O campo de data limite de uma missão não pode ficar vazio");
+            return
+        } else if (datadata < hoje) {
+            console.log("A data limite de uma missão não pode ser anterior ao dia de hoje.");
+            return
+        } 
+    }
     let temTarefaInvalida = dados.some(tarefa => tarefa.nome.trim() === "");
     if (temTarefaInvalida) {
         console.log("O campo de nome de uma tarefa não pode ficar vazio.");
@@ -260,6 +332,9 @@ async function addmissao(parent, missao, tarefas) {
         const titulomissao = $(elementoDialog).find("[id='nomem']");
         const descmissao = $(elementoDialog).find("[id='descricaom']");
         const datamissaoa = $(elementoDialog).find("[id='data-limitem']");
+        const bossvida = elementoDialog.querySelector("[class='barra bv']");
+        bossvida.style.width = missao.vida_boss + "%";
+        bossvida.innerHTML = missao.vida_boss;
         const dificuldademissao = missao.Dificuldade;
         const atualizarbtn = elementoDialog.querySelector("[id='atualizartarefa-buttonm']");
         const deletarbtn = $(elementoDialog).find("[id='deletar-buttonm']");
@@ -337,33 +412,35 @@ function verseigualtarefas(tarefasm, tarefasdamissaototal) {
             const datatarefa = new Date(tarefa.DataLimite);
             const datatarefa2 = datatarefa.toISOString().split('T')[0];
             let mudanca = {};
-            if (tarefam.nome != tarefa.Nome) {
-                if (tarefam.nome.trim() == '') {
-                    console.log("O campo de nome não pode ficar vazio.");
-                    return
+            if (tarefam != undefined)  {
+                if (tarefam.nome != tarefa.Nome) {
+                    if (tarefam.nome.trim() == '') {
+                        console.log("O campo de nome de uma tarefa não pode ficar vazio.");
+                        return
+                    }
+                    mudanca.Nome = tarefam.nome;
                 }
-                mudanca.Nome = tarefam.nome;
-            }
-            if (tarefam.datalimite != datatarefa2) {
-                if (tarefam.datalimite == '') {
-                 console.log("O campo de data não pode ficar vazio.");
-                 return
+                if (tarefam.datalimite != datatarefa2) {
+                    if (tarefam.datalimite == '') {
+                     console.log("O campo de data de uma tarefa não pode ficar vazio.");
+                     return
+                    }
+                    mudanca.DataLimite = tarefam.datalimite;
                 }
-                mudanca.DataLimite = tarefam.datalimite;
-            }
-            if (tarefam.feito != (tarefa.Feita === 1)) {
-                var feitoN;
-                if (tarefam.feito == true) {
-                    feitoN = 1;
-                } else {
-                    feitoN = 0;
+                if (tarefam.feito != (tarefa.Feita === 1)) {
+                    var feitoN;
+                    if (tarefam.feito == true) {
+                        feitoN = 1;
+                    } else {
+                        feitoN = 0;
+                    }
+                    mudanca.Feita = feitoN;
                 }
-                mudanca.Feita = feitoN;
-            }
-            if (Object.keys(mudanca).length > 0) {
-                mudanca.ID = tarefa.ID;
-                mudanca.missaoid = tarefa.fk_missao_id;
-                mudancatarefas.push(mudanca);
+                if (Object.keys(mudanca).length > 0) {
+                    mudanca.ID = tarefa.ID;
+                    mudanca.missaoid = tarefa.fk_missao_id;
+                    mudancatarefas.push(mudanca);
+                }
             }
         }
     );

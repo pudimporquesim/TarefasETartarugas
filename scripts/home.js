@@ -76,7 +76,7 @@ function formdialogevento() {
     dialog.elementoDialog.addEventListener("close", () => {
         FormEvento.reset();
     })
-    FormEvento.ElementoForm.addEventListener("criar-evento2", () => {
+    document.addEventListener("fechar-dialog", () => {
         dialog.close();
     });
 }
@@ -110,7 +110,8 @@ export function iniciarDialog(nome) {
 }
 function iniciarFormEvento() {
     const ElementoForm = document.querySelector("[data-event-form]");
-    ElementoForm.addEventListener("submit", (event) => {
+    let btn = ElementoForm.querySelector("[id='criartarefa-button']");
+    btn.addEventListener("click", (event) => {
         event.preventDefault();
         const EventoForm2 = FormparaEvento2(ElementoForm);
         ElementoForm.dispatchEvent(new CustomEvent("criar-evento2", {
@@ -144,10 +145,6 @@ function FormparaEvento2(ElementoForm) {
 
     return evento;
 }
-
-// function validarEvento(event) {
-    // eu validaria pra não colocar um evento antes do dia atual
-// }
 const ElementoTemplateEvento = document.querySelector("[data-template='evento']");
 function iniciarEventoEstatico(parent, event) {  
     const ElementoEvento = iniciarEvento(event);
@@ -287,22 +284,27 @@ function verseigual(tituloevento,desc,data,dataEvento2,event,idtarefa) {
 }
 function iniciarArmEvento() { 
     const eventos = [];
-    document.addEventListener("criar-evento2", async (event)=>{
-        const tarefas = await pegareventosdoarm2();
-        eventos.push(...tarefas);
-        document.dispatchEvent(new CustomEvent("eventos-mudaram", {
-            bubbles: true
-        }));
-    });
-    document.addEventListener("criar-evento2", (evento) =>{
+    document.addEventListener("criar-evento2", async (evento) => {
         const EventoCriado2 = evento.detail.evento;
         var titulo = EventoCriado2.titulo;
         var descricao = EventoCriado2.descricao;
         var data_limite = EventoCriado2.data;
         var dificuldade = EventoCriado2.dificuldade;
         var feito = EventoCriado2.feito;
+        if (titulo.trim() === "") {
+            console.log("O campo de nome de uma tarefa não pode ficar vazio.")
+            return
+        }
+        if (data_limite.trim() === "") {
+            console.log("O campo de data limite de uma tarefa não pode ficar vazio.")
+            return
+        }
+        if (dificuldade == null) {
+            console.log("O campo de dificuldade de uma tarefa não pode ficar vazio.")
+            return
+        }
         if (data_limite) {
-            let datal = new Date(data_limite); // Tem que mexer aqui
+            let datal = new Date(data_limite); 
             datal.setUTCHours(12, 0, 0, 0); 
             let hoje = today();
             hoje.setUTCHours(12, 0, 0, 0);
@@ -311,6 +313,12 @@ function iniciarArmEvento() {
                 return;
             } 
         }
+
+        const { tarefas, tarefasmissao } = await pegareventosdoarm2(); 
+        eventos.push(...tarefas);
+        document.dispatchEvent(new CustomEvent("eventos-mudaram", {
+            bubbles: true
+        }));
         $.post("php/eventoBD.php", {titulo, descricao, data_limite, dificuldade, feito})
         .done(function (data) {
             console.log("Resposta do servidor: ", data);
@@ -318,6 +326,12 @@ function iniciarArmEvento() {
         .fail(function (jqXHR, textStatus, errorThrown) {
             console.error('Erro na requisição:', textStatus, errorThrown);
         });
+        setTimeout(() => {
+            document.dispatchEvent(new CustomEvent("fechar-dialog", {
+                bubbles: true
+            }));
+          }, 200);
+
     });
     return {
         async pegarEventosPorData(data) {
