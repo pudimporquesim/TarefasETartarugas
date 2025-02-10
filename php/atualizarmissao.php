@@ -1,7 +1,7 @@
 <?php
 include 'conectbd.php';
 header('Content-Type: application/json; charset=UTF-8');
-
+session_start();
 if (isset($_POST['mudanca']) && !empty($_POST['mudanca']) ) {
     $mudanca = json_decode($_POST['mudanca'], true);
 } else {
@@ -85,11 +85,14 @@ try {
 
     if ($tarefassembdjson != null && is_array($tarefassembdjson)) {
         foreach ($tarefassembdjson as $novaTarefa) {
-            $sql = "INSERT INTO tarefa (Nome, fk_Missao_id, DataLimite) VALUES (:Nome, :MissaoID, :data)";
+            $idpessoa = intval($_SESSION["user-id"]);
+            $sql = "INSERT INTO tarefa (Nome, fk_Missao_id, DataLimite, fk_usuario_id, feita) VALUES (:Nome, :MissaoID, :data, :id, :feito)";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':Nome', $novaTarefa['nome']);
             $stmt->bindParam(':data', $novaTarefa['datalimite']);
             $stmt->bindParam(':MissaoID', $novaTarefa['missaoid']);
+            $stmt->bindParam(':id', $idpessoa);
+            $stmt->bindParam(':feito', $novaTarefa['feito']);
             $stmt->execute();
         }
         $tarefassembdjson_status = "Novas tarefas adicionadas";

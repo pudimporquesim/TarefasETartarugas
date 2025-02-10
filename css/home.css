@@ -8,6 +8,7 @@ body {
     display: grid;
     grid-template-columns: 5% 95%;
     height: 100vh;
+    background-color: #F5FEE0;
 }
 main {
     display: grid;
@@ -15,49 +16,102 @@ main {
     grid-template-rows: 20% calc(40% - 10px) calc(40% - 10px);
     gap: 10px;
     grid-template-areas: 
-    'perfil perfil tarefas pomo-miss'
-    'calendario calendario calendario pomo-miss'
-    'calendario calendario calendario pomo-miss';
+    'perfil perfil . missao'
+    'calendario calendario calendario missao'
+    'calendario calendario calendario missao';
     padding: 10px;
     height: 100vh;
 }
-nav, .perfil, .tarefasdia, .calendario, .missao{
+.perfil, .calendario, .missao{
+    background-color: #fcfff6;
+    box-shadow: rgba(121, 163, 128, 0.68) 0px 1px 4px;
+}
 
-}
-.pomodoro-missao {
-    grid-area: pomo-miss;
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-}
-.pomodoro {
-    /* grid-area: pomodoro; */
-    background-color: salmon;
-}
-.pomodoro, .missao {
-    height: 50%;
+.missao {
+    grid-area: missao;
+    height: 100%;
     width: 100%;
+
+    padding: 5px;
+    border-radius: 8px;
 }
 .calendario2 {
     display: flex;
     flex-direction: column;
     height: 100%;
-}
+    overflow: hidden;
+  }
+  
 .missaoM {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 10px;
+}
+.missaobd {
+    padding: 15px 8px;
+    border-radius: 10px;
+    box-shadow: rgba(121, 163, 128, 0.68) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    /* box-shadow:  0px 1px 4px; */
+}
+.missaobd:hover {
+    cursor: pointer;
+    background-color: rgba(170, 206, 176, 0.68);
+    transition: all 0.3s ease-in-out;
 }
 [data-missao-form] {
     display: flex;
 }
-.lado1, .lado2 {
+[data-dialog="form-evento"] {
+    height: 50%;
+    aspect-ratio: 1/1;
+}
+.lado1, .lado2, .lado21 {
     width: 50%;
     display: flex;
     flex-direction: column;
 }
+form#formnomeheroico {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+form#formnomeheroico input {
+    width: 60%;
+}
+#btnnomeheroico {
+    border: none;
+    height: 25px;
+    border-radius: 8px;
+    width: 40%;
+    background-color: #2d473d;
+    color: #F5FEE0;
+}
+.clique {
+    color: #808080;
+}
+[data-dialog="evento"] {
+    border: none;
+    align-self: center;
+    justify-self: center;
+    border: none;
+    border-radius: 10px;
+    height: 50%;
+    aspect-ratio: 1 / 1;
+}
+.tarefabd {
+
+}
 [data-dialog="form-missao"] {
     width: 80%;
     height: 70%;
+}
+.esse {
+    border: none;
+    height: 25px;
+    border-radius: 8px;
+    width: 100%;
+    background-color: #2d473d;
+    color: #F5FEE0;
 }
 [data-dialog="form-missao2"] {
     width: 80%;
@@ -67,8 +121,29 @@ nav, .perfil, .tarefasdia, .calendario, .missao{
 .tarefam {
     display: flex;
 }
+
+.butoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+.cagado, .jabuti, .tartaruga {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.butoes button {
+    border: none;
+    height: 25px;
+    border-radius: 8px;
+    width: 100%;
+    background-color: #2d473d;
+    color: #F5FEE0;
+}
 .tarefam input[type="date"] {
-    
+    border: none;
 }
 [data-criar-missao] {
     width: 100%;
@@ -77,13 +152,15 @@ nav, .perfil, .tarefasdia, .calendario, .missao{
     padding: 20px;
     height: 100%;
 }
-.lado2 img {
+
+.lado21 img {
     width: 50%;
     aspect-ratio: 1 / 1;
     align-self: center;
 }
 .infomissao {
     display: flex;
+    gap: 10px;
 }
 dialog.dialog {
     align-self: center;
@@ -97,11 +174,52 @@ dialog.dialog {
     justify-content: space-between;
 }
 nav {
-    background-color: aqua;
+    background-color:rgba(121, 163, 128, 0.68);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    
+}
+nav #logo {
+    width: 90%;
+    fill:  #1e2f29;
+}
+nav button {
+    background-color: transparent;
+    border: none;
 }
 .perfil {
     grid-area: perfil;
-    background-color: blue;
+    /* background-color: blue; */
+    border-radius: 10px;
+}
+.tarefas {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 10px;
+    align-items: center;
+}
+.tarefas2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 10px;
+    align-items: center;
+}
+.tarefam {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 3px;
+}
+.tarefam button {
+    background-color: transparent;
+    border: none;
 }
 .tarefasdia {
     background-color: blueviolet;
@@ -112,6 +230,9 @@ nav {
     display: flex;
     flex-direction: column;
     height: 100%;
+
+    padding: 8px;
+    border-radius: 8px;
 }
 .calendario-todo{
     display: flex;
@@ -141,9 +262,11 @@ nav {
 }
 .diaslista {
     height: 100%;
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    inset: 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  /* Use minmax(0, 1fr) para que cada linha não ultrapasse o espaço disponível */
+  grid-auto-rows: minmax(0, 1fr);
+  overflow: hidden;
 }
 .quatro-semanas {
     grid-template-rows: repeat(4, minmax(auto, 1fr));
@@ -160,8 +283,11 @@ nav {
     flex-direction: column;
     width: 100%;
     padding: 5px;
-    height: 100%;
+    height: 100%;  
+    /* flex-grow: 1;   */
+    overflow: hidden; 
 }
+
 .diadasemana .numerododia {
     width: fit-content;
     justify-content: center;
@@ -170,12 +296,15 @@ nav {
     border: none;
     font-weight: 500;
 }
+.numerododia {
+    flex: 0 0 auto;
+  }
 .listadeeventos {
     list-style: none;
-}
-.missao {
-    /* grid-area: missoes; */
-    background-color: chartreuse;
+    /* overflow-y: auto;  
+    flex-grow: 1;  */
+    flex: 1 1 auto;
+  overflow-y: auto;
 }
 .nav-calendario {
     display: flex;
@@ -203,8 +332,28 @@ nav {
     padding: 4px 15px;
 }
 .hoje button:hover {
-    background-color: aquamarine;
+    background-color: rgb(144, 255, 127);
     transition: all 0.3s ease-in-out;
+}
+.nav-data {
+    font-weight: bold;
+    color: rgb(2, 72, 2);
+}
+.nome {
+    font-weight: bold;
+}
+.missaoM h1 {
+    color: rgb(2, 72, 2);
+}
+.missaoM button {
+    background-color: transparent;
+    border: none;
+}
+.missoesbd {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px;
 }
 .setinhas {
     display: flex;
@@ -219,7 +368,7 @@ nav {
     height: 100%;
 }
 .icone-button:hover {
-    color: blue;
+    color: rgb(89, 201, 15);
     transition: all 0.3s ease-in-out;
     display: flex;
     align-items: center;
@@ -248,10 +397,7 @@ nav {
     background-color: transparent;
     border: none;
 }
-.diadasemana:hover {
-    background-color: rgb(231, 219, 231);
-    transition: all 0.1s ease-in-out;
-}
+
 .diadasemana-semana {
     display: flex;
     justify-content: center;
@@ -268,7 +414,7 @@ nav {
     border-right: 1px solid gray;
 }
 .highlight {
-    background-color: hwb(225 89% 0%);
+    background-color: hwb(128 78% 5% / 0.747);
 }
 .evento {
     display: flex;
@@ -434,10 +580,58 @@ nav {
     justify-content: center;
 }
 .bv {
-    background-color: crimson;
+    background-color: rgb(197, 71, 71);
+}
+[data-event-form] {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 90%;
+}
+[data-event-form] button {
+    border: none;
+    height: 25px;
+    border-radius: 8px;
+    width: 100%;
+    background-color: #2d473d;
+    color: #F5FEE0;
+}
+.baixo {
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+form.lado1 div {
+    display: flex;
+    gap: 5px;
+}
+[data-event-form] button:hover {
+    background-color: #21342d;
+    cursor: pointer;
+}
+.fechardialog {
+    align-self: end;
+    background-color: transparent;
+    border: none;
+}
+.dialogd {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+dialog h1 {
+    color: rgb(2, 72, 2);
+}
+.tarefabd {
+    display: flex;
+    flex-direction: column;
 }
 .bx {
-    background-color: deepskyblue;
+    background-color: rgb(71, 197, 184);
+    display: flex;
 }
 .perfil {
     display: flex;

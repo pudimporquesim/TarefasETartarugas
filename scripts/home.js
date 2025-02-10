@@ -479,7 +479,7 @@ async function iniciarDiaCalendario(parent, DiaCalendario, events) {
     iniciarListaEventos(ElementoDiaCalendario, events);
     parent.appendChild(ElementoDiaCalendario);
 }
-async function iniciarCalendario(armEvento) {
+export async function iniciarCalendario(armEvento) {
     const ElementoCalendario = document.querySelector("[data-calendario]");
     let dataSelecionada = today();
     document.addEventListener("data-mudou", (evento) => {
@@ -497,6 +497,9 @@ async function iniciarCalendario(armEvento) {
     document.addEventListener("atualizou-evento", () => {
         refreshCalendario();
     })
+    document.addEventListener("atualizar-missao", () => {
+        refreshCalendario();
+    });
 }
 const formatadorData = new Intl.DateTimeFormat("pt-BR", {
     month: "long",

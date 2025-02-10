@@ -18,6 +18,9 @@ export function iniciarmissoes() {
                 parent.removeChild(parent.firstChild);
             }
         })
+        document.addEventListener("criar-missao", () => {
+            dialog.close();
+        });
     });
 
     const btnadicionartarefamissao = document.querySelector("[data-adicionar-tarefa-missao]");
@@ -102,9 +105,7 @@ export function iniciarmissoes() {
         $.post("php/missaoBD.php", {titulom, descm, datalm, dificuldadem, feitom, tarefasm})
         .done(function (data) {
             console.log("Resposta do servidor: ", data);
-            document.dispatchEvent(new CustomEvent("criar-missão", {
-                bubbles: true
-            }));
+            
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
             console.error('Erro na requisição:', textStatus, errorThrown);
@@ -141,6 +142,9 @@ export function iniciarmissoes() {
         return missao;
     }
 }
+document.addEventListener("atualizar-missao", () => {
+    aparecermissao();
+});
 export async function aparecermissao() {
     const missoesbd = await pegarmissaobd();
     // console.log(missoesbd);
@@ -174,6 +178,10 @@ export async function aparecermissao() {
         }
         localStorage.setItem('ultimaDataCalculo', hoje.toDateString());
     }
+    const espacomissao = document.querySelector("[data-espaco-missoes]");
+    while (espacomissao.hasChildNodes()) {
+        espacomissao.removeChild(espacomissao.firstChild);
+      }
     missoesbd.forEach(missao => {
         missaoaparecer(missao, tarefas);
     });
@@ -260,6 +268,9 @@ function verseigual(titulomissao,desc,data,dataEvento2,missao,idmissao, mudancas
                 console.error('Status do erro:', error.status);
             }
         }
+        document.dispatchEvent(new CustomEvent("atualizar-missao", {
+            bubbles: true
+        }));
     }    
 }
 async function pegarmissaobd() {
@@ -387,6 +398,7 @@ async function addmissao(parent, missao, tarefas) {
             .fail(function (jqXHR, textStatus, errorThrown) {
                 console.error('Erro na requisição:', textStatus, errorThrown);
             });
+
           });
         const btnadicionartarefamissao = document.querySelector("[data-adicionar-tarefa-missao2]");
         const area = document.getElementsByClassName("tarefas2")[0];

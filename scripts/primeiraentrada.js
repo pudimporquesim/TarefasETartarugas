@@ -55,23 +55,23 @@ export function primeiraentrada() {
                 
                 caixaclasses.style.display = "flex";
                 $(".cagado").on("mouseover", function() {
-                    mudartextoDebounced("Essa é a classe cágado");
+                    mudartextoDebounced("Essa é a classe cágado, o cágado é veloz e astuto.");
                 }) .on("mouseout", function () {  
                     mudartextoDebounced(getTextoClasse(nomeHeroico));
                 });
                 $(".jabuti").on("mouseover", function() {
-                    mudartextoDebounced("Essa é a classe jabuti");
+                    mudartextoDebounced("Essa é a classe jabuti, o jabuti é forte e sagaz, por conta disso recebe um bônus de 1,5 em moedas.");
                 }) .on("mouseout", function () {  
                     mudartextoDebounced(getTextoClasse(nomeHeroico));
                 });
                 $(".tartaruga").on("mouseover", function() {
-                    mudartextoDebounced("Essa é a classe tartaruga");
+                    mudartextoDebounced("Essa é a classe tartaruga, a tartaruga é sábia e irreverente, por conta disso recebe um bônus de 1,5 em xp.");
                 }) .on("mouseout", function () {  
                     mudartextoDebounced(getTextoClasse(nomeHeroico));
                 });
             }
             function getTextoClasse(nome) {
-                return `Belo nome <strong>${nome}</strong>, agora você terá de escolher sua classe, entre as três disponíveis.`;
+                return `Belo nome <strong>${nome}</strong>, agora você poderá escolher sua classe, entre as três disponíveis. Sua classe define suas habilidades.`;
             }
             function mudartextoDebounced(novoTexto) {
                 let debounceTimer;
@@ -107,7 +107,7 @@ export function primeiraentrada() {
                             console.error('Erro na requisição:', textStatus, errorThrown);
                         });
                     } else { 
-                        mudartexto("Oh, grande escolha o <strong>tartaruga</strong>, tem certeza? <br> <span class='clique'>Clique novamente se tiver</span>");
+                        mudartexto("Oh, grande escolha a <strong>tartaruga</strong>, tem certeza? <br> <span class='clique'>Clique novamente se tiver</span>");
                         clicks = 1; 
                     }
                 });
