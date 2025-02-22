@@ -13,7 +13,9 @@ function butaocriacaoevento() {
 }
 iniciarmissoes();
 aparecermissao();
-function iniciarToaster(parent) {
+let main = document.querySelector("main");
+const toaster = iniciarToaster(main);
+export function iniciarToaster(parent) {
     const ElementoToaster = document.createElement("div");
     ElementoToaster.classList.add("toaster");
     parent.appendChild(ElementoToaster);
@@ -25,19 +27,19 @@ function iniciarToaster(parent) {
         mostrarToaster(ElementoToaster, message, "error");
       }
     };
-  }
-  function mostrarToaster(ElementoToaster, message, type) {
+}
+function mostrarToaster(ElementoToaster, message, type) {
     const ElementoToast = criarToast(message,type);
     animarToast(ElementoToaster, ElementoToast);
-  }
-  function criarToast(message, type) {
+}
+function criarToast(message, type) {
     const ElementoToast = document.createElement("div");
     ElementoToast.textContent = message;
     ElementoToast.classList.add("toast");
     ElementoToast.classList.add(type);
     return ElementoToast;
-  }
-  function animarToast(ElementoToaster, ElementoToast){
+}
+function animarToast(ElementoToaster, ElementoToast){
     const alturaantes = ElementoToaster.offsetHeight;
     ElementoToaster.appendChild(ElementoToast);
     const alturadepois = ElementoToaster.offsetHeight;
@@ -59,12 +61,12 @@ function iniciarToaster(parent) {
     .catch((error) => {
       console.error("Deu errado a animação", error);
     })
-  }
-  function esperarAnimacao(element) {
+}
+function esperarAnimacao(element) {
     const animationPromises = element.getAnimations().map(animation => animation.finished);
   
     return Promise.allSettled(animationPromises);
-  }
+}
 function formdialogevento() {
     const dialog = iniciarDialog("form-evento");
     const FormEvento = iniciarFormEvento();
@@ -212,15 +214,16 @@ function iniciarEvento(event) {
         deletarbtn.on('click', async function () {
             await $.post("php/deletartarefa.php", {idtarefa})
             .done(function (data) {
-                console.log("Resposta do servidor: ", data);
+                if (data.error != undefined) {
+                    toaster.error(data.error);
+                  } else if (data.success != undefined) {
+                    toaster.success(data.success);
+                  }
                 dialog.close();
                 document.dispatchEvent(new CustomEvent("eventos-mudaram", {
                     bubbles: true
                 }));
             })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                console.error('Erro na requisição:', textStatus, errorThrown);
-            });
           });
     });
     const ElementoId = ConteudoEvento.querySelector("[data-evento-id='']");
@@ -244,6 +247,14 @@ function verseigual(tituloevento,desc,data,dataEvento2,event,idtarefa) {
         mudancas.Descricao = desc.val();
     }
     if (data.val() != dataEvento2) {
+        let dataldata = new Date(data.val());
+        dataldata.setUTCHours(12, 0, 0, 0);
+        let hoje = today();
+        hoje.setUTCHours(12, 0, 0, 0); 
+        if (dataldata < hoje) {
+            toaster.error("A data de uma tarefa não pode ser anterior a data de hoje.");
+            return;
+        }
         mudancas.DataLimite = data.val();
     }
     if (dificuldadeSelecionada != event.Dificuldade) {
@@ -264,22 +275,18 @@ function verseigual(tituloevento,desc,data,dataEvento2,event,idtarefa) {
             var mudanca = JSON.stringify(mudancas);
             atualizarevento(mudanca);
         } else {
-            console.log("os campos de data e nome não podem ficar vazios");
+            toaster.error("os campos de data e nome não podem ficar vazios");
         }
     }
     async function atualizarevento(mudanca) {
-        try {
-            const data = await $.post("php/atualizarevento.php", {mudanca});  
-            console.log("Resposta do servidor: ", data);
-        } catch (error) {
-            console.error('Erro na requisição:', error);
-            if (error.responseText) {
-                console.error('Resposta do erro:', error.responseText);
-            }
-            if (error.status) {
-                console.error('Status do erro:', error.status);
-            }
-        }
+        $.post("php/atualizarevento.php", {mudanca})
+            .done(function (data) {
+                if (data.error != undefined) {
+                    toaster.error(data.error);
+                } else if (data.success != undefined) {
+                    toaster.success(data.success);
+                }
+            })
     }    
 }
 function iniciarArmEvento() { 
@@ -292,15 +299,15 @@ function iniciarArmEvento() {
         var dificuldade = EventoCriado2.dificuldade;
         var feito = EventoCriado2.feito;
         if (titulo.trim() === "") {
-            console.log("O campo de nome de uma tarefa não pode ficar vazio.")
+            toaster.error("O campo de nome de uma tarefa não pode ficar vazio.")
             return
         }
         if (data_limite.trim() === "") {
-            console.log("O campo de data limite de uma tarefa não pode ficar vazio.")
+            toaster.error("O campo de data limite de uma tarefa não pode ficar vazio.")
             return
         }
         if (dificuldade == null) {
-            console.log("O campo de dificuldade de uma tarefa não pode ficar vazio.")
+            toaster.error("O campo de dificuldade de uma tarefa não pode ficar vazio.")
             return
         }
         if (data_limite) {
@@ -309,7 +316,7 @@ function iniciarArmEvento() {
             let hoje = today();
             hoje.setUTCHours(12, 0, 0, 0);
             if (datal < hoje) {
-                console.log("A data de uma tarefa não pode ser anterior a data de hoje.");
+                toaster.error("A data de uma tarefa não pode ser anterior a data de hoje.");
                 return;
             } 
         }
@@ -321,11 +328,12 @@ function iniciarArmEvento() {
         }));
         $.post("php/eventoBD.php", {titulo, descricao, data_limite, dificuldade, feito})
         .done(function (data) {
-            console.log("Resposta do servidor: ", data);
+            if (data.error != undefined) {
+                toaster.error(data.error);
+              } else if (data.success != undefined) {
+                toaster.success(data.success);
+              }
         })
-        .fail(function (jqXHR, textStatus, errorThrown) {
-            console.error('Erro na requisição:', textStatus, errorThrown);
-        });
         setTimeout(() => {
             document.dispatchEvent(new CustomEvent("fechar-dialog", {
                 bubbles: true
@@ -336,7 +344,6 @@ function iniciarArmEvento() {
     return {
         async pegarEventosPorData(data) {
             const { tarefas, tarefasmissao } = await pegareventosdoarm2();
-            // console.log(tarefasmissao);
             const EventosFiltrados = tarefas.filter((evento) => mesmodia(evento.DataLimite, data));
             return EventosFiltrados;
         }
@@ -347,7 +354,7 @@ export async function pegareventosdoarm2() {
         var tarefas = [];
         const data = await $.post("php/puxareventoBD.php");
         if (data.error !== undefined) {
-            console.error(data.error);
+            toaster.error(data.error);
             return [];
         }
         if (data.tarefas !== undefined) {
@@ -365,7 +372,7 @@ export async function pegareventosdoarm2() {
         }
         return { tarefas: [], tarefasmissao: [] };
     } catch (error) {
-        console.error("Erro na requisição:", error);
+        toaster.error("Erro na requisição:", error);
         return { tarefas: [], tarefasmissao: [] };
     }
 }
@@ -497,7 +504,10 @@ export async function iniciarCalendario(armEvento) {
     document.addEventListener("atualizou-evento", () => {
         refreshCalendario();
     })
-    document.addEventListener("atualizar-missao", () => {
+    document.addEventListener("missão-criada", () => {
+        refreshCalendario();
+    });
+    document.addEventListener("missão-atualizada/deletada", () => {
         refreshCalendario();
     });
 }

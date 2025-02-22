@@ -11,7 +11,12 @@ try {
     $stmt->bindParam(':feito', $feito);
     $stmt->bindParam(':id', $idtarefa);
     $stmt->execute();
-    echo json_encode(['success' => 'Tarefa atualizada']);
+    if ($feito == 1) {
+        echo json_encode(['success' => 'Tarefa marcada como feita']);
+    } elseif ($feito == 0) {
+        echo json_encode(['success' => 'Tarefa marcada como não feita']);
+    }
+    
 } catch (PDOException $e) {
     echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
 }

@@ -10,6 +10,7 @@ export async function iniciarperfil() {
         nomeusuario.innerHTML = dados.nome_heroico;
         nivel.innerHTML = dados.nivel;
         barrav.innerHTML = dados.vida;
+        barrav.style.width = dados.vida + "%";
         barraxp.innerHTML = dados.experiencia;
         moedas.innerHTML = dados.moedas;
         async function pegardadosbd() {

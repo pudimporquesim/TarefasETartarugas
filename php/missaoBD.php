@@ -11,7 +11,7 @@ if(($_POST['titulom'] != null) && ($_POST['datalm'] != null) && ($_POST['dificul
     $datalimitedata = new DateTime($data_limite);
     $datacriadadata = new DateTime($data_criada);
     if ($datalimitedata < $datacriadadata) {
-        echo json_encode(['success' => 'num pode não colega']);
+        echo json_encode(['error' => 'A missão não pode ter uma data anterior ao dia atual']);
     } else {
         $dificuldade = $_POST['dificuldadem'];
         $feito = $_POST['feitom'];
@@ -89,7 +89,6 @@ if(($_POST['titulom'] != null) && ($_POST['datalm'] != null) && ($_POST['dificul
                         $smm->bindParam(':usuario_id', $idpessoa);
                         $smm->bindParam(':missao_id', $misssaoid);
                         $smm->execute();
-                        // echo json_encode(['success' => 'sasasasção']);
                         foreach ($tarefas_array as $tarefa) {
                             $nomet = $tarefa["nome"];
                             $data_limitet = $tarefa["datalimite"];
@@ -111,7 +110,7 @@ if(($_POST['titulom'] != null) && ($_POST['datalm'] != null) && ($_POST['dificul
                                 echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
                             }
                         }
-                        echo json_encode(['success' => 'funciona']);
+                        echo json_encode(['success' => 'Missão criada']);
                     } catch (PDOException $e) {
                         echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
                     }
@@ -122,8 +121,6 @@ if(($_POST['titulom'] != null) && ($_POST['datalm'] != null) && ($_POST['dificul
                 echo json_encode(['error' => 'Erro ao executar a consulta: ' . $e->getMessage()]);
             }
     }
-
-    
 } else {
     echo json_encode(['error' => 'Parametros obrigatorios nao especificados']);
 }

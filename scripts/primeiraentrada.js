@@ -55,7 +55,7 @@ export function primeiraentrada() {
                 
                 caixaclasses.style.display = "flex";
                 $(".cagado").on("mouseover", function() {
-                    mudartextoDebounced("Essa é a classe cágado, o cágado é veloz e astuto.");
+                    mudartextoDebounced("Essa é a classe cágado, o cágado é veloz e astuto, por conta disso recebe menos dano caso atrase suas tarefas");
                 }) .on("mouseout", function () {  
                     mudartextoDebounced(getTextoClasse(nomeHeroico));
                 });

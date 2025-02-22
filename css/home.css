@@ -128,6 +128,51 @@ form#formnomeheroico input {
     justify-content: space-between;
     gap: 10px;
 }
+.toaster {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: calc(100vw - 2rem);
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 10%;
+    gap: 10px;
+    pointer-events: none;
+    z-index: 10;
+}
+.toast {
+    color: white;
+    border-radius: 12px;
+    padding: 10px;
+    font-weight: bold;
+    animation: toast-in 300ms ease, toast-out 300ms ease 2500ms;
+}
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes toast-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.error {
+    background-color: rgb(211, 41, 41);
+}
+.success{
+    background-color: rgb(19, 187, 19);
+}
 .cagado, .jabuti, .tartaruga {
     display: flex;
     flex-direction: column;
