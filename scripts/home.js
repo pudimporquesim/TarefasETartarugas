@@ -70,7 +70,6 @@ function esperarAnimacao(element) {
 function formdialogevento() {
     const dialog = iniciarDialog("form-evento");
     const FormEvento = iniciarFormEvento();
-    // const toaster = iniciarToaster();
     document.addEventListener("requisicao-criacao-evento", () => {
         dialog.open();
     });
@@ -577,6 +576,20 @@ function iniciarListaEventos(parent, events) {
         ElementoListaEvento.appendChild(ElementoListaEventoItem);
     }
  }
+
+ $(".sair").on('click', async function () {
+    $.post("php/logout.php")
+    .done(function (data) {
+        if (data.error != undefined) {
+            toaster.error(data.error);
+          } else if (data.success != undefined) {
+            toaster.success(data.success);
+            
+          }
+    })
+    window.location.href = "index.html";
+
+});
 feito();
 formdialogevento(); 
 butaocriacaoevento();

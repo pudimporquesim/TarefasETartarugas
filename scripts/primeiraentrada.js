@@ -28,7 +28,6 @@ export function primeiraentrada() {
             function nomeheroico(nomeheroico) { 
                 $.post("php/nomeheroico.php", {nomeheroico: nomeheroico})
                 .done(function (data) {
-                    // console.log("Resposta do servidor: ", data);
                     if (data.error != undefined) {
                         console.log(data.error);
                     } else if (data.nomeheroico != undefined) {

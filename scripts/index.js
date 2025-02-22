@@ -11,6 +11,7 @@ var inp_senha = document.getElementById('senhal');
 var inp_submit = document.getElementById("submit");
 var inp_emailr = document.getElementById('emailr');
 var inp_senhaR1 = document.getElementById('senhaR1');
+var inp_senhaR2 = document.getElementById('senhaR2');
 var inp_nomer = document.getElementById('nomer');
 var inp_submitr = document.getElementById('butsubmitr');
 var inp_emails = document.getElementById('emails');
@@ -28,6 +29,10 @@ btn.onclick = function() {
   });
   inp_submitr.addEventListener('click' , function (event) {
     event.preventDefault();
+    if (inp_senhaR1.value != inp_senhaR2.value) {
+        toaster.error("Suas senhas precisam ser iguais");
+        return
+    }
     registro(inp_emailr.value, inp_senhaR1.value, inp_nomer.value, toaster);
   });
   inp_senhaesquecida.addEventListener('click', function(event) {
@@ -79,11 +84,9 @@ function mostrar() {
 function login(email, senha, toaster) {
     $.post("php/login.php", { emaill: email, senhal: senha })
     .done(function (data) {
-        // data = JSON.parse(data); se deixar isso aqui o código não funciona
         if (data.error != undefined) {
           toaster.error(data.error);
         } else if (data.success != undefined) {
-            // console.log(data.success);
             toaster.success(data.success);
             window.location.href = "homepage.html";
         }
@@ -112,10 +115,8 @@ function registro(email, senha, nome, toaster) {
 
 
 function senhaesquecida(email, toaster) {
-  console.log("Chega aqui senha esquecida 2");
   $.post("php/recuperarsenhapt1.php", {emails: email})
   .done(function(data) {
-    console.log("Resposta do servidor:", data);
     if (data.error != undefined) {
       toaster.error(data.error);
     } else if (data.success != undefined) {

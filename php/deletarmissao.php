@@ -8,7 +8,6 @@ if ($_POST['missao'] != null) {
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':id', $missao["ID"]);
         $stmt->execute();
-        // echo json_encode(['success' => 'Tarefa excluida']);
         $sql2 = "DELETE FROM usuario_missao where fk_missao_id = :id";
         try {
             $stmt = $pdo->prepare($sql2);
